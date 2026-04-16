@@ -2,7 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-  margin: 0;
-  padding: 0;
+@layer base {
+  :root {
+    /* Core Machine Brand: Dark tech theme */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 199 89% 55%; /* Cyan neon */
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 320 89% 55%; /* Magenta neon */
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65%;
+    --accent: 270 89% 55%; /* Purple */
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 199 89% 40%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 199 89% 55%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Neon glow animation for headings */
+  @keyframes neon-glow {
+    0%, 100% {
+      text-shadow: 
+        0 0 7px hsl(199 89% 55%),
+        0 0 10px hsl(199 89% 55%);
+    }
+    50% {
+      text-shadow: 
+        0 0 15px hsl(199 89% 55%),
+        0 0 25px hsl(199 89% 55%),
+        0 0 35px hsl(199 89% 55%);
+    }
+  }
+  
+  .neon-text {
+    animation: neon-glow 2s ease-in-out infinite;
+  }
+
+  /* Cyberpunk grid background */
+  .cyber-grid {
+    background-image: 
+      linear-gradient(rgba(199, 89%, 55%, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(199, 89%, 55%, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
 }
