@@ -1,6 +1,6 @@
 {
-  "buildCommand": null,
+  "buildCommand": "echo 'Static site - no build needed'",
   "outputDirectory": "dist/public",
-  "installCommand": null,
-  "framework": null
+  "installCommand": "echo 'No install needed'",
+  "framework": "vite"
 }
