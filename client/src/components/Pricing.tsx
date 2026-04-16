@@ -7,6 +7,7 @@ import { Check, Sparkles, Rocket, Building2, Users, Zap, ArrowRight, Mail } from
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Link } from "wouter";
 
 export default function Pricing() {
   const { language, t } = useLanguage();
@@ -80,12 +81,10 @@ export default function Pricing() {
                     </div>
                   ))}
                 </div>
-                <Button
-                  className="w-full mt-6"
-                  variant="outline"
-                  onClick={() => scrollToSection("subsidy")}
-                >
-                  {t("pricing.free.cta")}
+                <Button className="w-full mt-6" variant="outline" asChild>
+                  <Link to="/free-resources">
+                    {t("pricing.free.cta")}
+                  </Link>
                 </Button>
               </CardContent>
             </Card>

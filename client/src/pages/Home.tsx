@@ -104,9 +104,9 @@ export default function Home() {
             <button onClick={() => scrollToSection("subsidy")} className="text-sm hover:text-primary transition-colors">
               {language === "zh-HK" ? "資助一覽" : "资助一览"}
             </button>
-            <button onClick={() => scrollToSection("ai-generator")} className="text-sm hover:text-primary transition-colors">
+            <a href="/free-resources" className="text-sm hover:text-primary transition-colors">
               {t("nav.freeResources")}
-            </button>
+            </a>
             <a href="/pricing" className="text-sm hover:text-primary transition-colors">
               {t("nav.pricing")}
             </a>
