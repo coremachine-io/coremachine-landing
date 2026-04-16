@@ -7,7 +7,7 @@ export const ENV = {
   isProduction: process.env.NODE_ENV === "production",
   forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
   forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
-  miniMaxApiKey: process.env.MINIMAX_CN_API_KEY ?? "",
+  miniMaxApiKey: process.env.MINIMAX_API_KEY ?? process.env.MINIMAX_CN_API_KEY ?? "",
   miniMaxApiUrl: process.env.MINIMAX_API_URL ?? "https://api.minimax.chat/v1",
   resendApiKey: process.env.RESEND_API_KEY ?? "",
   notificationEmailTo: process.env.NOTIFICATION_EMAIL_TO ?? "",
