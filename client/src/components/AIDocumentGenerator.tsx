@@ -63,8 +63,7 @@ export default function AIDocumentGenerator() {
         toast.success(t("ai.success"));
       }
     } catch (error) {
-      toast.error(t("ai.error"));
-      console.error("Generation error:", error);
+      toast.error(language === "zh-HK" ? "生成失敗，請稍後再試" : "生成失败，请稍后再试");
     }
   };
 

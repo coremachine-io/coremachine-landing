@@ -28,7 +28,14 @@ export default function Home() {
       setConsultationForm({ name: "", contact: "", email: "", needs: "" });
     },
     onError: (error) => {
-      toast.error(error.message);
+      // Show user-friendly error instead of raw Zod/technical details
+      const msg = error.message;
+      const isValidationError = msg.includes("請") || msg.includes("需要") || msg.includes("最少") || msg.includes("有效") || msg.includes("Invalid");
+      if (isValidationError) {
+        toast.error(language === "zh-HK" ? "請完整填寫所有必填欄位" : "请完整填写所有必填字段");
+      } else {
+        toast.error(language === "zh-HK" ? "提交失敗，請稍後再試" : "提交失败，请稍后再试");
+      }
     },
   });
 
@@ -49,7 +56,7 @@ export default function Home() {
       setTemplateEmail("");
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(language === "zh-HK" ? "下載失敗，請稍後再試" : "下载失败，请稍后再试");
     },
   });
 
@@ -642,7 +649,7 @@ export default function Home() {
           </div>
 
           <div className="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
-            <p>© 2026 Core Machine Limited. {language === "zh-HK" ? "版權所有。" : "版权所有。"} | <a href="/pricing" className="hover:text-primary">{t("footer.terms")}</a> | <a href="/pricing" className="hover:text-primary">{t("footer.privacy")}</a></p>
+            <p>© 2026 Core Machine Limited. {language === "zh-HK" ? "版權所有。" : "版权所有。"} | <a href="/terms" className="hover:text-primary">{t("footer.terms")}</a> | <a href="/privacy" className="hover:text-primary">{t("footer.privacy")}</a></p>
           </div>
         </div>
       </footer>

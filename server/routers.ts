@@ -29,7 +29,7 @@ export const appRouter = router({
       .input(z.object({
         name: z.string().min(1, "請輸入姓名"),
         contact: z.string().min(1, "請輸入聯絡方式"),
-        email: z.string().email("請輸入有效電子郵件").optional().or(z.literal("")),
+        email: z.union([z.string().email("請輸入有效電子郵件"), z.literal(""), z.undefined()]).optional().transform(v => v === "" ? undefined : v),
         needs: z.string().min(10, "請詳細描述您的需求（至少10字）"),
         language: z.enum(["zh-HK", "zh-CN"]).default("zh-HK"),
       }))

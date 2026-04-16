@@ -43,7 +43,7 @@ export default function Pricing() {
             {t("pricing.subtitle")}
           </div>
 
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-primary">
             <span className="neon-text">{t("pricing.title")}</span>
           </h1>
         </motion.div>
