@@ -1,4 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import NavBar from "@/components/NavBar";
 import EligibilityChecker from "@/components/EligibilityChecker";
 import DeadlineTimeline from "@/components/DeadlineTimeline";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,6 +23,7 @@ export default function FreeResources() {
 
   return (
     <div className="min-h-screen bg-background">
+      <NavBar />
       {/* Hero */}
       <section className="py-16 px-4 border-b border-border/50">
         <div className="max-w-4xl mx-auto text-center">
