@@ -1,85 +1,243 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Rocket, Sparkles, FileText, Users, Check, Download, Globe, ArrowRight } from "lucide-react";
+import { Rocket, Sparkles, ArrowRight, CheckCircle2, Users, FileText, Clock, Globe, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import AIDocumentGenerator from "@/components/AIDocumentGenerator";
 import CaseDisplay from "@/components/CaseDisplay";
-import PolicyDisplay from "@/components/PolicyDisplay";
-import ServiceProcess from "@/components/ServiceProcess";
+
+// Simple 3-step "How it Works"
+function HowItWorks() {
+  const { language } = useLanguage();
+  const steps = language === "zh-HK" ? [
+    { icon: Sparkles, title: "免費評估", desc: "3分鐘知道夾唔夾申請補貼", time: "3 分鐘" },
+    { icon: FileText, title: "AI 分析報告", desc: "個人化補貼配對 + 文件初稿", time: "AI 即時生成" },
+    { icon: Users, title: "專人代辦", desc: "顧問幫你搞掂申請流程", time: "全程跟進" },
+  ] : [
+    { icon: Sparkles, title: "免费评估", desc: "3分钟知道夹唔夹申请补贴", time: "3 分钟" },
+    { icon: FileText, title: "AI 分析报告", desc: "个人化补贴配对 + 文件初稿", time: "AI 即时生成" },
+    { icon: Users, title: "专人代办", desc: "顾问帮你搞掂申请流程", time: "全程跟进" },
+  ];
+
+  return (
+    <section className="py-16 bg-muted/30">
+      <div className="container">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">
+            {language === "zh-HK" ? "點樣運作" : "如何运作"}
+          </h2>
+          <p className="text-muted-foreground">
+            {language === "zh-HK"
+              ? "三步，幫你由零到補貼申請完成"
+              : "三步，帮你由零到补贴申请完成"}
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          {steps.map((step, i) => {
+            const Icon = step.icon;
+            return (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Card className="text-center h-full hover:border-primary/40 transition-colors">
+                  <CardContent className="pt-6">
+                    <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                      <Icon className="w-7 h-7 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-lg mb-1">{step.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-3">{step.desc}</p>
+                    <span className="text-xs text-primary font-medium bg-primary/10 px-2 py-1 rounded-full">
+                      {step.time}
+                    </span>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Trust signals bar
+function TrustBar() {
+  const { language } = useLanguage();
+  const signals = language === "zh-HK" ? [
+    "127+ 創業者已使用",
+    "3 分鐘免費評估",
+    "AI + 真人把關",
+  ] : [
+    "127+ 创业者已使用",
+    "3 分钟免费评估",
+    "AI + 真人把关",
+  ];
+
+  return (
+    <div className="bg-primary/5 border-y border-primary/20 py-4">
+      <div className="container">
+        <div className="flex flex-wrap justify-center gap-6 md:gap-12 text-sm text-muted-foreground">
+          {signals.map((s) => (
+            <div key={s} className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-primary" />
+              <span>{s}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Condensed founder story
+function FounderStory() {
+  const { language } = useLanguage();
+  const content = language === "zh-HK" ? {
+    title: "我行過呢條路",
+    desc: "38歲香港人，親身經歷前海創業由零到補貼申請嘅全過程。",
+    quote: "自己走過嘅路，先有資格帶你走。",
+    cta: "了解我哋嘅故事 →",
+  } : {
+    title: "我行过这条路",
+    desc: "38岁香港人，亲身经历前海创业由零到补贴申请嘅全过程。",
+    quote: "自己走过嘅路，先有资格带你走。",
+    cta: "了解我们的故事 →",
+  };
+
+  return (
+    <section className="py-16">
+      <div className="container">
+        <Card className="bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
+          <CardContent className="py-8 px-6 md:px-12">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center shrink-0">
+                <span className="text-3xl">🚀</span>
+              </div>
+              <div className="text-center md:text-left flex-1">
+                <h3 className="text-xl font-bold mb-2">{content.title}</h3>
+                <p className="text-muted-foreground mb-3">{content.desc}</p>
+                <p className="text-primary font-medium italic">"{content.quote}"</p>
+              </div>
+              <a
+                href="#mission"
+                className="text-sm text-primary hover:underline flex items-center gap-1 shrink-0"
+              >
+                {content.cta}
+              </a>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+// Simple 3-tier pricing preview
+function PricingPreview() {
+  const { language } = useLanguage();
+  const tiers = language === "zh-HK" ? [
+    { name: "評估", price: "免費", desc: "知道自己夾唔夾", features: ["3分鐘 AI 評估", "個人化報告"], cta: "立即評估", highlight: false },
+    { name: "代辦", price: "固定費用", desc: "幫你搞掂申請", features: ["AI 文件生成", "專人審核", "代提交"], cta: "了解更多", highlight: true },
+    { name: "顧問", price: "月費", desc: "長期陪跑", features: ["所有代辦服務", "每月策略會議", "優先政策通知"], cta: "聯絡我們", highlight: false },
+  ] : [
+    { name: "评估", price: "免费", desc: "知道自己夹唔夹", features: ["3分钟 AI 评估", "个人化报告"], cta: "立即评估", highlight: false },
+    { name: "代办", price: "固定费用", desc: "帮你搞掂申请", features: ["AI 文件生成", "专人审核", "代提交"], cta: "了解更多", highlight: true },
+    { name: "顾问", price: "月费", desc: "长期陪跑", features: ["所有代办服务", "每月策略会议", "优先政策通知"], cta: "联络我们", highlight: false },
+  ];
+
+  return (
+    <section className="py-16">
+      <div className="container">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">
+            {language === "zh-HK" ? "收費模式" : "收费模式"}
+          </h2>
+          <p className="text-muted-foreground">
+            {language === "zh-HK" ? "三個層次，適合你嘅唔同階段" : "三个层次，适合你的不同阶段"}
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {tiers.map((tier, i) => (
+            <motion.div
+              key={tier.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className={`rounded-xl p-6 flex flex-col h-full ${
+                tier.highlight
+                  ? "bg-primary text-primary-foreground shadow-lg"
+                  : "bg-card border"
+              }`}
+            >
+              {tier.highlight && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-amber-500 text-white text-xs font-medium rounded-full">
+                  {language === "zh-HK" ? "最受歡迎" : "最受欢迎"}
+                </div>
+              )}
+
+              <div className="mb-4">
+                <h3 className="text-lg font-bold">{tier.name}</h3>
+                <p className={`text-2xl font-bold mt-1 ${tier.highlight ? "" : "text-primary"}`}>
+                  {tier.price}
+                </p>
+                <p className={`text-sm mt-1 ${tier.highlight ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
+                  {tier.desc}
+                </p>
+              </div>
+
+              <ul className={`space-y-2 flex-1 ${tier.highlight ? "text-primary-foreground/90" : "text-muted-foreground"}`}>
+                {tier.features.map((f) => (
+                  <li key={f} className="text-sm flex items-start gap-2">
+                    <CheckCircle2 className={`w-4 h-4 mt-0.5 shrink-0 ${tier.highlight ? "text-primary-foreground" : "text-primary"}`} />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-6">
+                {tier.highlight ? (
+                  <a
+                    href="/free-assessment"
+                    className="block w-full py-2.5 px-4 bg-white text-primary font-semibold rounded-lg text-center hover:bg-primary-foreground/90 transition-colors"
+                  >
+                    {tier.cta}
+                  </a>
+                ) : (
+                  <button className="w-full py-2.5 px-4 border rounded-lg font-semibold transition-colors bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
+                    {tier.cta}
+                  </button>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function Home() {
   const { language, setLanguage, t } = useLanguage();
-  const [consultationForm, setConsultationForm] = useState({
-    name: "",
-    contact: "",
-    email: "",
-    needs: "",
-  });
-  const [templateEmail, setTemplateEmail] = useState("");
-
-  const submitConsultation = trpc.consultation.submit.useMutation({
-    onSuccess: (data) => {
-      toast.success(data.message);
-      setConsultationForm({ name: "", contact: "", email: "", needs: "" });
-    },
-    onError: (error) => {
-      // Show user-friendly error instead of raw Zod/technical details
-      const msg = error.message;
-      const isValidationError = msg.includes("請") || msg.includes("需要") || msg.includes("最少") || msg.includes("有效") || msg.includes("Invalid");
-      if (isValidationError) {
-        toast.error(language === "zh-HK" ? "請完整填寫所有必填欄位" : "请完整填写所有必填字段");
-      } else {
-        toast.error(language === "zh-HK" ? "提交失敗，請稍後再試" : "提交失败，请稍后再试");
-      }
-    },
-  });
-
-  const downloadTemplate = trpc.template.download.useMutation({
-    onSuccess: (data) => {
-      // 創建下載鏈接
-      const blob = new Blob([data.content], { type: "text/markdown" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = data.filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      
-      toast.success(language === "zh-HK" ? "下載成功！" : "下载成功！");
-      setTemplateEmail("");
-    },
-    onError: (error) => {
-      toast.error(language === "zh-HK" ? "下載失敗，請稍後再試" : "下载失败，请稍后再试");
-    },
-  });
-
-  const handleConsultationSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    submitConsultation.mutate({
-      ...consultationForm,
-      language,
-    });
-  };
-
-  const handleTemplateDownload = (templateType: "subsidy_application" | "personal_statement") => {
-    downloadTemplate.mutate({
-      templateType,
-      language,
-      email: templateEmail,
-      ipAddress: undefined,
-      userAgent: navigator.userAgent,
-    });
-  };
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -89,33 +247,31 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground cyber-grid">
+    <div className="min-h-screen bg-background text-foreground">
       {/* WhatsApp 懸浮按鈕 */}
       <WhatsAppButton phoneNumber="85291444340" />
+
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
         <div className="container flex items-center justify-between py-4">
           <a href="/" className="flex items-center gap-2">
-            <Rocket className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold neon-text">Core Machine</span>
+            <Rocket className="h-7 w-7 text-primary" />
+            <span className="text-xl font-bold">Core Machine</span>
           </a>
-          
-          <div className="hidden md:flex items-center gap-6">
-            <button onClick={() => scrollToSection("mission")} className="text-sm hover:text-primary transition-colors">
-              {t("nav.story")}
+
+          <div className="hidden md:flex items-center gap-6 text-sm">
+            <button onClick={() => scrollToSection("how-it-works")} className="hover:text-primary transition-colors">
+              {language === "zh-HK" ? "點樣運作" : "如何运作"}
             </button>
-            <button onClick={() => scrollToSection("subsidy")} className="text-sm hover:text-primary transition-colors">
+            <button onClick={() => scrollToSection("pricing")} className="hover:text-primary transition-colors">
+              {language === "zh-HK" ? "收費" : "收费"}
+            </button>
+            <button onClick={() => scrollToSection("cases")} className="hover:text-primary transition-colors">
+              {language === "zh-HK" ? "案例" : "案例"}
+            </button>
+            <a href="/subsidies" className="hover:text-primary transition-colors">
               {language === "zh-HK" ? "資助一覽" : "资助一览"}
-            </button>
-            <a href="/free-resources" className="text-sm hover:text-primary transition-colors">
-              {t("nav.freeResources")}
             </a>
-            <a href="/pricing" className="text-sm hover:text-primary transition-colors">
-              {t("nav.pricing")}
-            </a>
-            <button onClick={() => scrollToSection("contact")} className="text-sm hover:text-primary transition-colors">
-              {t("nav.contact")}
-            </button>
           </div>
 
           <div className="flex items-center gap-3">
@@ -128,785 +284,159 @@ export default function Home() {
               <Globe className="h-4 w-4" />
               {language === "zh-HK" ? "繁" : "简"}
             </Button>
-            <Button onClick={() => scrollToSection("contact")} className="gap-2">
-              {t("hero.cta.primary")}
-              <ArrowRight className="h-4 w-4" />
+            <Button asChild className="gap-2">
+              <a href="/free-assessment">
+                {language === "zh-HK" ? "免費評估" : "免费评估"}
+                <ArrowRight className="h-4 w-4" />
+              </a>
             </Button>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="container py-20 md:py-32">
+      <section className="container py-20 md:py-28">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto text-center space-y-8"
+          className="max-w-3xl mx-auto text-center space-y-6"
         >
-          <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-primary text-sm font-medium mb-4">
-            <Sparkles className="inline h-4 w-4 mr-2" />
-            {t("hero.tagline")}
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-            <span className="neon-text">Core Machine</span>
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+            <span className="text-primary">Core Machine</span>
             <br />
-            <span className="text-3xl md:text-5xl text-muted-foreground mt-4 block">
-              {language === "zh-HK" ? "港澳青年前海創業 AI 加速器" : "港澳青年前海创业 AI 加速器"}
+            <span className="text-2xl md:text-4xl text-muted-foreground mt-2 block">
+              {language === "zh-HK"
+                ? "港澳青年前海創業 AI 加速器"
+                : "港澳青年前海创业 AI 加速器"}
             </span>
           </h1>
 
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-xl mx-auto">
             {language === "zh-HK"
-              ? "用 AI 驗證每一個資助申請的可能——從自己開始，幫客戶複製成功。我哋幫你由零開始，申請資助、建立公司、實現夢想。"
-              : "用 AI 验证每一个资助申请的可能——从自己开始，帮客户复制成功。我们帮你由零开始，申请资助、建立公司、实现梦想。"}
+              ? "幫你由零開始，申請資助、建立公司。免費評估你嘅補貼資格，AI + 真人全程支援。"
+              : "帮你由零开始，申请资助、建立公司。免费评估你的补贴资格，AI + 真人全程支援。"}
           </p>
 
-          {/* Social Proof Badge */}
-          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-background/80 border border-border/50 backdrop-blur-sm">
-            <div className="flex -space-x-2">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-purple-500 border-2 border-background flex items-center justify-center text-[10px] font-bold text-white">
-                  {String.fromCharCode(64 + i * 3)}
-                </div>
-              ))}
-            </div>
-            <div className="text-left">
-              <p className="text-sm font-semibold text-foreground">
-                {language === "zh-HK"
-                  ? "已幫 127+ 位港澳創業者評估"
-                  : "已帮 127+ 位港澳创业者评估"}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {language === "zh-HK"
-                  ? "涵蓋科技、餐飲、零售、創意行業"
-                  : "涵盖科技、餐饮、零售、创意行业"}
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button size="lg" asChild className="gap-2 text-lg px-8 bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90 text-white border-0">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+            <Button size="lg" asChild className="gap-2 text-base px-8">
               <a href="/free-assessment">
                 <Sparkles className="h-5 w-5" />
-                {language === "zh-HK" ? "免費評估資格" : "免费评估资格"}
-                <ArrowRight className="h-5 w-5" />
+                {language === "zh-HK" ? "免費評估補貼資格" : "免费评估补贴资格"}
               </a>
             </Button>
-            <Button size="lg" variant="outline" onClick={() => scrollToSection("ai-generator")} className="gap-2 text-lg px-8">
-              {language === "zh-HK" ? "免費試用 AI" : "免费试用 AI"}
-              <ArrowRight className="h-5 w-5" />
+            <Button size="lg" variant="outline" asChild className="gap-2 text-base px-8">
+              <a href="https://wa.me/85291444340" target="_blank" rel="noopener noreferrer">
+                {language === "zh-HK" ? "WhatsApp 傾傾" : "WhatsApp 倾倾"}
+              </a>
             </Button>
           </div>
-        </motion.div>
-      </section>
 
-      {/* Mission Section */}
-      <section id="mission" className="container py-20">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center space-y-4 mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold">{t("mission.title")}</h2>
-          <p className="text-2xl text-accent font-semibold">{t("mission.subtitle")}</p>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">{t("mission.description")}</p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          <Card className="border-primary/30">
-            <CardHeader>
-              <CardTitle className="text-primary">{t("story.challenge.title")}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground leading-relaxed">{t("story.challenge.content")}</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-secondary/30">
-            <CardHeader>
-              <CardTitle className="text-secondary">{t("story.solution.title")}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground leading-relaxed">{t("story.solution.content")}</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-accent/30">
-            <CardHeader>
-              <CardTitle className="text-accent">{t("story.vision.title")}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground leading-relaxed">{t("story.vision.content")}</p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Our Journey Section - 取代舊 Success Story placeholder */}
-      <section className="container py-16">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center space-y-6 mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold">
-            {language === "zh-HK" ? "我哋自己行緊嘅路" : "我们自己正在走的路"}
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm text-muted-foreground">
             {language === "zh-HK"
-              ? "每一步都透明公開——因為我哋深信：自己走過嘅路，先有資格帶你走。"
-              : "每一步都透明公开——因为我们深信：自己走过的路，才有资格带你走。"}
+              ? "已幫 127+ 位港澳創業者評估 · 涵蓋科技、餐飲、零售、創意行業"
+              : "已帮 127+ 位港澳创业者评估 · 涵盖科技、餐饮、零售、创意行业"}
           </p>
         </motion.div>
+      </section>
 
-        <div className="max-w-5xl mx-auto">
-          {/* Journey Table */}
-          <div className="bg-gradient-to-br from-card to-card/80 border border-border/50 rounded-2xl overflow-hidden">
-            {/* Header */}
-            <div className="grid grid-cols-2 bg-gradient-to-r from-primary/20 to-secondary/20 border-b border-border/50">
-              <div className="flex items-center gap-3 px-6 py-4 font-bold text-lg">
-                <span className="text-2xl">🤖</span>
-                <span className="text-primary">{language === "zh-HK" ? "AI 系統建設" : "AI 系统建设"}</span>
-                <span className="text-xs text-muted-foreground font-normal">(Track 1)</span>
-              </div>
-              <div className="flex items-center gap-3 px-6 py-4 font-bold text-lg border-l border-border/50">
-                <span className="text-2xl">🏢</span>
-                <span className="text-secondary">{language === "zh-HK" ? "公司 & 資助申請" : "公司 & 资助申请"}</span>
-                <span className="text-xs text-muted-foreground font-normal">(Track 2)</span>
-              </div>
-            </div>
+      {/* Trust Bar */}
+      <TrustBar />
 
-            {/* Rows */}
-            <div className="divide-y divide-border/30">
-              {/* Row 1 */}
-              <div className="grid grid-cols-2">
-                <div className="flex items-start gap-3 px-6 py-4">
-                  <span className="text-green-500 text-lg mt-0.5">✅</span>
-                  <div>
-                    <p className="font-medium">{language === "zh-HK" ? "AI Agent 訓練完成" : "AI Agent 训练完成"}</p>
-                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "多 Agent 分工架構已建立" : "多 Agent 分工架构已建立"}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 px-6 py-4 border-l border-border/50">
-                  <span className="text-amber-500 text-lg mt-0.5">📋</span>
-                  <div>
-                    <p className="font-medium">{language === "zh-HK" ? "有限公司成立" : "有限公司成立"}</p>
-                    <p className="text-sm text-green-500 font-medium">→ {language === "zh-HK" ? "下星期完成" : "下星期完成"}</p>
-                  </div>
-                </div>
-              </div>
+      {/* How It Works */}
+      <HowItWorks />
 
-              {/* Row 2 */}
-              <div className="grid grid-cols-2">
-                <div className="flex items-start gap-3 px-6 py-4">
-                  <span className="text-green-500 text-lg mt-0.5">✅</span>
-                  <div>
-                    <p className="font-medium">{language === "zh-HK" ? "tRPC API + Drizzle 打通" : "tRPC API + Drizzle 打通"}</p>
-                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "前後端通訊穩定" : "前后端通讯稳定"}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 px-6 py-4 border-l border-border/50">
-                  <span className="text-amber-500 text-lg mt-0.5">🔄</span>
-                  <div>
-                    <p className="font-medium">{language === "zh-HK" ? "前海 OPC 申請準備中" : "前海 OPC 申请准备中"}</p>
-                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "文件準備緊..." : "文件准备中..."}</p>
-                  </div>
-                </div>
-              </div>
+      {/* Pricing */}
+      <div id="pricing">
+        <PricingPreview />
+      </div>
 
-              {/* Row 3 */}
-              <div className="grid grid-cols-2">
-                <div className="flex items-start gap-3 px-6 py-4">
-                  <span className="text-green-500 text-lg mt-0.5">✅</span>
-                  <div>
-                    <p className="font-medium">{language === "zh-HK" ? "Lead Magnet MVP 上線" : "Lead Magnet MVP 上线"}</p>
-                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "免費評估系統運行中" : "免费评估系统运行中"}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 px-6 py-4 border-l border-border/50">
-                  <span className="text-muted-foreground text-lg mt-0.5">→</span>
-                  <div>
-                    <p className="font-medium">{language === "zh-HK" ? "成立後即提交" : "成立后即提交"}</p>
-                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "第一時間遞交申請" : "第一时间递交申请"}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Row 4 */}
-              <div className="grid grid-cols-2">
-                <div className="flex items-start gap-3 px-6 py-4">
-                  <span className="text-amber-500 text-lg mt-0.5">🔄</span>
-                  <div>
-                    <p className="font-medium">{language === "zh-HK" ? "MiniMax 2.7 + Hermes 整合" : "MiniMax 2.7 + Hermes 整合"}</p>
-                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "AI 能力升級中" : "AI 能力升级中"}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 px-6 py-4 border-l border-border/50">
-                  <span className="text-muted-foreground text-lg mt-0.5">→</span>
-                  <div>
-                    <p className="font-medium">{language === "zh-HK" ? "Cyberport Incubation" : "Cyberport Incubation"}</p>
-                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "同步跟進" : "同步跟进"}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Row 5 */}
-              <div className="grid grid-cols-2">
-                <div className="flex items-start gap-3 px-6 py-4">
-                  <span className="text-amber-500 text-lg mt-0.5">🔄</span>
-                  <div>
-                    <p className="font-medium">{language === "zh-HK" ? "Proactive Agent 架構設計" : "Proactive Agent 架构设计"}</p>
-                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "小紅書 Pipeline 建構中" : "小红书 Pipeline 构建中"}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 px-6 py-4 border-l border-border/50 bg-muted/20">
-                  <span className="text-primary text-lg mt-0.5">🎯</span>
-                  <div>
-                    <p className="font-medium text-primary">{language === "zh-HK" ? "目標：資助申請成功" : "目标：资助申请成功"}</p>
-                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "我哋做到，再幫你做到" : "我们做到，再帮你做到"}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom message */}
-          <div className="text-center mt-8 py-6 px-8 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 rounded-xl border border-border/30">
-            <p className="text-lg font-medium text-foreground">
+      {/* Cases */}
+      <section id="cases" className="py-16 bg-muted/30">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mb-10"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-3">
+              {language === "zh-HK" ? "創業者故事" : "创业者故事"}
+            </h2>
+            <p className="text-muted-foreground">
               {language === "zh-HK"
-                ? "🚀 我哋每一步都係證明——自己走過嘅路，先有資格帶你走。"
-                : "🚀 我们每一步都是证明——自己走过的路，才有资格带你走。"}
+                ? "我哋協助緊嘅創業者（匿名）"
+                : "我们协助紧的创业者（匿名）"}
             </p>
-            <p className="text-sm text-muted-foreground mt-2">
-              {language === "zh-HK"
-                ? "持續更新 · 歡迎追蹤"
-                : "持续更新 · 欢迎追踪"}
-            </p>
+          </motion.div>
+
+          <CaseDisplay />
+
+          <div className="text-center mt-8">
+            <Button asChild size="lg" className="gap-2">
+              <a href="/free-assessment">
+                <Sparkles className="h-4 w-4" />
+                {language === "zh-HK" ? "立即評估你嘅補貼資格" : "立即评估你的补贴资格"}
+              </a>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* 成功案例 Section */}
-      <section id="cases" className="container py-20 bg-muted/30">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center space-y-4 mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold">
-            {language === "zh-HK" ? "真實案例" : "真实案例"}
-          </h2>
-          <p className="text-xl text-muted-foreground">
-            {language === "zh-HK"
-              ? "我哋協助緊嘅創業者故事"
-              : "我们协助紧的创业者故事"}
-          </p>
-        </motion.div>
+      {/* Founder Story */}
+      <div id="mission">
+        <FounderStory />
+      </div>
 
-        <CaseDisplay />
-
-        <div className="text-center mt-8">
-          <p className="text-sm text-muted-foreground mb-4">
-            {language === "zh-HK"
-              ? "（案例持續更新中...）"
-              : "（案例持续更新中...）"}
-          </p>
-          <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
-            <a href="/free-assessment">
-              <Sparkles className="w-4 h-4 mr-2" />
-              {language === "zh-HK" ? "立即評估你嘅補貼資格" : "立即评估你的补贴资格"}
-            </a>
-          </Button>
-        </div>
-      </section>
-
-      {/* 政策資訊 Section */}
-      <section id="policy" className="container py-20">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center space-y-4 mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold">
-            {language === "zh-HK" ? "政策資訊" : "政策资讯"}
-          </h2>
-          <p className="text-xl text-muted-foreground">
-            {language === "zh-HK"
-              ? "前海補貼 · 稅務優惠 · 人才政策"
-              : "前海补贴 · 税务优惠 · 人才政策"}
-          </p>
-        </motion.div>
-
-        <div className="max-w-3xl mx-auto">
-          <PolicyDisplay />
-        </div>
-      </section>
-
-      {/* 服務流程 + 收費模式 Section */}
-      <section id="service" className="container py-20">
-        <ServiceProcess />
-
-        {/* Final CTA after service flow */}
-        <div className="text-center mt-12 pt-8 border-t">
-          <p className="text-lg text-muted-foreground mb-4">
+      {/* Final CTA */}
+      <section className="py-16">
+        <div className="container text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">
             {language === "zh-HK"
               ? "準備好開始你嘅創業之旅？"
               : "准备好开始你的创业之旅？"}
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="/free-assessment"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors"
-            >
-              <Sparkles className="w-4 h-4" />
-              {language === "zh-HK" ? "免費評估補貼資格" : "免费评估补贴资格"}
-            </a>
-            <a
-              href="https://wa.me/85291444340"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-3 border border-primary text-primary font-semibold rounded-lg hover:bg-primary/10 transition-colors"
-            >
-              {language === "zh-HK" ? " WhatsApp 傾傾" : " WhatsApp 倾倾"}
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* 中港創業資助一覽 Section */}
-      <section id="subsidy" className="container py-20">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center space-y-4 mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold">{t("fund.title")}</h2>
-          <p className="text-xl text-muted-foreground">{t("fund.subtitle")}</p>
-        </motion.div>
-
-        {/* Fund Cards Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto mb-16">
-          {/* OPC 國際社區 */}
-          <Card className="border-primary/30 hover:border-primary/60 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded-full">{t("fund.opc.tag")}</span>
-              </div>
-              <CardTitle className="text-lg leading-tight">{t("fund.opc.name")}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="space-y-1">
-                <p className="text-2xl font-bold text-primary">{t("fund.opc.amount")}</p>
-                <p className="text-sm text-secondary font-medium">+ {t("fund.opc.bonus")}</p>
-              </div>
-              <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.opc.description")}</p>
-              <div className="pt-2 border-t border-border/50">
-                <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.opc.eligible")}</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* 深圳智能券 */}
-          <Card className="border-secondary/30 hover:border-secondary/60 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary to-secondary/50" />
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-medium px-2 py-1 bg-secondary/10 text-secondary rounded-full">{t("fund.smartcoupon.tag")}</span>
-              </div>
-              <CardTitle className="text-lg leading-tight">{t("fund.smartcoupon.name")}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="space-y-1">
-                <p className="text-2xl font-bold text-secondary">{t("fund.smartcoupon.amount")}</p>
-                <p className="text-sm text-secondary font-medium">+ {t("fund.smartcoupon.bonus")}</p>
-              </div>
-              <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.smartcoupon.description")}</p>
-              <div className="pt-2 border-t border-border/50">
-                <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.smartcoupon.eligible")}</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* 鯤鵬青年創新創業項目 */}
-          <Card className="border-accent/30 hover:border-accent/60 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent to-accent/50" />
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-medium px-2 py-1 bg-accent/10 text-accent rounded-full">{t("fund.kunpeng.tag")}</span>
-              </div>
-              <CardTitle className="text-lg leading-tight">{t("fund.kunpeng.name")}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="space-y-1">
-                <p className="text-2xl font-bold text-accent">{t("fund.kunpeng.amount")}</p>
-                <p className="text-sm text-accent font-medium">+ {t("fund.kunpeng.bonus")}</p>
-              </div>
-              <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.kunpeng.description")}</p>
-              <div className="pt-2 border-t border-border/50">
-                <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.kunpeng.eligible")}</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Cyberport */}
-          <Card className="border-primary/30 hover:border-primary/60 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded-full">{t("fund.cyberport.tag")}</span>
-              </div>
-              <CardTitle className="text-lg leading-tight">{t("fund.cyberport.name")}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="space-y-1">
-                <p className="text-2xl font-bold text-primary">{t("fund.cyberport.amount")}</p>
-                <p className="text-sm text-secondary font-medium">+ {t("fund.cyberport.bonus")}</p>
-              </div>
-              <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.cyberport.description")}</p>
-              <div className="pt-2 border-t border-border/50">
-                <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.cyberport.eligible")}</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* HKSTP */}
-          <Card className="border-secondary/30 hover:border-secondary/60 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary to-secondary/50" />
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-medium px-2 py-1 bg-secondary/10 text-secondary rounded-full">{t("fund.hkstp.tag")}</span>
-              </div>
-              <CardTitle className="text-lg leading-tight">{t("fund.hkstp.name")}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="space-y-1">
-                <p className="text-2xl font-bold text-secondary">{t("fund.hkstp.amount")}</p>
-                <p className="text-sm text-secondary font-medium">+ {t("fund.hkstp.bonus")}</p>
-              </div>
-              <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.hkstp.description")}</p>
-              <div className="pt-2 border-t border-border/50">
-                <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.hkstp.eligible")}</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* ITF AI 補貼 */}
-          <Card className="border-accent/30 hover:border-accent/60 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent to-accent/50" />
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-medium px-2 py-1 bg-accent/10 text-accent rounded-full">{t("fund.itf.tag")}</span>
-              </div>
-              <CardTitle className="text-lg leading-tight">{t("fund.itf.name")}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="space-y-1">
-                <p className="text-2xl font-bold text-accent">{t("fund.itf.amount")}</p>
-                <p className="text-sm text-accent font-medium">+ {t("fund.itf.bonus")}</p>
-              </div>
-              <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.itf.description")}</p>
-              <div className="pt-2 border-t border-border/50">
-                <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.itf.eligible")}</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* GBA 青年創業基金 */}
-          <Card className="border-primary/30 hover:border-primary/60 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded-full">{t("fund.gba.tag")}</span>
-              </div>
-              <CardTitle className="text-lg leading-tight">{t("fund.gba.name")}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="space-y-1">
-                <p className="text-2xl font-bold text-primary">{t("fund.gba.amount")}</p>
-                <p className="text-sm text-secondary font-medium">+ {t("fund.gba.bonus")}</p>
-              </div>
-              <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.gba.description")}</p>
-              <div className="pt-2 border-t border-border/50">
-                <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.gba.eligible")}</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* 粵港澳青年創業計劃 */}
-          <Card className="border-secondary/30 hover:border-secondary/60 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary to-secondary/50" />
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-medium px-2 py-1 bg-secondary/10 text-secondary rounded-full">{t("fund.youth.tag")}</span>
-              </div>
-              <CardTitle className="text-lg leading-tight">{t("fund.youth.name")}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="space-y-1">
-                <p className="text-2xl font-bold text-secondary">{t("fund.youth.amount")}</p>
-                <p className="text-sm text-secondary font-medium">+ {t("fund.youth.bonus")}</p>
-              </div>
-              <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.youth.description")}</p>
-              <div className="pt-2 border-t border-border/50">
-                <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.youth.eligible")}</p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* 申請流程 + 文件清單 */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
-          {/* 申請流程 */}
-          <Card className="bg-card/50">
-            <CardHeader>
-              <CardTitle className="text-xl">{t("fund.process.title")}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">1</div>
-                  <div>
-                    <p className="font-semibold">{t("fund.process.step1.title")}</p>
-                    <p className="text-sm text-muted-foreground">{t("fund.process.step1.desc")}</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary/10 text-secondary flex items-center justify-center font-bold">2</div>
-                  <div>
-                    <p className="font-semibold">{t("fund.process.step2.title")}</p>
-                    <p className="text-sm text-muted-foreground">{t("fund.process.step2.desc")}</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-accent/10 text-accent flex items-center justify-center font-bold">3</div>
-                  <div>
-                    <p className="font-semibold">{t("fund.process.step3.title")}</p>
-                    <p className="text-sm text-muted-foreground">{t("fund.process.step3.desc")}</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">4</div>
-                  <div>
-                    <p className="font-semibold">{t("fund.process.step4.title")}</p>
-                    <p className="text-sm text-muted-foreground">{t("fund.process.step4.desc")}</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* 文件清單 */}
-          <Card className="bg-card/50">
-            <CardHeader>
-              <CardTitle className="text-xl">{t("fund.docs.title")}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2">
-                  <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">{t("fund.docs.business")}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">{t("fund.docs.reg")}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">{t("fund.docs.id")}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="h-5 w-5 text-secondary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">{t("fund.docs.financial")}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="h-5 w-5 text-secondary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">{t("fund.docs.tech")}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
-                  <span className="text-sm">{t("fund.docs.other")}</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center">
-          <Button size="lg" onClick={() => scrollToSection("contact")} className="gap-2 text-lg px-8">
-            {t("fund.cta.button")}
-            <ArrowRight className="h-5 w-5" />
-          </Button>
-          <p className="text-sm text-muted-foreground mt-3">{t("fund.cta.subtitle")}</p>
-        </div>
-      </section>
-
-      {/* AI Document Generator Section */}
-
-      {/* AI Generator Section - Free Experience */}
-      <section id="ai-generator" className="container py-20">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center space-y-4 mb-16"
-        >
-          <div className="inline-block px-4 py-2 bg-secondary/10 border border-secondary/30 rounded-full text-secondary text-sm font-medium mb-4">
-            <Sparkles className="inline h-4 w-4 mr-2" />
-            {language === "zh-HK" ? "免費體驗" : "免费体验"}
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold">
-            {language === "zh-HK" ? "AI 資助配對報告" : "AI 资助配对报告"}
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground mb-8">
             {language === "zh-HK"
-              ? "輸入你嘅背景資料，即時獲得個人化資助配對報告（PDF）。免費一次，email 換取。"
-              : "输入你的背景资料，即时获得个人化资助配对报告（PDF）。免费一次，email 换取。"}
+              ? "由免費評估開始，我哋陪你走每一步"
+              : "由免费评估开始，我们陪你走每一步"}
           </p>
-        </motion.div>
-
-        <div className="max-w-xl mx-auto">
-          <AIDocumentGenerator />
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="container py-20 bg-card/30 rounded-3xl my-20">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="max-w-2xl mx-auto"
-        >
-          <div className="text-center space-y-4 mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold">
-              {language === "zh-HK" ? "立即開始" : "立即开始"}
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              {language === "zh-HK" ? "填寫表單，我哋會儘快聯絡你" : "填写表单，我们会尽快联络你"}
-            </p>
-            <a
-              href="/free-assessment"
-              className="inline-flex items-center gap-1 text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
-            >
-              {language === "zh-HK"
-                ? "👉 免費 AI 評估：知道自己可以拎幾多補貼"
-                : "👉 免费 AI 评估：知道自己可以领多少补贴"}
-              <ArrowRight className="h-4 w-4" />
-            </a>
-          </div>
-
-          <form onSubmit={handleConsultationSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="name">{t("contact.form.name")}</Label>
-              <Input
-                id="name"
-                required
-                placeholder={t("contact.form.name.placeholder")}
-                value={consultationForm.name}
-                onChange={(e) => setConsultationForm({ ...consultationForm, name: e.target.value })}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="contact">{t("contact.form.contact")}</Label>
-              <Input
-                id="contact"
-                required
-                placeholder={t("contact.form.contact.placeholder")}
-                value={consultationForm.contact}
-                onChange={(e) => setConsultationForm({ ...consultationForm, contact: e.target.value })}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email">{t("contact.form.email")}</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder={t("contact.form.email.placeholder")}
-                value={consultationForm.email}
-                onChange={(e) => setConsultationForm({ ...consultationForm, email: e.target.value })}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="needs">{t("contact.form.needs")}</Label>
-              <Textarea
-                id="needs"
-                required
-                rows={5}
-                placeholder={t("contact.form.needs.placeholder")}
-                value={consultationForm.needs}
-                onChange={(e) => setConsultationForm({ ...consultationForm, needs: e.target.value })}
-              />
-            </div>
-
-            <Button type="submit" className="w-full text-lg py-6" disabled={submitConsultation.isPending}>
-              {submitConsultation.isPending ? t("contact.form.submitting") : t("contact.form.submit")}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" asChild className="gap-2 text-base px-8">
+              <a href="/free-assessment">
+                <Sparkles className="h-5 w-5" />
+                {language === "zh-HK" ? "免費評估補貼資格" : "免费评估补贴资格"}
+              </a>
             </Button>
-          </form>
-        </motion.div>
+            <Button size="lg" variant="outline" asChild className="gap-2 text-base px-8">
+              <a href="https://wa.me/85291444340" target="_blank" rel="noopener noreferrer">
+                {language === "zh-HK" ? "WhatsApp 傾傾" : "WhatsApp 倾倾"}
+              </a>
+            </Button>
+          </div>
+        </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border mt-20">
-        <div className="container py-12">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="space-y-4">
-              <a href="/" className="flex items-center gap-2">
-                <Rocket className="h-6 w-6 text-primary" />
-                <span className="text-xl font-bold">Core Machine</span>
+      <footer className="border-t py-8">
+        <div className="container">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Rocket className="h-5 w-5 text-primary" />
+              <span className="font-semibold text-foreground">Core Machine</span>
+            </div>
+            <div className="flex flex-wrap justify-center gap-6">
+              <a href="/subsidies" className="hover:text-primary transition-colors">
+                {language === "zh-HK" ? "資助一覽" : "资助一览"}
               </a>
-              <p className="text-sm text-muted-foreground">
-                {language === "zh-HK"
-                  ? "港澳青年前海創業 AI 加速器"
-                  : "港澳青年前海创业 AI 加速器"}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {language === "zh-HK"
-                  ? "用 AI 驗證每一個資助申請的可能"
-                  : "用 AI 验证每一个资助申请的可能"}
-              </p>
+              <a href="/policy" className="hover:text-primary transition-colors">
+                {language === "zh-HK" ? "政策資訊" : "政策资讯"}
+              </a>
+              <a href="/free-assessment" className="hover:text-primary transition-colors">
+                {language === "zh-HK" ? "免費評估" : "免费评估"}
+              </a>
             </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold">{t("footer.services.title")}</h3>
-              <div className="space-y-2 text-sm text-muted-foreground">
-                <p><a href="/pricing" className="hover:text-primary">{t("footer.pricing")}</a></p>
-                <p><a href="/#subsidy" className="hover:text-primary">{t("footer.services.subsidy")}</a></p>
-                <p><a href="/#ai-generator" className="hover:text-primary">{t("footer.services.ai")}</a></p>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold">{t("footer.resources.title")}</h3>
-              <div className="space-y-2 text-sm text-muted-foreground">
-                <p><a href="/#subsidy" className="hover:text-primary">{t("footer.resources.templates")}</a></p>
-                <p><a href="/#contact" className="hover:text-primary">{t("footer.faq")}</a></p>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold">{t("footer.about")}</h3>
-              <div className="space-y-2 text-sm text-muted-foreground">
-                <p><a href="/#mission" className="hover:text-primary">{language === "zh-HK" ? "我哋嘅使命" : "我们的使命"}</a></p>
-                <p><a href="/#contact" className="hover:text-primary">{t("nav.contact")}</a></p>
-                <p>{t("footer.contact.email")}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
-            <p>© 2026 Core Machine Limited. {language === "zh-HK" ? "版權所有。" : "版权所有。"} | <a href="/terms" className="hover:text-primary">{t("footer.terms")}</a> | <a href="/privacy" className="hover:text-primary">{t("footer.privacy")}</a></p>
+            <p>© 2025 Core Machine</p>
           </div>
         </div>
       </footer>

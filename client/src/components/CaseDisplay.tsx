@@ -61,7 +61,7 @@ export default function CaseDisplay({ cases: manualCases, compact = false }: Cas
       industry: "創意",
       city: "前海",
       evaluationScore: 68,
-      status: "已提交",
+      status: "評估完成",
       websiteCase: {
         headline: language === "zh-HK"
           ? "第一次申請補貼，Core Machine 全程幫我搞掂"
