@@ -1,4 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import NavBar from "@/components/NavBar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,29 +9,39 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Link } from "wouter";
+import StripeCheckoutButton from "@/components/StripeCheckoutButton";
 
 export default function Pricing() {
   const { language, t } = useLanguage();
-  const [email, setEmail] = useState("");
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const [freeEmail, setFreeEmail] = useState(""); // Free AI card email
+  const [starterEmail, setStarterEmail] = useState("");
+  const [showStarterCheckout, setShowStarterCheckout] = useState(false);
 
   const handleAI体验 = () => {
-    if (!email) {
+    if (!freeEmail) {
       toast.error(language === "zh-HK" ? "請輸入 email" : "请输入 email");
       return;
     }
-    toast.success(language === "zh-HK" ? "報告將發送至你的 email！" : "报告将发送至你的 email！");
-    scrollToSection("ai-generator");
+    // 直接跳轉到首頁的 AI 生成器試用
+    window.location.href = "/#ai-generator";
+  };
+
+  const handleStarterCheckout = () => {
+    if (!starterEmail) {
+      toast.error(language === "zh-HK" ? "請輸入你的 email" : "请输入你的 email");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(starterEmail)) {
+      toast.error(language === "zh-HK" ? "請輸入有效的 email 地址" : "请输入有效的 email 地址");
+      return;
+    }
+    setShowStarterCheckout(true);
   };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <NavBar />
+
       {/* Hero Section */}
       <section className="container py-20 md:py-32">
         <motion.div
@@ -97,9 +108,6 @@ export default function Pricing() {
             transition={{ delay: 0.2 }}
           >
             <Card className="h-full border-2 border-secondary hover:border-secondary/70 transition-all duration-300 relative">
-              <div className="absolute top-4 right-4 bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-xs font-bold">
-                {language === "zh-HK" ? "email 換" : "email 换"}
-              </div>
               <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                   <Zap className="h-5 w-5 text-secondary" />
@@ -120,8 +128,8 @@ export default function Pricing() {
                     id="ai-email"
                     type="email"
                     placeholder="your@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={freeEmail}
+                    onChange={(e) => setFreeEmail(e.target.value)}
                   />
                 </div>
                 <Button
@@ -168,13 +176,44 @@ export default function Pricing() {
                     </div>
                   ))}
                 </div>
-                <Button
-                  className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground"
-                  onClick={() => scrollToSection("ai-generator")}
-                >
-                  {t("pricing.starter.cta")}
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
+                {!showStarterCheckout ? (
+                  <div className="space-y-3">
+                    <Input
+                      type="email"
+                      placeholder={language === "zh-HK" ? "你的 email 地址" : "你的 email 地址"}
+                      value={starterEmail}
+                      onChange={(e) => setStarterEmail(e.target.value)}
+                    />
+                    <Button
+                      className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
+                      onClick={handleStarterCheckout}
+                    >
+                      {t("pricing.starter.cta")}
+                      <ArrowRight className="h-4 w-4 ml-2" />
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <p className="text-xs text-muted-foreground text-center">
+                      {language === "zh-HK"
+                        ? `將為 ${starterEmail} 開通 Starter`
+                        : `将为 ${starterEmail} 开通 Starter`}
+                    </p>
+                    <StripeCheckoutButton
+                      planKey="starter"
+                      price="HK$38/月"
+                      email={starterEmail}
+                      className="bg-accent hover:bg-accent/90"
+                    />
+                    <Button
+                      variant="ghost"
+                      className="w-full text-xs"
+                      onClick={() => setShowStarterCheckout(false)}
+                    >
+                      {language === "zh-HK" ? "更改 email" : "更改 email"}
+                    </Button>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </motion.div>
@@ -219,25 +258,59 @@ export default function Pricing() {
                 </div>
                 <Button
                   className="w-full mt-6"
-                  onClick={() => scrollToSection("contact")}
+                  asChild
                 >
-                  {t("pricing.pro.cta")}
-                  <ArrowRight className="h-4 w-4 ml-2" />
+                  <a href="/#contact">
+                    {t("pricing.pro.cta")}
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </a>
                 </Button>
               </CardContent>
             </Card>
           </motion.div>
         </div>
 
-        {/* Enterprise - 隱藏式引導 */}
-        <div className="max-w-2xl mx-auto mt-12 text-center">
-          <p className="text-muted-foreground mb-4">
-            {language === "zh-HK" ? "需要企業級方案？" : "需要企业级方案？"}
+        {/* Enterprise - 獨立突出區塊 */}
+        <div className="max-w-2xl mx-auto mt-16">
+          <div className="bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/10 border border-primary/30 rounded-2xl p-8 text-center">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/20 mb-4">
+              <Building2 className="w-7 h-7 text-primary" />
+            </div>
+            <h3 className="text-xl font-bold mb-2">
+              {language === "zh-HK" ? "企業方案" : "企业方案"}
+            </h3>
+            <p className="text-sm text-muted-foreground mb-6 max-w-md mx-auto">
+              {language === "zh-HK"
+                ? "公司註冊 + OPC 秘书 + 全程代辦補貼申請 + 无限次 AI 文件生成。適合認真做大灣區業務的創業者。"
+                : "公司注册 + OPC 秘书 + 全程代办补贴申请 + 无限次 AI 文件生成。适合认真做大湾区业务的创业者。"}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button asChild className="bg-primary hover:bg-primary/90">
+                <a href="/#contact">
+                  <Building2 className="h-4 w-4 mr-2" />
+                  {t("pricing.enterprise.cta")}
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </a>
+              </Button>
+              <Button variant="outline" asChild>
+                <a href="/free-assessment">
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  {language === "zh-HK" ? "先做免費評估" : "先做免费评估"}
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Urgency Banner */}
+      <section className="container pb-8">
+        <div className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-xl p-4 text-center max-w-2xl mx-auto">
+          <p className="text-sm text-orange-400">
+            {language === "zh-HK"
+              ? "⏰ 前海補貼名額有限，申請資格審批需時 2-6 個月 — 越早申請，越早有結果"
+              : "⏰ 前海补贴名额有限，申请资格审批需时 2-6 个月 — 越早申请，越早有结果"}
           </p>
-          <Button variant="link" onClick={() => scrollToSection("contact")}>
-            <Users className="h-4 w-4 mr-2" />
-            {t("pricing.enterprise.cta")} →
-          </Button>
         </div>
       </section>
 
@@ -269,6 +342,25 @@ export default function Pricing() {
               <p className="text-sm text-muted-foreground">{t("pricing.faq.a3")}</p>
             </CardContent>
           </Card>
+        </div>
+      </section>
+
+      {/* Subscription Management */}
+      <section className="container py-8">
+        <div className="text-center text-sm text-muted-foreground">
+          <p className="mb-2">
+            {language === "zh-HK"
+              ? "已經訂閱？想管理或取消你的訂閱"
+              : "已经订阅？想管理或取消你的订阅"}
+          </p>
+          <a
+            href="mailto:iocoremachine@gmail.com?subject=訂閱管理查詢"
+            className="text-primary hover:underline"
+          >
+            {language === "zh-HK"
+              ? "📧 聯絡我們處理訂閱"
+              : "📧 联络我们处理订阅"}
+          </a>
         </div>
       </section>
     </div>

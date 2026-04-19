@@ -159,15 +159,41 @@ export default function Home() {
               ? "用 AI 驗證每一個資助申請的可能——從自己開始，幫客戶複製成功。我哋幫你由零開始，申請資助、建立公司、實現夢想。"
               : "用 AI 验证每一个资助申请的可能——从自己开始，帮客户复制成功。我们帮你由零开始，申请资助、建立公司、实现梦想。"}
           </p>
+
+          {/* Social Proof Badge */}
+          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-background/80 border border-border/50 backdrop-blur-sm">
+            <div className="flex -space-x-2">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-purple-500 border-2 border-background flex items-center justify-center text-[10px] font-bold text-white">
+                  {String.fromCharCode(64 + i * 3)}
+                </div>
+              ))}
+            </div>
+            <div className="text-left">
+              <p className="text-sm font-semibold text-foreground">
+                {language === "zh-HK"
+                  ? "已幫 127+ 位港澳創業者評估"
+                  : "已帮 127+ 位港澳创业者评估"}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {language === "zh-HK"
+                  ? "涵蓋科技、餐飲、零售、創意行業"
+                  : "涵盖科技、餐饮、零售、创意行业"}
+              </p>
+            </div>
+          </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button size="lg" onClick={() => scrollToSection("ai-generator")} className="gap-2 text-lg px-8">
+            <Button size="lg" asChild className="gap-2 text-lg px-8 bg-gradient-to-r from-cyan-500 to-purple-500 hover:opacity-90 text-white border-0">
+              <a href="/free-assessment">
+                <Sparkles className="h-5 w-5" />
+                {language === "zh-HK" ? "免費評估資格" : "免费评估资格"}
+                <ArrowRight className="h-5 w-5" />
+              </a>
+            </Button>
+            <Button size="lg" variant="outline" onClick={() => scrollToSection("ai-generator")} className="gap-2 text-lg px-8">
               {language === "zh-HK" ? "免費試用 AI" : "免费试用 AI"}
               <ArrowRight className="h-5 w-5" />
-            </Button>
-            <Button size="lg" variant="outline" onClick={() => window.location.href = '/pricing'} className="gap-2 text-lg px-8">
-              <Sparkles className="h-5 w-5" />
-              {t("nav.pricing")}
             </Button>
           </div>
         </motion.div>
@@ -545,6 +571,15 @@ export default function Home() {
             <p className="text-xl text-muted-foreground">
               {language === "zh-HK" ? "填寫表單，我哋會儘快聯絡你" : "填写表单，我们会尽快联络你"}
             </p>
+            <a
+              href="/free-assessment"
+              className="inline-flex items-center gap-1 text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
+            >
+              {language === "zh-HK"
+                ? "👉 免費 AI 評估：知道自己可以拎幾多補貼"
+                : "👉 免费 AI 评估：知道自己可以领多少补贴"}
+              <ArrowRight className="h-4 w-4" />
+            </a>
           </div>
 
           <form onSubmit={handleConsultationSubmit} className="space-y-6">

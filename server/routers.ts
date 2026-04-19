@@ -4,10 +4,11 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { createConsultation, trackTemplateDownload } from "./db";
+import { createConsultation, trackTemplateDownload, getCredits, deductCredit, canUseAI } from "./db";
 import { sendConsultationEmail, sendAIGenerationEmail } from "./_core/email";
 import { invokeMiniMaxLLM } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
+import { stripeRouter } from "./_core/stripe";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -86,6 +87,7 @@ export const appRouter = router({
       .input(z.object({
         documentType: z.enum(["subsidy_application", "personal_statement"]),
         language: z.enum(["zh-HK", "zh-CN"]),
+        email: z.string().email().optional(), // 用於識別會員，扣減 credits
         userInfo: z.object({
           name: z.string().min(1, "請輸入姓名"),
           age: z.number().optional(),
@@ -98,6 +100,30 @@ export const appRouter = router({
         }),
       }))
       .mutation(async ({ input }) => {
+        // 如果提供了 email，檢查並扣減 credits
+        let remainingCredits = null;
+        if (input.email) {
+          const openId = `email:${input.email}`;
+          const { allowed, reason } = await canUseAI(openId);
+          if (!allowed) {
+            throw new TRPCError({
+              code: "FORBIDDEN",
+              message: reason || "您的配額已用完，請升級至 Pro",
+            });
+          }
+          // 扣減 1 credit（非 Pro 會員才需要）
+          const { success, remaining } = await deductCredit(openId);
+          if (!success) {
+            throw new TRPCError({
+              code: "FORBIDDEN",
+              message: input.language === "zh-HK"
+                ? "您的配額已用完，請升級至 Pro"
+                : "您的配额已用完，请升级至 Pro",
+            });
+          }
+          remainingCredits = remaining;
+        }
+
         try {
           // 根據文件類型準備 LLM prompt
           let systemPrompt = "";
@@ -163,7 +189,7 @@ export const appRouter = router({
             const langLabel = input.language === "zh-HK" ? "繁體中文" : "简体中文";
             await notifyOwner({
               title: "🤖 AI 文件生成請求",
-              content: `姓名：${input.userInfo.name}\n文件類型：${docLabel}\n語言：${langLabel}\n創業理念：${input.userInfo.businessIdea || "未提供"}\n時間：${new Date().toLocaleString("zh-HK")}`,
+              content: `姓名：${input.userInfo.name}\n文件類型：${docLabel}\n語言：${langLabel}\n創業理念：${input.userInfo.businessIdea || "未提供"}\n${remainingCredits !== null ? `剩餘配額：${remainingCredits}` : "訪客使用（無限）"}\n時間：${new Date().toLocaleString("zh-HK")}`,
             });
           } catch (notifyError) {
             console.warn("[Notify] Failed to send Telegram notification:", notifyError);
@@ -173,6 +199,7 @@ export const appRouter = router({
             success: true,
             content: generatedContent,
             filename: `${input.documentType}_${input.language}_${Date.now()}.md`,
+            remainingCredits,
           };
         } catch (error) {
           console.error("AI document generation error:", error);
@@ -229,6 +256,131 @@ export const appRouter = router({
           throw new TRPCError({
             code: "INTERNAL_SERVER_ERROR",
             message: "下載失敗，請稍後再試",
+          });
+        }
+      }),
+  }),
+
+  // Stripe 付款
+  stripe: stripeRouter,
+
+  // Credits & Subscription 查詢（用 email 識別）
+  member: router({
+    // 查詢餘額（用 email 作為識別）
+    getCredits: publicProcedure
+      .input(z.object({
+        email: z.string().email(),
+      }))
+      .query(async ({ input }) => {
+        const openId = `email:${input.email}`;
+        const credits = await getCredits(openId);
+        const subscription = await canUseAI(openId);
+        return {
+          credits,
+          hasUnlimited: subscription.allowed && credits === 0,
+        };
+      }),
+
+    // 前海補貼資格 AI 評估（Lead Magnet）
+    evaluateSubsidyEligibility: publicProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        email: z.string().email(),
+        businessType: z.enum(["technology", "retail", "catering", "creative", "professional", "other"]),
+        yearsInBusiness: z.enum(["0", "1-3", "3-5", "5+"]).optional(),
+        hasHKID: z.boolean(),
+        city: z.enum(["前海", "南沙", "橫琴", "未決定"]).optional(),
+        additionalInfo: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const isHK = true;
+
+        // 用 MiniMax 分析資格
+        const systemPrompt = `你係一位專業嘅粵港澳大灣區創業補貼顧問。你的任務係根據用戶提供嘅資料，快速評估佢哋嘅補貼資格同埋可以拎到嘅最高補貼金額。
+
+請用繁體中文回答（如果用戶用粵語，你都要用粵語），分析要專業但易明。`;
+
+        const userPrompt = isHK
+          ? `請評估以下創業人士嘅補貼資格：
+
+姓名：${input.name}
+行業：${input.businessType}
+創業經驗：${input.yearsInBusiness || "未提供"}
+持有港澳身份證：${input.hasHKID ? "係" : "否"}
+目標城市：${input.city || "未決定"}
+補充資料：${input.additionalInfo || "無"}
+
+請提供：
+1. 資格評分（0-100），並解釋原因
+2. 是否符合基本資格（係 / 否 / 有機會）
+3. 預計最高補貼金額（HKD）
+4. 為呢個人做一個 3-5 句嘅分析
+5. 下一步建議（3 項）
+
+請用 JSON 格式回覆：
+{
+  "score": 數字,
+  "eligible": true/false/"有機會",
+  "maxSubsidy": "HK$xx萬",
+  "analysis": "分析文字",
+  "recommendations": ["建議1", "建議2", "建議3"]
+}`
+          : `请评估以下创业人士嘅补贴资格...`; // zh-CN version
+
+        try {
+          const response = await invokeMiniMaxLLM({
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: userPrompt },
+            ],
+          });
+
+          const baseResp = (response as any).base_resp;
+          if (baseResp?.status_code !== 0 && baseResp?.status_code !== 200) {
+            throw new Error("AI 評估服務暫時不可用，請稍後再試");
+          }
+
+          const content = response.choices?.[0]?.message?.content || "";
+
+          // 嘗試解析 JSON
+          let parsed;
+          try {
+            // 移除 markdown 代碼塊
+            const jsonStr = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+            parsed = JSON.parse(jsonStr);
+          } catch {
+            // 如果解析失敗，返回基本結果
+            parsed = {
+              score: 50,
+              eligible: "有機會",
+              maxSubsidy: "待評估",
+              analysis: content.substring(0, 300),
+              recommendations: ["請聯絡我們获取詳細評估"],
+            };
+          }
+
+          // 通知 Johnny 有新 lead
+          try {
+            await notifyOwner({
+              title: "📋 新免費評估申請",
+              content: `姓名：${input.name}\nEmail：${input.email}\n行業：${input.businessType}\n城市：${input.city || "未決定"}\n時間：${new Date().toLocaleString("zh-HK")}`,
+            });
+          } catch (notifyError) {
+            console.warn("[Notify] Failed to send Telegram notification:", notifyError);
+          }
+
+          return {
+            score: parsed.score ?? 50,
+            eligible: parsed.eligible === true,
+            maxSubsidy: parsed.maxSubsidy ?? "待評估",
+            analysis: parsed.analysis ?? "",
+            recommendations: parsed.recommendations ?? [],
+          };
+        } catch (error: any) {
+          console.error("[AI Evaluation] Error:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: error?.message || (isHK ? "評估失敗，請稍後再試" : "评估失败，请稍后再试"),
           });
         }
       }),

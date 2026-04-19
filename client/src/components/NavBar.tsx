@@ -48,6 +48,9 @@ export default function NavBar({ transparent = false }: NavBarProps) {
           <a href="/free-resources" className="text-sm hover:text-primary transition-colors">
             {t("nav.freeResources")}
           </a>
+          <a href="/free-assessment" className="text-sm hover:text-primary transition-colors text-cyan-400">
+            {language === "zh-HK" ? "免費評估" : "免费评估"}
+          </a>
           <a href="/pricing" className="text-sm hover:text-primary transition-colors">
             {t("nav.pricing")}
           </a>

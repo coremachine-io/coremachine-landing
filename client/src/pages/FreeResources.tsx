@@ -125,8 +125,8 @@ export default function FreeResources() {
               回答幾條簡單問題，立即知道邊個資助啱你
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" onClick={() => document.getElementById("eligibility-checker")?.scrollIntoView({ behavior: "smooth" })}>
-                立即評估資格
+              <Button size="lg" asChild>
+                <Link to="/free-assessment">立即評估資格</Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
                 <Link to="/#ai-generator">試用 AI 生成文件</Link>

@@ -49,7 +49,7 @@ const questions: Question[] = [
     ],
   },
   {
-    id: " residency",
+    id: "residency",
     question: "你嘅居民身份係？",
     options: [
       { label: "香港永久居民", matches: ["opc", "cyberport", "hkstp", "itf", "kunpeng", "gba", "youth", "smartcoupon"] },

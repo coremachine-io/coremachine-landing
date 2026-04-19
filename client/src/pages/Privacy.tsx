@@ -1,6 +1,6 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import NavBar from "@/components/NavBar";
 import { Card, CardContent } from "@/components/ui/card";
-import { Rocket, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Privacy() {
@@ -9,19 +9,7 @@ export default function Privacy() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
-        <div className="container flex items-center justify-between py-4">
-          <Link href="/" className="flex items-center gap-2">
-            <Rocket className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold neon-text">Core Machine</span>
-          </Link>
-          <Link href="/" className="flex items-center gap-2 text-sm hover:text-primary transition-colors">
-            <ArrowLeft className="h-4 w-4" />
-            {isHK ? "返回首頁" : "返回首页"}
-          </Link>
-        </div>
-      </nav>
+      <NavBar />
 
       {/* Content */}
       <section className="container py-20 md:py-32">

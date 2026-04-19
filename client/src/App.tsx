@@ -10,6 +10,9 @@ import Pricing from "@/components/Pricing";
 import Terms from "@/pages/Terms";
 import Privacy from "@/pages/Privacy";
 import FreeResources from "@/pages/FreeResources";
+import PaymentSuccess from "@/pages/PaymentSuccess";
+import PaymentCancel from "@/pages/PaymentCancel";
+import FreeAssessment from "@/pages/FreeAssessment";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -20,6 +23,9 @@ function Router() {
       <Route path="/terms" component={Terms} />
       <Route path="/privacy" component={Privacy} />
       <Route path="/free-resources" component={FreeResources} />
+      <Route path="/payment-success" component={PaymentSuccess} />
+      <Route path="/payment-cancel" component={PaymentCancel} />
+      <Route path="/free-assessment" component={FreeAssessment} />
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

@@ -1,0 +1,41 @@
+{
+  "version": "5",
+  "id": "0002_starter_subscriptions",
+  "prevId": "0001_cute_chat",
+  "hash": "starter_subscriptions_v1",
+  "tables": {
+    "subscriptions": {
+      "name": "subscriptions",
+      "columns": {
+        "id": { "name": "id", "type": "int", "primaryKey": true, "autoincrement": true },
+        "openId": { "name": "openId", "type": "varchar(64)", "primaryKey": false, "autoincrement": false },
+        "plan": { "name": "plan", "type": "enum('starter','starter_yearly','pro','pro_monthly')", "primaryKey": false, "autoincrement": false },
+        "stripeSubscriptionId": { "name": "stripeSubscriptionId", "type": "varchar(255)", "primaryKey": false, "autoincrement": false },
+        "stripeCustomerId": { "name": "stripeCustomerId", "type": "varchar(255)", "primaryKey": false, "autoincrement": false },
+        "status": { "name": "status", "type": "enum('active','cancelled','expired','past_due')", "primaryKey": false, "autoincrement": false },
+        "currentPeriodStart": { "name": "currentPeriodStart", "type": "timestamp", "primaryKey": false, "autoincrement": false },
+        "currentPeriodEnd": { "name": "currentPeriodEnd", "type": "timestamp", "primaryKey": false, "autoincrement": false },
+        "createdAt": { "name": "createdAt", "type": "timestamp", "primaryKey": false, "autoincrement": false },
+        "updatedAt": { "name": "updatedAt", "type": "timestamp", "primaryKey": false, "autoincrement": false }
+      },
+      "indexes": {
+        "idx_subscriptions_openId": { "name": "idx_subscriptions_openId", "columns": ["openId"] },
+        "idx_subscriptions_stripeCustomerId": { "name": "idx_subscriptions_stripeCustomerId", "columns": ["stripeCustomerId"] }
+      }
+    },
+    "userCredits": {
+      "name": "userCredits",
+      "columns": {
+        "id": { "name": "id", "type": "int", "primaryKey": true, "autoincrement": true },
+        "openId": { "name": "openId", "type": "varchar(64)", "primaryKey": false, "autoincrement": false },
+        "balance": { "name": "balance", "type": "int", "primaryKey": false, "autoincrement": false },
+        "totalUsed": { "name": "totalUsed", "type": "int", "primaryKey": false, "autoincrement": false },
+        "createdAt": { "name": "createdAt", "type": "timestamp", "primaryKey": false, "autoincrement": false },
+        "updatedAt": { "name": "updatedAt", "type": "timestamp", "primaryKey": false, "autoincrement": false }
+      },
+      "indexes": {
+        "idx_userCredits_openId": { "name": "idx_userCredits_openId", "columns": ["openId"], "isUnique": true }
+      }
+    }
+  }
+}

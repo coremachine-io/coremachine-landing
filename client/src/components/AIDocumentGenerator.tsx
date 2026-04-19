@@ -13,6 +13,7 @@ import { toast } from "sonner";
 export default function AIDocumentGenerator() {
   const { language, t } = useLanguage();
   const [documentType, setDocumentType] = useState<"subsidy_application" | "personal_statement">("subsidy_application");
+  const [email, setEmail] = useState(""); // 會員 email，用於扣減 credits
   const [formData, setFormData] = useState({
     name: "",
     age: "",
@@ -45,6 +46,7 @@ export default function AIDocumentGenerator() {
       const result = await generateMutation.mutateAsync({
         documentType,
         language: language as "zh-HK" | "zh-CN",
+        email: email || undefined, // 如果提供了 email，會扣減 credits
         userInfo: {
           name: formData.name,
           age: formData.age ? parseInt(formData.age) : undefined,
@@ -60,10 +62,21 @@ export default function AIDocumentGenerator() {
       if (result.success) {
         const content = typeof result.content === 'string' ? result.content : JSON.stringify(result.content);
         setGeneratedContent(content);
-        toast.success(t("ai.success"));
+        
+        // 顯示剩餘配額（如果有）
+        if (result.remainingCredits !== null && result.remainingCredits !== undefined) {
+          toast.success(
+            language === "zh-HK"
+              ? `生成成功！剩餘配額：${result.remainingCredits} 次`
+              : `生成成功！剩余配额：${result.remainingCredits} 次`
+          );
+        } else {
+          toast.success(t("ai.success"));
+        }
       }
-    } catch (error) {
-      toast.error(language === "zh-HK" ? "生成失敗，請稍後再試" : "生成失败，请稍后再试");
+    } catch (error: any) {
+      const message = error?.message || (language === "zh-HK" ? "生成失敗，請稍後再試" : "生成失败，请稍后再试");
+      toast.error(message);
     }
   };
 
@@ -128,6 +141,23 @@ export default function AIDocumentGenerator() {
                       </SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+
+                {/* Email — for member credit tracking */}
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    {language === "zh-HK" ? "你的 email（已訂閱會員）" : "你的 email（已订阅会员）"}
+                    <span className="text-xs text-muted-foreground ml-2">
+                      {language === "zh-HK" ? "可選" : "可选"}
+                    </span>
+                  </label>
+                  <Input
+                    type="email"
+                    placeholder={language === "zh-HK" ? "已訂閱的話填寫，會扣 credit" : "已订阅的话填写，会扣 credit"}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="bg-background border-border"
+                  />
                 </div>
 
                 {/* Name */}

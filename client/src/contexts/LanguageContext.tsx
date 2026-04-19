@@ -324,6 +324,12 @@ const translations: Record<Language, Record<string, string>> = {
     "success.title": "成功案例",
     "success.subtitle": "我哋正準備發佈我哋嘅第一個成功案例",
     "success.cta": "成為我哋嘅第一個 Pro 客戶",
+
+    // Stripe / Payment
+    "stripe.pay": "立即付款",
+    "stripe.processing": "連接 Stripe...",
+    "stripe.error": "啟動付款失敗，請稍後再試",
+    "stripe.notConfigured": "Stripe 尚未配置，請聯絡我們",
   },
 
   "zh-CN": {
@@ -640,6 +646,12 @@ const translations: Record<Language, Record<string, string>> = {
     "success.title": "成功案例",
     "success.subtitle": "我们正准备发布我们的第一个成功案例",
     "success.cta": "成为我们的第一个 Pro 客户",
+
+    // Stripe / Payment
+    "stripe.pay": "立即付款",
+    "stripe.processing": "连接 Stripe...",
+    "stripe.error": "启动付款失败，请稍后再试",
+    "stripe.notConfigured": "Stripe 尚未配置，请联络我们",
   },
 };
 

@@ -14,4 +14,8 @@ export const ENV = {
   notificationEmailFrom: process.env.NOTIFICATION_EMAIL_FROM ?? "",
   telegramBotToken: process.env.TELEGRAM_BOT_TOKEN ?? "",
   telegramChatId: process.env.TELEGRAM_CHAT_ID ?? "",
+  // Stripe
+  stripePublicKey: process.env.STRIPE_PUBLIC_KEY ?? "",
+  stripeSecretKey: process.env.STRIPE_SECRET_KEY ?? "",
+  stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET ?? "",
 };

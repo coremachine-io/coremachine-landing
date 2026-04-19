@@ -206,6 +206,82 @@ export async function sendAIGenerationEmail(params: {
   });
 }
 
+/**
+ * Sends a welcome email to a new paid customer.
+ */
+export async function sendWelcomeEmail({
+  email,
+  planName,
+  credits,
+}: {
+  email: string;
+  planName: string;
+  credits: number;
+}): Promise<boolean> {
+  if (!email) return false;
+
+  const isHK = true; // Default to HK
+  const subject = isHK
+    ? `✅ 歡迎加入 Core Machine — 你的 ${planName} 已啟動`
+    : `✅ 欢迎加入 Core Machine — 你的 ${planName} 已启动`;
+
+  const creditsText = credits > 0
+    ? `<p style="color: #10b981; font-size: 18px; font-weight: bold;">${isHK ? "已發放" : "已发放"} ${credits} ${isHK ? "次 AI 生成配額" : "次 AI 生成配额"}</p>
+       <p>${isHK ? "登入後即可使用，剩餘次數會自動顯示。" : "登录后即可使用，剩余次数会自动显示。"}</p>`
+    : `<p style="color: #6366f1; font-size: 18px; font-weight: bold;">${isHK ? "Pro 會員已啟動 — 無限次 AI 生成" : "Pro 会员已启动 — 无限次 AI 生成"}</p>`;
+
+  const html = `
+<!DOCTYPE html>
+<html lang="${isHK ? "zh-HK" : "zh-CN"}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${subject}</title>
+</head>
+<body style="margin: 0; padding: 0; background: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+  <div class="container" style="max-width: 600px; margin: 40px auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
+    <div class="header" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); padding: 40px; text-align: center;">
+      <h1 style="color: #ffffff; margin: 0; font-size: 28px;">
+        🎉 ${isHK ? "感謝你的信任！" : "感谢你的信任！"}
+      </h1>
+    </div>
+    <div class="body" style="padding: 40px;">
+      <p style="font-size: 16px; color: #374151; line-height: 1.6;">
+        ${isHK ? "你好，感謝你訂閱 Core Machine" : "你好，感谢你订阅 Core Machine"} <strong>${planName}</strong>！
+      </p>
+
+      ${creditsText}
+
+      <div style="background: #f8fafc; border-radius: 12px; padding: 24px; margin: 24px 0;">
+        <h3 style="margin: 0 0 12px; color: #1f2937; font-size: 16px;">
+          ${isHK ? "你可以用 AI 做乜？" : "你可以用 AI 做什么？"}
+        </h3>
+        <ul style="margin: 0; padding-left: 20px; color: #6b7280; font-size: 14px; line-height: 2;">
+          <li>${isHK ? "生成專業補貼申請文件" : "生成专业补贴申请文件"}</li>
+          <li>${isHK ? "撰寫個人陳述（Personal Statement）" : "撰写个人陈述（Personal Statement）"}</li>
+          <li>${isHK ? "評估你的補貼資格" : "评估你的补贴资格"}</li>
+        </ul>
+      </div>
+
+      <p style="font-size: 14px; color: #9ca3af;">
+        ${isHK ? "如有問題，歡迎回覆此電郵或通過以下方式聯絡我們。" : "如有问题，欢迎回复此邮件或通过以下方式联系我们。"}
+      </p>
+    </div>
+    <div class="footer" style="padding: 20px 40px; background: #f8fafc; text-align: center; font-size: 12px; color: #9ca3af;">
+      Core Machine — ${isHK ? "前海創業補貼 AI 助手" : "前海创业补贴 AI 助手"}
+    </div>
+  </div>
+</body>
+</html>
+`;
+
+  return sendEmail({
+    to: email,
+    subject,
+    html,
+  });
+}
+
 function escapeHtml(text: string): string {
   return text
     .replace(/&/g, "&amp;")

@@ -59,3 +59,39 @@ export const templateDownloads = mysqlTable("templateDownloads", {
 
 export type TemplateDownload = typeof templateDownloads.$inferSelect;
 export type InsertTemplateDownload = typeof templateDownloads.$inferInsert;
+
+/**
+ * 用戶 subscriptions 表
+ * 記錄用戶訂閱狀態（Starter / Pro）
+ */
+export const subscriptions = mysqlTable("subscriptions", {
+  id: int("id").autoincrement().primaryKey(),
+  openId: varchar("openId", { length: 64 }).notNull(),
+  plan: mysqlEnum("plan", ["starter", "starter_yearly", "pro", "pro_monthly"]).notNull(),
+  stripeSubscriptionId: varchar("stripeSubscriptionId", { length: 255 }),
+  stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
+  status: mysqlEnum("status", ["active", "cancelled", "expired", "past_due"]).default("active").notNull(),
+  currentPeriodStart: timestamp("currentPeriodStart"),
+  currentPeriodEnd: timestamp("currentPeriodEnd"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Subscription = typeof subscriptions.$inferSelect;
+export type InsertSubscription = typeof subscriptions.$inferInsert;
+
+/**
+ * 用戶 credits 表
+ * 記錄 Starter 用戶剩餘 AI 生成次數
+ */
+export const userCredits = mysqlTable("userCredits", {
+  id: int("id").autoincrement().primaryKey(),
+  openId: varchar("openId", { length: 64 }).notNull().unique(),
+  balance: int("balance").notNull().default(0),
+  totalUsed: int("totalUsed").notNull().default(0),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type UserCredit = typeof userCredits.$inferSelect;
+export type InsertUserCredit = typeof userCredits.$inferInsert;
