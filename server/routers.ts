@@ -385,9 +385,11 @@ export const appRouter = router({
           });
         }
       }),
+  }),
 
-    // 成功案例生成（Case Agent）
-    generateCase: publicProcedure
+  // 成功案例生成（Case Agent）- 頂層 router
+  case: router({
+    generate: publicProcedure
       .input(z.object({
         style: z.enum(["xiaohongshu", "website", "both"]).default("both"),
         industry: z.string().optional(),
@@ -409,7 +411,7 @@ Core Machine 背景：
 1. 必須基於真實創業者模式（創業者背景 + 補貼資格評估結果）
 2. 所有個人資料必須完全匿名化
 3. 案例要有情感共鳴，同時包含具體數據
-4. 語言：繁體中文（香港/澳門口語风格）
+4. 語言：繁體中文（香港/澳門口語風格）
 5. 故事結構：背景 → 痛點 → 接觸 Core Machine → 評估結果 → 準備申請
 
 用 JSON 格式回覆：
@@ -458,7 +460,6 @@ Core Machine 背景：
 
           const content = response.choices?.[0]?.message?.content || "";
 
-          // 解析 JSON
           let parsed;
           try {
             const jsonStr = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
@@ -467,7 +468,6 @@ Core Machine 背景：
             throw new Error("案例格式解析失敗");
           }
 
-          // 返回符合風格要求的結果
           const result: any = {
             caseId: parsed.caseId || `case_${Date.now()}`,
             heroName: parsed.heroName || "匿名創業者",
@@ -499,7 +499,7 @@ Core Machine 背景：
           });
         }
       }),
-  },
+  }),
 });
 
 export type AppRouter = typeof appRouter;

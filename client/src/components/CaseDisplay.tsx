@@ -3,7 +3,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, Star, TrendingUp, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import { trpc } from "@/lib/trpc-client";
 
 interface CaseDisplayProps {
   cases?: Array<{
