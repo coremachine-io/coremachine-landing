@@ -8,10 +8,10 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { ENV } from "./env";
-import Stripe from "stripe";
 import { createOrUpdateSubscription, addCredits, getUserByOpenId, upsertUser } from "../db";
 import { sendWelcomeEmail } from "./email";
 import { notifyOwner } from "./notification";
+import { stripe } from "./stripe"; // Reuse graceful Stripe instance
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -195,7 +195,7 @@ async function registerStripeWebhook(app: express.Express) {
     return;
   }
 
-  const stripe = new Stripe(ENV.stripeSecretKey, { apiVersion: "2025-04-30.basil" });
+  // Use the shared graceful stripe instance from ./stripe
 
   app.post("/api/stripe/webhook", express.raw({ type: "application/json" }), async (req, res) => {
     const sig = req.headers["stripe-signature"] as string;

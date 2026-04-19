@@ -3,7 +3,9 @@ import { ENV } from "./env";
 import { router, publicProcedure } from "./trpc";
 import { z } from "zod";
 
-const stripe = new Stripe(ENV.stripeSecretKey ?? "sk_test_placeholder", {
+// Graceful Stripe initialization - works without keys, Stripe features disabled
+const stripeSecretKey = ENV.stripeSecretKey || "sk_test_placeholder";
+export const stripe = new Stripe(stripeSecretKey, {
   apiVersion: "2025-04-30.basil",
 });
 
