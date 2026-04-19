@@ -451,6 +451,32 @@ export default function Home() {
       {/* 服務流程 + 收費模式 Section */}
       <section id="service" className="container py-20">
         <ServiceProcess />
+
+        {/* Final CTA after service flow */}
+        <div className="text-center mt-12 pt-8 border-t">
+          <p className="text-lg text-muted-foreground mb-4">
+            {language === "zh-HK"
+              ? "準備好開始你嘅創業之旅？"
+              : "准备好开始你的创业之旅？"}
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a
+              href="/free-assessment"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors"
+            >
+              <Sparkles className="w-4 h-4" />
+              {language === "zh-HK" ? "免費評估補貼資格" : "免费评估补贴资格"}
+            </a>
+            <a
+              href="https://wa.me/85291444340"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-3 border border-primary text-primary font-semibold rounded-lg hover:bg-primary/10 transition-colors"
+            >
+              {language === "zh-HK" ? " WhatsApp 傾傾" : " WhatsApp 倾倾"}
+            </a>
+          </div>
+        </div>
       </section>
 
       {/* 中港創業資助一覽 Section */}

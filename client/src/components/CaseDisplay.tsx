@@ -25,13 +25,13 @@ interface CaseDisplayProps {
 export default function CaseDisplay({ cases: manualCases, compact = false }: CaseDisplayProps) {
   const { language, t } = useLanguage();
 
-  // 示範案例（等待真實案例積累）
+  // 示範案例（展示真實評估能力，逐步替換為真實案例）
   const demoCases = manualCases || [
     {
       heroName: "陳生",
       heroBackground: language === "zh-HK"
-        ? "香港IT人，40歲，想在深圳前海創業"
-        : "香港IT人，40岁，想在深圳前海创业",
+        ? "香港IT人，40歲，10年後端開發經驗，想在深圳搞 AI SaaS"
+        : "香港IT人，40岁，10年后端开发经验，想在深圳搞 AI SaaS",
       industry: "科技",
       city: "前海",
       evaluationScore: 72,
@@ -45,8 +45,8 @@ export default function CaseDisplay({ cases: manualCases, compact = false }: Cas
           : "香港IT创业者，评估后发现符合前海补贴资格，准备文件中",
         keyMetrics: [
           language === "zh-HK" ? "補貼評分：72分" : "补贴评分：72分",
-          language === "zh-HK" ? "目標補貼：HK$100萬+" : "目标补贴：HK$100万+",
-          language === "zh-HK" ? "使用服務：免費評估" : "使用服务：免费评估",
+          language === "zh-HK" ? "目標補貼：RMB 50萬+" : "目标补贴：RMB 50万+",
+          language === "zh-HK" ? "評估重點：前海OPC + 深圳AI算力補貼" : "评估重点：前海OPC + 深圳AI算力补贴",
         ],
         quote: language === "zh-HK"
           ? "估唔到免費評估已經咁詳細！"
@@ -56,8 +56,8 @@ export default function CaseDisplay({ cases: manualCases, compact = false }: Cas
     {
       heroName: "李小姐",
       heroBackground: language === "zh-HK"
-        ? "澳門設計師，35歲，首次創業"
-        : "澳门设计师，35岁，首次创业",
+        ? "澳門設計師，35歲，擅長品牌設計，想做中港澳文創品牌"
+        : "澳门设计师，35岁，擅长品牌设计，想做中港澳文创品牌",
       industry: "創意",
       city: "前海",
       evaluationScore: 68,
@@ -71,8 +71,8 @@ export default function CaseDisplay({ cases: manualCases, compact = false }: Cas
           : "澳门创业者，首次接触内地补贴，现已成功提交申请",
         keyMetrics: [
           language === "zh-HK" ? "補貼評分：68分" : "补贴评分：68分",
-          language === "zh-HK" ? "目標補貼：HK$50萬+" : "目标补贴：HK$50万+",
-          language === "zh-HK" ? "申請狀態：已提交" : "申请状态：已提交",
+          language === "zh-HK" ? "目標補貼：HK$30萬+" : "目标补贴：HK$30万+",
+          language === "zh-HK" ? "評估重點：大灣區青年創業基金" : "评估重点：大湾区青年创业基金",
         ],
         quote: language === "zh-HK"
           ? "自己搞唔知幾時先搞完，有佢幫手放心好多"

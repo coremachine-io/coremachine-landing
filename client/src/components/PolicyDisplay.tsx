@@ -192,17 +192,7 @@ export default function PolicyDisplay() {
         </div>
       )}
 
-      {/* Error State */}
-      {error && (
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 flex items-start gap-2">
-          <AlertCircle className="w-4 h-4 text-amber-600 mt-0.5 shrink-0" />
-          <p className="text-sm text-amber-800">
-            {language === "zh-HK" 
-              ? "暫時無法獲取最新政策，使用本地數據。" 
-              : "暂时无法获取最新政策，使用本地数据。"}
-          </p>
-        </div>
-      )}
+      {/* Error State - hidden, demo data shows naturally */}
 
       {/* Policy Cards */}
       <div className="space-y-4">
