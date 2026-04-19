@@ -9,7 +9,10 @@ import type { AppRouter } from "@/server/routers";
 export const trpc = createTRPCReact<AppRouter>();
 
 function getBaseUrl() {
-  if (typeof window !== "undefined") return "";
+  if (typeof window !== "undefined") {
+    // Vercel static: API calls go to Railway
+    return "https://coremachine.io";
+  }
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
   return `http://localhost:${process.env.PORT ?? 3000}`;
 }

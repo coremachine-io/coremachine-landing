@@ -32,7 +32,7 @@ export default function FreeAssessment() {
     recommendations: string[];
   } | null>(null);
 
-  const assessMutation = trpc.ai.evaluateSubsidyEligibility.useMutation();
+  const assessMutation = trpc.member.evaluateSubsidyEligibility.useMutation();
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
