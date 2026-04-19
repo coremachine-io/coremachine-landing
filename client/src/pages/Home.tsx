@@ -242,19 +242,149 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Success Story - 準備中 */}
-      <section className="container py-12">
-        <Card className="bg-gradient-to-r from-primary/10 to-secondary/10 border-2 border-primary/30">
-          <CardContent className="text-center py-12">
-            <Sparkles className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h3 className="text-2xl font-bold mb-2">{t("success.title")}</h3>
-            <p className="text-muted-foreground mb-6">{t("success.subtitle")}</p>
-            <Button onClick={() => scrollToSection("contact")} className="gap-2">
-              {t("success.cta")}
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </CardContent>
-        </Card>
+      {/* Our Journey Section - 取代舊 Success Story placeholder */}
+      <section className="container py-16">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center space-y-6 mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold">
+            {language === "zh-HK" ? "我哋自己行緊嘅路" : "我们自己正在走的路"}
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            {language === "zh-HK"
+              ? "每一步都透明公開——因為我哋深信：自己走過嘅路，先有資格帶你走。"
+              : "每一步都透明公开——因为我们深信：自己走过的路，才有资格带你走。"}
+          </p>
+        </motion.div>
+
+        <div className="max-w-5xl mx-auto">
+          {/* Journey Table */}
+          <div className="bg-gradient-to-br from-card to-card/80 border border-border/50 rounded-2xl overflow-hidden">
+            {/* Header */}
+            <div className="grid grid-cols-2 bg-gradient-to-r from-primary/20 to-secondary/20 border-b border-border/50">
+              <div className="flex items-center gap-3 px-6 py-4 font-bold text-lg">
+                <span className="text-2xl">🤖</span>
+                <span className="text-primary">{language === "zh-HK" ? "AI 系統建設" : "AI 系统建设"}</span>
+                <span className="text-xs text-muted-foreground font-normal">(Track 1)</span>
+              </div>
+              <div className="flex items-center gap-3 px-6 py-4 font-bold text-lg border-l border-border/50">
+                <span className="text-2xl">🏢</span>
+                <span className="text-secondary">{language === "zh-HK" ? "公司 & 資助申請" : "公司 & 资助申请"}</span>
+                <span className="text-xs text-muted-foreground font-normal">(Track 2)</span>
+              </div>
+            </div>
+
+            {/* Rows */}
+            <div className="divide-y divide-border/30">
+              {/* Row 1 */}
+              <div className="grid grid-cols-2">
+                <div className="flex items-start gap-3 px-6 py-4">
+                  <span className="text-green-500 text-lg mt-0.5">✅</span>
+                  <div>
+                    <p className="font-medium">{language === "zh-HK" ? "AI Agent 訓練完成" : "AI Agent 训练完成"}</p>
+                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "多 Agent 分工架構已建立" : "多 Agent 分工架构已建立"}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 px-6 py-4 border-l border-border/50">
+                  <span className="text-amber-500 text-lg mt-0.5">📋</span>
+                  <div>
+                    <p className="font-medium">{language === "zh-HK" ? "有限公司成立" : "有限公司成立"}</p>
+                    <p className="text-sm text-green-500 font-medium">→ {language === "zh-HK" ? "下星期完成" : "下星期完成"}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 2 */}
+              <div className="grid grid-cols-2">
+                <div className="flex items-start gap-3 px-6 py-4">
+                  <span className="text-green-500 text-lg mt-0.5">✅</span>
+                  <div>
+                    <p className="font-medium">{language === "zh-HK" ? "tRPC API + Drizzle 打通" : "tRPC API + Drizzle 打通"}</p>
+                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "前後端通訊穩定" : "前后端通讯稳定"}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 px-6 py-4 border-l border-border/50">
+                  <span className="text-amber-500 text-lg mt-0.5">🔄</span>
+                  <div>
+                    <p className="font-medium">{language === "zh-HK" ? "前海 OPC 申請準備中" : "前海 OPC 申请准备中"}</p>
+                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "文件準備緊..." : "文件准备中..."}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 3 */}
+              <div className="grid grid-cols-2">
+                <div className="flex items-start gap-3 px-6 py-4">
+                  <span className="text-green-500 text-lg mt-0.5">✅</span>
+                  <div>
+                    <p className="font-medium">{language === "zh-HK" ? "Lead Magnet MVP 上線" : "Lead Magnet MVP 上线"}</p>
+                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "免費評估系統運行中" : "免费评估系统运行中"}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 px-6 py-4 border-l border-border/50">
+                  <span className="text-muted-foreground text-lg mt-0.5">→</span>
+                  <div>
+                    <p className="font-medium">{language === "zh-HK" ? "成立後即提交" : "成立后即提交"}</p>
+                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "第一時間遞交申請" : "第一时间递交申请"}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 4 */}
+              <div className="grid grid-cols-2">
+                <div className="flex items-start gap-3 px-6 py-4">
+                  <span className="text-amber-500 text-lg mt-0.5">🔄</span>
+                  <div>
+                    <p className="font-medium">{language === "zh-HK" ? "MiniMax 2.7 + Hermes 整合" : "MiniMax 2.7 + Hermes 整合"}</p>
+                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "AI 能力升級中" : "AI 能力升级中"}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 px-6 py-4 border-l border-border/50">
+                  <span className="text-muted-foreground text-lg mt-0.5">→</span>
+                  <div>
+                    <p className="font-medium">{language === "zh-HK" ? "Cyberport Incubation" : "Cyberport Incubation"}</p>
+                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "同步跟進" : "同步跟进"}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 5 */}
+              <div className="grid grid-cols-2">
+                <div className="flex items-start gap-3 px-6 py-4">
+                  <span className="text-amber-500 text-lg mt-0.5">🔄</span>
+                  <div>
+                    <p className="font-medium">{language === "zh-HK" ? "Proactive Agent 架構設計" : "Proactive Agent 架构设计"}</p>
+                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "小紅書 Pipeline 建構中" : "小红书 Pipeline 构建中"}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 px-6 py-4 border-l border-border/50 bg-muted/20">
+                  <span className="text-primary text-lg mt-0.5">🎯</span>
+                  <div>
+                    <p className="font-medium text-primary">{language === "zh-HK" ? "目標：資助申請成功" : "目标：资助申请成功"}</p>
+                    <p className="text-sm text-muted-foreground">{language === "zh-HK" ? "我哋做到，再幫你做到" : "我们做到，再帮你做到"}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom message */}
+          <div className="text-center mt-8 py-6 px-8 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 rounded-xl border border-border/30">
+            <p className="text-lg font-medium text-foreground">
+              {language === "zh-HK"
+                ? "🚀 我哋每一步都係證明——自己走過嘅路，先有資格帶你走。"
+                : "🚀 我们每一步都是证明——自己走过的路，才有资格带你走。"}
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              {language === "zh-HK"
+                ? "持續更新 · 歡迎追蹤"
+                : "持续更新 · 欢迎追踪"}
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* 中港創業資助一覽 Section */}
