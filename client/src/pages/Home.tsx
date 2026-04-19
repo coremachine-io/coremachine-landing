@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import AIDocumentGenerator from "@/components/AIDocumentGenerator";
 import CaseDisplay from "@/components/CaseDisplay";
+import PolicyDisplay from "@/components/PolicyDisplay";
 
 export default function Home() {
   const { language, setLanguage, t } = useLanguage();
@@ -420,6 +421,29 @@ export default function Home() {
               {language === "zh-HK" ? "立即評估你嘅補貼資格" : "立即评估你的补贴资格"}
             </a>
           </Button>
+        </div>
+      </section>
+
+      {/* 政策資訊 Section */}
+      <section id="policy" className="container py-20">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center space-y-4 mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold">
+            {language === "zh-HK" ? "政策資訊" : "政策资讯"}
+          </h2>
+          <p className="text-xl text-muted-foreground">
+            {language === "zh-HK"
+              ? "前海補貼 · 稅務優惠 · 人才政策"
+              : "前海补贴 · 税务优惠 · 人才政策"}
+          </p>
+        </motion.div>
+
+        <div className="max-w-3xl mx-auto">
+          <PolicyDisplay />
         </div>
       </section>
 

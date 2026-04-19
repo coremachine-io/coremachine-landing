@@ -500,6 +500,134 @@ Core Machine 背景：
         }
       }),
   }),
+
+  // 前海政策追蹤系統（Policy Agent）
+  policy: router({
+    // 獲取最新政策資訊
+    fetchLatest: publicProcedure
+      .input(z.object({
+        category: z.enum(["subsidy", "tax", "talent", "office", "all"]).default("all"),
+        region: z.enum(["qianhai", "nansha", "hengqin", "all"]).default("qianhai"),
+      }).optional())
+      .mutation(async ({ input }) => {
+        const category = input?.category || "all";
+        const region = input?.region || "qianhai";
+
+        const regionNames: Record<string, string> = {
+          qianhai: "深圳前海",
+          nansha: "廣州南沙",
+          hengqin: "珠海橫琴",
+          all: "大灣區",
+        };
+
+        const systemPrompt = `你係 Core Machine 嘅政策顧問，專門追蹤粵港澳大灣區補貼政策動態。
+
+你嘅任務係根據最新已知政策資訊，生成精準、實用嘅政策更新摘要。
+
+重要原則：
+1. 只提供已確認嘅政策資訊，唔好夾硬生造數據
+2. 如果某項政策你唔確定，請如實標註「待確認」
+3. 所有金額要註明係港幣（HKD）定係人民幣（RMB）
+4. 語言：繁體中文（香港/澳門口語風格）
+5. 每條資訊要包含：標題、適用對象、補貼金額、申請截止日期（如果有）、官方連結
+
+用 JSON 格式回覆：
+{
+  "policies": [
+    {
+      "id": "pol_001",
+      "title": "政策名稱",
+      "category": "補貼類型（subsidy/tax/talent/office）",
+      "region": "適用地區",
+      "targetAudience": "適用對象",
+      "amount": "補貼金額（要註明貨幣）",
+      "deadline": "申請截止日期 or 無期限",
+      "keyPoints": ["要點1", "要點2", "要點3"],
+      "eligibility": "基本資格要求",
+      "officialUrl": "官方連結（如果知道）",
+      "isNew": true/false,
+      "source": "政策來源"
+    }
+  ],
+  "lastUpdated": "最後更新時間",
+  "summary": "整體政策趨勢簡述（50字以內）",
+  "nextUpdate": "下次更新時間"
+}`;
+
+        const userPrompt = `請生成 ${regionNames[region]} ${category === "all" ? "所有類型" : category} 相關嘅最新政策資訊。
+
+重點關注：
+- 港澳居民適用的補貼政策
+- 創業資助相關政策
+- 辦公室/租金補貼政策
+- 人才引進政策
+
+如果政策資訊唔夠新或唔確定，請如實標註「待確認」。`;
+
+        try {
+          const response = await invokeMiniMaxLLM({
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: userPrompt },
+            ],
+          });
+
+          const baseResp = (response as any).base_resp;
+          if (baseResp?.status_code !== 0 && baseResp?.status_code !== 200) {
+            throw new Error("政策資訊服務暫時不可用，請稍後再試");
+          }
+
+          const content = response.choices?.[0]?.message?.content || "";
+
+          let parsed;
+          try {
+            const jsonStr = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+            parsed = JSON.parse(jsonStr);
+          } catch {
+            throw new Error("政策格式解析失敗");
+          }
+
+          return {
+            policies: parsed.policies || [],
+            lastUpdated: parsed.lastUpdated || new Date().toISOString(),
+            summary: parsed.summary || "",
+            nextUpdate: parsed.nextUpdate || "",
+          };
+        } catch (error: any) {
+          console.error("[Policy Fetch] Error:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: error?.message || "政策資訊獲取失敗，請稍後再試",
+          });
+        }
+      }),
+
+    // 儲存政策更新到數據庫（管理員用）
+    savePolicy: publicProcedure
+      .input(z.object({
+        title: z.string().min(1),
+        category: z.string(),
+        region: z.string(),
+        targetAudience: z.string(),
+        amount: z.string(),
+        deadline: z.string().optional(),
+        keyPoints: z.array(z.string()),
+        eligibility: z.string(),
+        officialUrl: z.string().optional(),
+        isNew: z.boolean().default(false),
+        source: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        // 簡化版：返回成功訊息，實際需要數據庫支援
+        // TODO: 未來整合 MySQL 數據庫
+        return {
+          success: true,
+          message: "政策資訊已保存（待數據庫支援）",
+          policyId: `pol_${Date.now()}`,
+          ...input,
+        };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
