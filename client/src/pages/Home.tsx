@@ -13,6 +13,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import AIDocumentGenerator from "@/components/AIDocumentGenerator";
 import CaseDisplay from "@/components/CaseDisplay";
 import PolicyDisplay from "@/components/PolicyDisplay";
+import ServiceProcess from "@/components/ServiceProcess";
 
 export default function Home() {
   const { language, setLanguage, t } = useLanguage();
@@ -445,6 +446,11 @@ export default function Home() {
         <div className="max-w-3xl mx-auto">
           <PolicyDisplay />
         </div>
+      </section>
+
+      {/* 服務流程 + 收費模式 Section */}
+      <section id="service" className="container py-20">
+        <ServiceProcess />
       </section>
 
       {/* 中港創業資助一覽 Section */}
