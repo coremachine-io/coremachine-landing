@@ -1,6 +1,6 @@
 {
-  "buildCommand": "echo 'Static site - no build needed'",
+  "buildCommand": "pnpm run build",
   "outputDirectory": "dist/public",
-  "installCommand": "echo 'No install needed'",
+  "installCommand": "pnpm install",
   "framework": "vite"
 }
