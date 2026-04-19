@@ -385,7 +385,121 @@ export const appRouter = router({
           });
         }
       }),
-  }),
+
+    // 成功案例生成（Case Agent）
+    generateCase: publicProcedure
+      .input(z.object({
+        style: z.enum(["xiaohongshu", "website", "both"]).default("both"),
+        industry: z.string().optional(),
+        city: z.string().optional(),
+      }).optional())
+      .mutation(async ({ input }) => {
+        const style = input?.style || "both";
+        const industry = input?.industry || "科技";
+        const city = input?.city || "前海";
+
+        const systemPrompt = `你係 Core Machine 嘅案例生成顧問。你嘅任務係根據真實評估模式，生成高質量嘅成功案例故事。
+
+Core Machine 背景：
+- 幫港澳創業者申請深圳前海補貼嘅 AI 服務
+- 服務特色：免費評估 → 專業代辦 → 全程支援
+- 理念：「我哋做到，先幫你做到」
+
+生成案例嘅原則：
+1. 必須基於真實創業者模式（創業者背景 + 補貼資格評估結果）
+2. 所有個人資料必須完全匿名化
+3. 案例要有情感共鳴，同時包含具體數據
+4. 語言：繁體中文（香港/澳門口語风格）
+5. 故事結構：背景 → 痛點 → 接觸 Core Machine → 評估結果 → 準備申請
+
+用 JSON 格式回覆：
+{
+  "caseId": "case_001",
+  "heroName": "匿名化名（如：陳生、李小姐）",
+  "heroBackground": "創業者背景描述（2-3句）",
+  "industry": "行業",
+  "city": "目標城市",
+  "painPoint": "最大痛點（1-2句）",
+  "subsidyTarget": "目標補貼金額",
+  "evaluationScore": 評分數字,
+  "evaluationResult": "評估結果描述",
+  "status": "準備中/已提交/審批中/已獲批",
+  "xiaohongshuPost": {
+    "title": "小紅書標題（吸睛式）",
+    "content": "小紅書正文（300字以內，emoji + 段落）",
+    "hashtags": ["標籤1", "標籤2", "標籤3"]
+  },
+  "websiteCase": {
+    "headline": "網站用標題",
+    "summary": "摘要（50字以內）",
+    "keyMetrics": ["關鍵指標1", "關鍵指標2"],
+    "quote": "創業者心聲（1句）"
+  }
+}`;
+
+        const userPrompt = `請生成一個創業者案例：
+
+行業：${industry}
+目標城市：${city}
+`;
+
+        try {
+          const response = await invokeMiniMaxLLM({
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: userPrompt },
+            ],
+          });
+
+          const baseResp = (response as any).base_resp;
+          if (baseResp?.status_code !== 0 && baseResp?.status_code !== 200) {
+            throw new Error("案例生成服務暫時不可用，請稍後再試");
+          }
+
+          const content = response.choices?.[0]?.message?.content || "";
+
+          // 解析 JSON
+          let parsed;
+          try {
+            const jsonStr = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+            parsed = JSON.parse(jsonStr);
+          } catch {
+            throw new Error("案例格式解析失敗");
+          }
+
+          // 返回符合風格要求的結果
+          const result: any = {
+            caseId: parsed.caseId || `case_${Date.now()}`,
+            heroName: parsed.heroName || "匿名創業者",
+            heroBackground: parsed.heroBackground || "",
+            industry: parsed.industry || industry,
+            city: parsed.city || city,
+            painPoint: parsed.painPoint || "",
+            subsidyTarget: parsed.subsidyTarget || "待評估",
+            evaluationScore: parsed.evaluationScore || 50,
+            evaluationResult: parsed.evaluationResult || "",
+            status: parsed.status || "準備中",
+            generatedAt: new Date().toISOString(),
+          };
+
+          if (style === "xiaohongshu" || style === "both") {
+            result.xiaohongshuPost = parsed.xiaohongshuPost || null;
+          }
+
+          if (style === "website" || style === "both") {
+            result.websiteCase = parsed.websiteCase || null;
+          }
+
+          return result;
+        } catch (error: any) {
+          console.error("[Case Generation] Error:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: error?.message || "案例生成失敗，請稍後再試",
+          });
+        }
+      }),
+  },
 });
 
 export type AppRouter = typeof appRouter;

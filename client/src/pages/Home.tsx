@@ -11,6 +11,7 @@ import { Rocket, Sparkles, FileText, Users, Check, Download, Globe, ArrowRight }
 import { motion } from "framer-motion";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import AIDocumentGenerator from "@/components/AIDocumentGenerator";
+import CaseDisplay from "@/components/CaseDisplay";
 
 export default function Home() {
   const { language, setLanguage, t } = useLanguage();
@@ -384,6 +385,41 @@ export default function Home() {
                 : "持续更新 · 欢迎追踪"}
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* 成功案例 Section */}
+      <section id="cases" className="container py-20 bg-muted/30">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center space-y-4 mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold">
+            {language === "zh-HK" ? "真實案例" : "真实案例"}
+          </h2>
+          <p className="text-xl text-muted-foreground">
+            {language === "zh-HK"
+              ? "我哋協助緊嘅創業者故事"
+              : "我们协助紧的创业者故事"}
+          </p>
+        </motion.div>
+
+        <CaseDisplay />
+
+        <div className="text-center mt-8">
+          <p className="text-sm text-muted-foreground mb-4">
+            {language === "zh-HK"
+              ? "（案例持續更新中...）"
+              : "（案例持续更新中...）"}
+          </p>
+          <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
+            <a href="/free-assessment">
+              <Sparkles className="w-4 h-4 mr-2" />
+              {language === "zh-HK" ? "立即評估你嘅補貼資格" : "立即评估你的补贴资格"}
+            </a>
+          </Button>
         </div>
       </section>
 
