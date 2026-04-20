@@ -4,6 +4,7 @@ import { ENV } from "./env";
 export type NotificationPayload = {
   title: string;
   content: string;
+  priority?: 'high' | 'medium' | 'low';
 };
 
 const TITLE_MAX_LENGTH = 1200;
@@ -54,7 +55,7 @@ const validatePayload = (input: NotificationPayload): NotificationPayload => {
 export async function notifyOwner(
   payload: NotificationPayload
 ): Promise<boolean> {
-  const { title, content } = validatePayload(payload);
+  const { title, content, priority } = validatePayload(payload);
 
   if (!ENV.telegramBotToken) {
     console.warn("[Notify] TELEGRAM_BOT_TOKEN is not configured");
@@ -66,7 +67,14 @@ export async function notifyOwner(
     return false;
   }
 
-  const message = `*${title}*\n\n${content}`;
+  const PRIORITY_EMOJI: Record<string, string> = {
+    high: '🔴',
+    medium: '🟡',
+    low: '🟢',
+  };
+  const priorityPrefix = priority ? `${PRIORITY_EMOJI[priority]} ` : '';
+
+  const message = `*${priorityPrefix}${title}*\n\n${content}`;
   const url = `https://api.telegram.org/bot${ENV.telegramBotToken}/sendMessage`;
 
   try {

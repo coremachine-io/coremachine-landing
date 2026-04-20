@@ -1,7 +1,7 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
+import { publicProcedure, rateLimitedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { createConsultation, trackTemplateDownload, getCredits, deductCredit, canUseAI } from "./db";
@@ -27,7 +27,7 @@ export const appRouter = router({
 
   // 咨詢表單提交
   consultation: router({
-    submit: publicProcedure
+    submit: rateLimitedProcedure("consultation")
       .input(z.object({
         name: z.string().min(1, "請輸入姓名"),
         contact: z.string().min(1, "請輸入聯絡方式"),
@@ -84,7 +84,7 @@ export const appRouter = router({
 
   // AI 文件生成
   ai: router({
-    generateDocument: publicProcedure
+    generateDocument: rateLimitedProcedure("ai")
       .input(z.object({
         documentType: z.enum(["subsidy_application", "personal_statement"]),
         language: z.enum(["zh-HK", "zh-CN"]),
@@ -216,7 +216,7 @@ export const appRouter = router({
 
   // AI 模板下載
   template: router({
-    download: publicProcedure
+    download: rateLimitedProcedure("template")
       .input(z.object({
         templateType: z.enum(["subsidy_application", "personal_statement"]),
         language: z.enum(["zh-HK", "zh-CN"]),
@@ -283,7 +283,7 @@ export const appRouter = router({
       }),
 
     // 前海補貼資格 AI 評估（Lead Magnet）
-    evaluateSubsidyEligibility: publicProcedure
+    evaluateSubsidyEligibility: rateLimitedProcedure("evaluate")
       .input(z.object({
         name: z.string().min(1),
         email: z.string().email(),
@@ -360,22 +360,91 @@ export const appRouter = router({
             };
           }
 
-          // 通知 Johnny 有新 lead
+          const score = parsed.score ?? 50;
+          const eligible = parsed.eligible;
+          const maxSubsidy = parsed.maxSubsidy ?? "待評估";
+          const analysis = parsed.analysis ?? "";
+          const recommendations = parsed.recommendations ?? [];
+
+          // ─── 優先級分類邏輯 ───────────────────────────────────────
+          // High: score ≥ 70 AND (eligible === true OR "有機會")
+          // Medium: score 40-69 OR eligible === "有機會"
+          // Low: score < 40 OR eligible === false
+          const priority: 'high' | 'medium' | 'low' =
+            score >= 70 && (eligible === true || eligible === "有機會")
+              ? 'high'
+              : score >= 40 || eligible === "有機會"
+              ? 'medium'
+              : 'low';
+
+          // ─── 跟進建議書生成（變數替換）──────────────────────────
+          const businessTypeLabels: Record<string, string> = {
+            technology: "科技/互聯網",
+            retail: "零售/電商",
+            catering: "餐飲/食品",
+            creative: "創意/設計",
+            professional: "專業服務",
+            other: "其他行業",
+          };
+          const bizLabel = businessTypeLabels[input.businessType] ?? input.businessType;
+          const cityLabel = input.city || "未決定";
+
+          const followupSuggestions = `
+📋 *個案跟進建議書*
+
+創業者：${input.name}
+行業：${bizLabel}
+評估分數：${score}/100
+資格狀態：${eligible === true ? "✅ 符合基本資格" : eligible === "有機會" ? "⚠️ 有機會" : "❌ 暫不符合"}
+預計補貼：${maxSubsidy}
+
+💡 *AI 分析摘要：*
+${analysis}
+
+📌 *建議下一步：*
+${recommendations.map((r: string, i: number) => `${i + 1}. ${r}`).join('\n')}
+
+---
+Core Machine 個案管理 | ${new Date().toLocaleString("zh-HK")}`;
+
+          // ─── 升級 Telegram 通知 ───────────────────────────────────
+          const PRIORITY_TAG = { high: "🔴 高優先", medium: "🟡 中優先", low: "🟢 低優先" };
+          const eligibleLabel = eligible === true ? "✅ 符合資格" : eligible === "有機會" ? "⚠️ 有機會" : "❌ 暫不符合";
+          const langLabel = input.language === "zh-HK" ? "繁體" : "簡體";
+
           try {
             await notifyOwner({
+              priority,
               title: "📋 新免費評估申請",
-              content: `姓名：${input.name}\nEmail：${input.email}\n行業：${input.businessType}\n城市：${input.city || "未決定"}\n時間：${new Date().toLocaleString("zh-HK")}`,
+              content: `${PRIORITY_TAG[priority]} | ${langLabel}
+━━━━━━━━━━━━━━━━━━
+👤 姓名：${input.name}
+📧 Email：${input.email}
+🏢 行業：${bizLabel}
+📍 目標城市：${cityLabel}
+⏰ 時間：${new Date().toLocaleString("zh-HK")}
+━━━━━━━━━━━━━━━━━━
+🎯 評估分數：${score}/100
+💰 預計補貼：${maxSubsidy}
+📊 資格狀態：${eligibleLabel}
+━━━━━━━━━━━━━━━━━━
+💡 AI 分析：${analysis.substring(0, 120)}${analysis.length > 120 ? "…" : ""}
+━━━━━━━━━━━━━━━━━━
+📌 下一步建議：
+${recommendations.slice(0, 3).map((r: string, i: number) => `${i + 1}. ${r}`).join('\n')}`,
             });
           } catch (notifyError) {
             console.warn("[Notify] Failed to send Telegram notification:", notifyError);
           }
 
           return {
-            score: parsed.score ?? 50,
-            eligible: parsed.eligible === true,
-            maxSubsidy: parsed.maxSubsidy ?? "待評估",
-            analysis: parsed.analysis ?? "",
-            recommendations: parsed.recommendations ?? [],
+            score,
+            eligible: eligible === true,
+            maxSubsidy,
+            analysis,
+            recommendations,
+            priority,         // 新增：優先級
+            followupSuggestions, // 新增：跟進建議書（教 Johnny 點跟進）
           };
         } catch (error: any) {
           console.error("[AI Evaluation] Error:", error);
@@ -389,7 +458,7 @@ export const appRouter = router({
 
   // 成功案例生成（Case Agent）- 頂層 router
   case: router({
-    generate: publicProcedure
+    generate: rateLimitedProcedure("case")
       .input(z.object({
         style: z.enum(["xiaohongshu", "website", "both"]).default("both"),
         industry: z.string().optional(),
@@ -531,7 +600,7 @@ Core Machine 背景：
   // 前海政策追蹤系統（Policy Agent）
   policy: router({
     // 獲取最新政策資訊
-    fetchLatest: publicProcedure
+    fetchLatest: rateLimitedProcedure("policy")
       .input(z.object({
         category: z.enum(["subsidy", "tax", "talent", "office", "all"]).default("all"),
         region: z.enum(["qianhai", "nansha", "hengqin", "all"]).default("qianhai"),
@@ -725,7 +794,7 @@ Core Machine 背景：
       }),
 
     // 儲存政策更新到數據庫（管理員用）
-    savePolicy: publicProcedure
+    savePolicy: rateLimitedProcedure("policy")
       .input(z.object({
         title: z.string().min(1),
         category: z.string(),
