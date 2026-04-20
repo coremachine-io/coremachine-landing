@@ -229,6 +229,58 @@ const assertMiniMaxApiKey = () => {
   }
 };
 
+// ─── Retry + Timeout utilities ──────────────────────────────────────────────
+
+const DEFAULT_TIMEOUT_MS = 30_000;
+const RETRY_DELAYS_MS = [1_000, 3_000, 10_000]; // exponential back-off
+
+interface FetchWithTimeoutOptions extends RequestInit {
+  timeoutMs?: number;
+}
+
+/**
+ * Wraps fetch with an AbortController timeout.
+ */
+async function fetchWithTimeout(
+  url: string,
+  options: FetchWithTimeoutOptions = {}
+): Promise<Response> {
+  const { timeoutMs = DEFAULT_TIMEOUT_MS, ...fetchOptions } = options;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(url, {
+      ...fetchOptions,
+      signal: controller.signal,
+    });
+    clearTimeout(timer);
+    return response;
+  } catch (err) {
+    clearTimeout(timer);
+    throw err;
+  }
+}
+
+/**
+ * Retry a function up to 3 times with exponential back-off.
+ * Returns the first successful result or throws the last error.
+ */
+async function withRetry<T>(
+  fn: () => Promise<T>,
+  delaysMs: number[] = RETRY_DELAYS_MS,
+  attempt = 0
+): Promise<T> {
+  try {
+    return await fn();
+  } catch (err) {
+    if (attempt >= delaysMs.length) throw err;
+    const delay = delaysMs[attempt];
+    console.warn(`[AI] Attempt ${attempt + 1} failed, retrying in ${delay}ms…`, err instanceof Error ? err.message : err);
+    await new Promise((resolve) => setTimeout(resolve, delay));
+    return withRetry(fn, delaysMs, attempt + 1);
+  }
+}
+
 const normalizeResponseFormat = ({
   responseFormat,
   response_format,
@@ -321,14 +373,18 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     payload.response_format = normalizedResponseFormat;
   }
 
-  const response = await fetch(resolveApiUrl(), {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      authorization: `Bearer ${ENV.forgeApiKey}`,
-    },
-    body: JSON.stringify(payload),
-  });
+  const doFetch = async (): Promise<Response> =>
+    fetchWithTimeout(resolveApiUrl(), {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${ENV.forgeApiKey}`,
+      },
+      body: JSON.stringify(payload),
+      timeoutMs: DEFAULT_TIMEOUT_MS,
+    });
+
+  const response = await withRetry(doFetch);
 
   if (!response.ok) {
     const errorText = await response.text();
@@ -351,14 +407,18 @@ export async function invokeMiniMaxLLM(params: InvokeParams): Promise<InvokeResu
     max_tokens: maxTokens ?? max_tokens ?? 8192,
   };
 
-  const response = await fetch(resolveMiniMaxUrl(), {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      authorization: `Bearer ${ENV.miniMaxApiKey}`,
-    },
-    body: JSON.stringify(payload),
-  });
+  const doFetch = async (): Promise<Response> =>
+    fetchWithTimeout(resolveMiniMaxUrl(), {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${ENV.miniMaxApiKey}`,
+      },
+      body: JSON.stringify(payload),
+      timeoutMs: DEFAULT_TIMEOUT_MS,
+    });
+
+  const response = await withRetry(doFetch);
 
   if (!response.ok) {
     const errorText = await response.text();
