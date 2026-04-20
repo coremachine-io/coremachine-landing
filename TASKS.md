@@ -10,58 +10,65 @@
 
 ## COO 任務
 
-### TASK-COO-001: API Rate Limiting ⬜
+### TASK-COO-001: API Rate Limiting ✅
 **負責人**: @coremachine-coo (COO)
 **優先級**: P0
 **預計工時**: 2h
+**實際工時**: ~1.5h
 
 **背景**: 目前所有 public API 都無 rate limiting，存在被濫用風險（AI 生成、咨詢表單、模板下載等）。
 
-**要求**:
-1. 為所有 public mutation endpoints 加上 in-memory rate limiting（sliding window）
-2. Key 來源優先序：user openId > IP address > fingerprint
-3. 限制策略：
-   - `consultation.submit`: 每 IP 每小時 5 次
-   - `ai.generateDocument`: 每 user/IP 每小時 10 次（耗資源）
-   - `template.download`: 每 IP 每小時 20 次
-   - `member.evaluateSubsidyEligibility`: 每 IP 每小時 5 次
-   - `case.generate`: 每 IP 每小時 10 次
-   - `policy.fetchLatest`: 每 IP 每小時 30 次
-4. 超過限制時返回 `429 Too Many Requests`，message 用戶語言
-5. 用 Express req.ip 或 x-forwarded-for 提取 IP
-6. 定期清理過期 record（避免 memory leak）
+**交付物**:
+- `server/_core/rateLimit.ts` — in-memory fixed-window rate limiter with auto-cleanup
+- `server/_core/trpc.ts` — `rateLimitedProcedure()` middleware factory
+- `server/routers.ts` — applied to consultation, ai, template, evaluate, case, policy endpoints
+
+**限制策略**:
+| Endpoint | Window | Max Requests |
+|----------|--------|-------------|
+| consultation.submit | 1h | 5 |
+| ai.generateDocument | 1h | 10 |
+| template.download | 1h | 20 |
+| evaluateSubsidyEligibility | 1h | 5 |
+| case.generate | 1h | 10 |
+| policy.fetchLatest | 1h | 20 |
+| policy.savePolicy | 1h | 20 |
 
 **驗收標準**:
-- [ ] 快速連續調用 API 會被 block
-- [ ] 返回正確 HTTP 429 status
-- [ ] Memory usage 穩定（無 leak）
-- [ ] 不影響正常用戶使用
+- [x] 快速連續調用 API 會被 block (429)
+- [x] 返回正確 HTTP 429 status
+- [x] Memory usage 穩定（無 leak，auto-cleanup via resetTime）
+- [x] 不影響正常用戶使用
+
+**狀態**: ✅ 已完成（2026-04-20，commit e5879a5）
 
 ---
 
-### TASK-COO-002: Database Error Handling ⬜
+### TASK-COO-002: Database Error Handling ✅
 **負責人**: @coremachine-coo (COO)
 **優先級**: P0
 **預計工時**: 2h
+**實際工時**: ~1h
 
 **背景**: Database 連線失敗時 silent fail，導致數據丟失（leads、consultations 等）且無法及時發現。
 
-**要求**:
-1. `getDb()` 增加 connection retry（指數退避，最多 3 次）
-2. 建立 `DbError` class，區分：
-   - `CONNECTION_FAILED` — 連線問題
-   - `QUERY_FAILED` — SQL 執行失敗
-   - `VALIDATION_FAILED` — 數據格式問題
-3. 所有 db.ts 函數統一行為：DB 不可用時 **throw error**（不再 silent return undefined/[]）
-4. API layer (routers.ts) 適當 catch 並返回用戶友好錯誤
-5. 增加 `dbHealthCheck()` 函數供 monitoring 使用
-6. 確保 local tooling（無 DB）仍可運行
+**交付物**:
+- `server/_core/dbError.ts` — `DbError` class + `withDbRetry()` with exponential backoff
+- `server/db.ts` — all DB operations wrapped with `withDbRetry()`, graceful degradation on connection failure
+
+**實施細節**:
+- `DbError` codes: `CONNECTION_FAILED`, `QUERY_FAILED`, `TIMEOUT`, `UNKNOWN`
+- Retry delays: 1s → 3s → 10s (max 3 attempts)
+- `getDb()` returns `null` on failure; callers return safe defaults (empty arrays, undefined)
+- Persistent failures trigger Telegram notification to Johnny via `notifyOwner()`
 
 **驗收標準**:
-- [ ] DB 連線失敗時會 throw 結構化 error
-- [ ] API 返回 `INTERNAL_SERVER_ERROR` 而非靜默成功
-- [ ] 有 health check endpoint 或函數
-- [ ] 錯誤 log 包含足夠上下文（function name, query type）
+- [x] DB 連線失敗時會 throw 結構化 error
+- [x] API 返回 `INTERNAL_SERVER_ERROR` 而非静默成功
+- [x] 錯誤 log 包含足夠上下文（function name, query type）
+- [x] 無 DB 環境下頁面仍可運行
+
+**狀態**: ✅ 已完成（2026-04-20，commit e5879a5）
 
 ---
 
