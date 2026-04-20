@@ -2,6 +2,7 @@ import { eq, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users, consultations, InsertConsultation, templateDownloads, InsertTemplateDownload, subscriptions, InsertSubscription, userCredits, InsertUserCredit } from "../drizzle/schema";
 import { ENV } from './_core/env';
+import { withDbRetry, DbError } from './_core/dbError';
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -9,9 +10,12 @@ let _db: ReturnType<typeof drizzle> | null = null;
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      _db = await withDbRetry(
+        () => Promise.resolve(drizzle(process.env.DATABASE_URL!)),
+        "Database connection"
+      );
     } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
+      console.warn("[Database] Failed to connect after retries:", error);
       _db = null;
     }
   }
@@ -68,12 +72,13 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       updateSet.lastSignedIn = new Date();
     }
 
-    await db.insert(users).values(values).onDuplicateKeyUpdate({
-      set: updateSet,
-    });
+    await withDbRetry(
+      () => db.insert(users).values(values).onDuplicateKeyUpdate({ set: updateSet }),
+      "upsertUser"
+    );
   } catch (error) {
     console.error("[Database] Failed to upsert user:", error);
-    throw error;
+    throw new DbError("Failed to upsert user", "QUERY_FAILED");
   }
 }
 
@@ -84,9 +89,16 @@ export async function getUserByOpenId(openId: string) {
     return undefined;
   }
 
-  const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
-
-  return result.length > 0 ? result[0] : undefined;
+  try {
+    const result = await withDbRetry(
+      () => db.select().from(users).where(eq(users.openId, openId)).limit(1),
+      "getUserByOpenId"
+    );
+    return result.length > 0 ? result[0] : undefined;
+  } catch (error) {
+    console.error("[Database] Failed to get user:", error);
+    return undefined;
+  }
 }
 
 /**
@@ -100,10 +112,13 @@ export async function createConsultation(data: InsertConsultation) {
   }
   
   try {
-    const result = await db.insert(consultations).values(data);
+    const result = await withDbRetry(
+      () => db.insert(consultations).values(data),
+      "createConsultation"
+    );
     return result;
   } catch (error) {
-    console.warn("[Database] Cannot create consultation: database not available", error);
+    console.warn("[Database] Cannot create consultation:", error);
     return;
   }
 }
@@ -112,7 +127,15 @@ export async function getAllConsultations() {
   const db = await getDb();
   if (!db) return [];
   
-  return await db.select().from(consultations).orderBy(consultations.createdAt);
+  try {
+    return await withDbRetry(
+      () => db.select().from(consultations).orderBy(consultations.createdAt),
+      "getAllConsultations"
+    );
+  } catch (error) {
+    console.error("[Database] Failed to get consultations:", error);
+    return [];
+  }
 }
 
 /**
@@ -126,10 +149,13 @@ export async function trackTemplateDownload(data: InsertTemplateDownload) {
   }
   
   try {
-    const result = await db.insert(templateDownloads).values(data);
+    const result = await withDbRetry(
+      () => db.insert(templateDownloads).values(data),
+      "trackTemplateDownload"
+    );
     return result;
   } catch (error) {
-    console.warn("[Database] Cannot track template download: database not available", error);
+    console.warn("[Database] Cannot track template download:", error);
     return;
   }
 }
@@ -138,7 +164,15 @@ export async function getDownloadStats() {
   const db = await getDb();
   if (!db) return [];
   
-  return await db.select().from(templateDownloads).orderBy(templateDownloads.createdAt);
+  try {
+    return await withDbRetry(
+      () => db.select().from(templateDownloads).orderBy(templateDownloads.createdAt),
+      "getDownloadStats"
+    );
+  } catch (error) {
+    console.error("[Database] Failed to get download stats:", error);
+    return [];
+  }
 }
 
 // ============================================================
@@ -153,20 +187,23 @@ export async function createOrUpdateSubscription(data: InsertSubscription): Prom
   }
 
   try {
-    await db.insert(subscriptions).values(data).onDuplicateKeyUpdate({
-      set: {
-        plan: data.plan,
-        status: data.status,
-        stripeSubscriptionId: data.stripeSubscriptionId ?? undefined,
-        stripeCustomerId: data.stripeCustomerId ?? undefined,
-        currentPeriodStart: data.currentPeriodStart ?? undefined,
-        currentPeriodEnd: data.currentPeriodEnd ?? undefined,
-        updatedAt: new Date(),
-      },
-    });
+    await withDbRetry(
+      () => db.insert(subscriptions).values(data).onDuplicateKeyUpdate({
+        set: {
+          plan: data.plan,
+          status: data.status,
+          stripeSubscriptionId: data.stripeSubscriptionId ?? undefined,
+          stripeCustomerId: data.stripeCustomerId ?? undefined,
+          currentPeriodStart: data.currentPeriodStart ?? undefined,
+          currentPeriodEnd: data.currentPeriodEnd ?? undefined,
+          updatedAt: new Date(),
+        },
+      }),
+      "createOrUpdateSubscription"
+    );
   } catch (error) {
     console.error("[Database] Failed to create/update subscription:", error);
-    throw error;
+    throw new DbError("Failed to create/update subscription", "QUERY_FAILED");
   }
 }
 
@@ -174,34 +211,37 @@ export async function getSubscriptionByOpenId(openId: string) {
   const db = await getDb();
   if (!db) return undefined;
 
-  const result = await db
-    .select()
-    .from(subscriptions)
-    .where(eq(subscriptions.openId, openId))
-    .limit(1);
-
-  return result.length > 0 ? result[0] : undefined;
+  try {
+    const result = await withDbRetry(
+      () => db.select().from(subscriptions).where(eq(subscriptions.openId, openId)).limit(1),
+      "getSubscriptionByOpenId"
+    );
+    return result.length > 0 ? result[0] : undefined;
+  } catch (error) {
+    console.error("[Database] Failed to get subscription:", error);
+    return undefined;
+  }
 }
 
 export async function getActiveSubscription(openId: string) {
-  const db = await getDb();
-  if (!db) return undefined;
+  try {
+    const result = await withDbRetry(
+      () => getSubscriptionByOpenId(openId),
+      "getActiveSubscription"
+    );
+    const sub = result;
+    if (!sub) return undefined;
 
-  const result = await db
-    .select()
-    .from(subscriptions)
-    .where(eq(subscriptions.openId, openId))
-    .limit(1);
+    // 檢查是否已過期
+    if (sub.currentPeriodEnd && new Date(sub.currentPeriodEnd) < new Date()) {
+      return undefined;
+    }
 
-  const sub = result.length > 0 ? result[0] : undefined;
-  if (!sub) return undefined;
-
-  // 檢查是否已過期
-  if (sub.currentPeriodEnd && new Date(sub.currentPeriodEnd) < new Date()) {
+    return sub.status === "active" ? sub : undefined;
+  } catch (error) {
+    console.error("[Database] Failed to get active subscription:", error);
     return undefined;
   }
-
-  return sub.status === "active" ? sub : undefined;
 }
 
 // ============================================================
@@ -214,13 +254,16 @@ export async function getCredits(openId: string): Promise<number> {
   const db = await getDb();
   if (!db) return 0;
 
-  const result = await db
-    .select()
-    .from(userCredits)
-    .where(eq(userCredits.openId, openId))
-    .limit(1);
-
-  return result.length > 0 ? Math.max(0, result[0].balance) : 0;
+  try {
+    const result = await withDbRetry(
+      () => db.select().from(userCredits).where(eq(userCredits.openId, openId)).limit(1),
+      "getCredits"
+    );
+    return result.length > 0 ? Math.max(0, result[0].balance) : 0;
+  } catch (error) {
+    console.error("[Database] Failed to get credits:", error);
+    return 0;
+  }
 }
 
 export async function deductCredit(openId: string): Promise<{ success: boolean; remaining: number }> {
@@ -233,16 +276,19 @@ export async function deductCredit(openId: string): Promise<{ success: boolean; 
   }
 
   try {
-    await db
-      .insert(userCredits)
-      .values({ openId, balance: current - 1, totalUsed: current })
-      .onDuplicateKeyUpdate({
-        set: {
-          balance: current - 1,
-          totalUsed: current,
-          updatedAt: new Date(),
-        },
-      });
+    await withDbRetry(
+      () => db
+        .insert(userCredits)
+        .values({ openId, balance: current - 1, totalUsed: current })
+        .onDuplicateKeyUpdate({
+          set: {
+            balance: current - 1,
+            totalUsed: current,
+            updatedAt: new Date(),
+          },
+        }),
+      "deductCredit"
+    );
     return { success: true, remaining: current - 1 };
   } catch (error) {
     console.error("[Database] Failed to deduct credit:", error);
@@ -260,20 +306,23 @@ export async function addCredits(openId: string, amount: number = STARTER_CREDIT
   const current = await getCredits(openId);
 
   try {
-    await db
-      .insert(userCredits)
-      .values({ openId, balance: current + amount, totalUsed: 0 })
-      .onDuplicateKeyUpdate({
-        set: {
-          balance: current + amount,
-          totalUsed: 0,
-          updatedAt: new Date(),
-        },
-      });
+    await withDbRetry(
+      () => db
+        .insert(userCredits)
+        .values({ openId, balance: current + amount, totalUsed: 0 })
+        .onDuplicateKeyUpdate({
+          set: {
+            balance: current + amount,
+            totalUsed: 0,
+            updatedAt: new Date(),
+          },
+        }),
+      "addCredits"
+    );
     console.log(`[Credits] Added ${amount} credits to ${openId}. New balance: ${current + amount}`);
   } catch (error) {
     console.error("[Database] Failed to add credits:", error);
-    throw error;
+    throw new DbError("Failed to add credits", "QUERY_FAILED");
   }
 }
 

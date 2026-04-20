@@ -8,10 +8,12 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { ENV } from "./env";
-import { createOrUpdateSubscription, addCredits, getUserByOpenId, upsertUser } from "../db";
+import { createOrUpdateSubscription, addCredits, getUserByOpenId, upsertUser, getDb } from "../db";
 import { sendWelcomeEmail } from "./email";
 import { notifyOwner } from "./notification";
 import { stripe } from "./stripe"; // Reuse graceful Stripe instance
+import { generalRateLimiter, contactRateLimiter, evaluateRateLimiter } from "./rateLimiter";
+import { users } from "../../drizzle/schema";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -242,6 +244,26 @@ async function startServer() {
 
   // Stripe Webhook（需要在 express.json() 之後，但在 tRPC 之前）
   await registerStripeWebhook(app);
+
+  // Health check endpoint
+  app.get("/api/health", async (_req, res) => {
+    try {
+      const db = await getDb();
+      if (!db) {
+        res.status(503).json({ status: "error", db: "disconnected", error: "Database not available" });
+        return;
+      }
+      await db.select({ id: users.id }).from(users).limit(1);
+      res.status(200).json({ status: "ok", db: "connected" });
+    } catch (error) {
+      res.status(503).json({ status: "error", db: "disconnected", error: String(error) });
+    }
+  });
+
+  // Rate limiting — strictest first
+  app.use("/api/trpc", contactRateLimiter);
+  app.use("/api/trpc", evaluateRateLimiter);
+  app.use("/api/trpc", generalRateLimiter);
 
   // tRPC API
   app.use(
