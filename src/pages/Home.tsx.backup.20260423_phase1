@@ -180,67 +180,34 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="container py-24 md:py-36">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          transition={{ duration: 0.6 }} 
-          className="max-w-4xl mx-auto text-center space-y-8"
-        >
-          {/* Badge */}
+      <section className="container py-20 md:py-32">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="max-w-4xl mx-auto text-center space-y-8">
           <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-primary text-sm font-medium mb-4">
-            <Sparkles className="inline h-4 w-4 mr-2" />
-            {language === "zh-HK" ? "前海創業補貼 • 港澳青年優先" : "前海创业补贴 • 港澳青年优先"}
+            <Sparkles className="inline h-4 w-4 mr-2" />{language === "zh-HK" ? "3 \u5206\u9418\u8a55\u4f30\u524d\u6d77\u5275\u696d\u6700\u9ad8\u53ef\u7372\u8cc7\u52a9" : "3 \u5206\u949f\u8bc4\u4f30\u524d\u6d77\u521b\u4e1a\u6700\u9ad8\u53ef\u83b7\u8d44\u52a9"}
           </div>
-          
-          {/* Main Headline */}
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight">
-            <span className="neon-text">
-              {language === "zh-HK" 
-                ? "AI 幫你攞政府資助" 
-                : "AI 帮你拿政府资助"}
-            </span>
-            <br />
-            <span className="text-3xl md:text-5xl text-muted-foreground mt-4 block">
-              {language === "zh-HK" 
-                ? "創業路上唔使孤軍作戰" 
-                : "创业路上不用孤军作战"}
-            </span>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+            <span className="neon-text">{language === "zh-HK" ? "\u524d\u6d77\u5275\u696d\uff0cAI \u5f15\u8def" : "\u524d\u6d77\u521b\u4e1a\uff0cAI \u5f15\u8def"}</span><br />
+            <span className="text-3xl md:text-5xl text-muted-foreground mt-4 block">{language === "zh-HK" ? "\u4e00\u6b65\u4e00\u8173\u5370\uff0c\u81ea\u5df1\u5b78\u6703\u53d6\u5f97\u8cc7\u52a9" : "\u4e00\u6b65\u4e00\u811a\u5370\uff0c\u81ea\u5df1\u5b66\u4f1a\u53d6\u5f97\u8d44\u52a9"}</span>
           </h1>
-          
-          {/* Sub-headline */}
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             {language === "zh-HK"
-              ? "專為港澳青年設計。3分鐘 AI 評估、專業團隊跟進，由資格審查到申請文件，全程陪住你走。"
-              : "专为港澳青年设计。3分钟 AI 评估、专业团队跟进，由资格审核到申请文件，全程陪着你走。"}
+              ? "\u6211\u5011\u4e26\u975e\u4ee3\u8fa6\uff0c\u800c\u662f\u4f60\u7684\u5c0e\u822a\u5730\u5716\u3002\u8f38\u5165\u4f60\u7684\u80cc\u666f\uff0cAI \u5373\u6642\u8a55\u4f30\u4f60\u53ef\u7372\u5f97\u591a\u5c11\u88dc\u8cbc\uff0c\u751f\u6210\u7533\u8acb\u6587\u4ef6\u8349\u7a3f\u3002\u8a55\u4f30\u514d\u8cbb\uff0c\u4e3b\u5c0e\u6b0a\u5728\u4f60\u3002"
+              : "\u6211\u4eec\u5e76\u975e\u4ee3\u529e\uff0c\u800c\u662f\u4f60\u7684\u5bfc\u822a\u5730\u56fe\u3002\u8f93\u5165\u4f60\u7684\u80cc\u666f\uff0cAI \u5373\u65f6\u8bc4\u4f30\u4f60\u53ef\u83b7\u5f97\u591a\u5c11\u8865\u8d34\uff0c\u751f\u6210\u7533\u8bf7\u6587\u4ef6\u8349\u7a3f\u3002\u8bc4\u4f30\u514d\u8d39\uff0c\u4e3b\u5bfc\u6743\u5728\u4f60\u3002"}
           </p>
-          
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-            <Button 
-              size="lg" 
-              onClick={() => setShowAIGenerator(true)} 
-              className="gap-2 text-lg px-10 py-7 h-auto"
-            >
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            <Button size="lg" onClick={() => setShowAIGenerator(true)} className="gap-2 text-lg px-8">
               <Zap className="h-5 w-5" />
-              {language === "zh-HK" ? "免費評估我合唔合資格" : "免费评估我合不合资格"}
+              {language === "zh-HK" ? "\u514d\u8cbb AI \u8cc7\u683c\u8a55\u4f30" : "\u514d\u8d39 AI \u8d44\u683c\u8bc4\u4f30"}
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              onClick={() => scrollToSection("journey")} 
-              className="gap-2 text-lg px-10 py-7 h-auto"
-            >
+            <Button size="lg" variant="outline" onClick={() => scrollToSection("story")} className="gap-2 text-lg px-8">
               <Users className="h-5 w-5" />
-              {language === "zh-HK" ? "睇下其他人點樣成功" : "看下其他人怎样成功"}
+              {language === "zh-HK" ? "\u70ba\u4f55\u6709\u9019\u5f35\u5730\u5716" : "\u4e3a\u4f55\u6709\u8fd9\u5f20\u5730\u56fe"}
             </Button>
           </div>
-          
-          {/* Social Proof */}
-          <p className="text-base text-muted-foreground pt-4">
+          <p className="text-sm text-muted-foreground">
             {language === "zh-HK"
-              ? "✓ 已有 200+ 港澳青年使用 Core Machine AI 評估補貼資格"
-              : "✓ 已有 200+ 港澳青年使用 Core Machine AI 评估补贴资格"}
+              ? "\u5df2\u6709 200+ \u6e2f\u6fb3\u9752\u5e74\u7528 AI \u81ea\u52a9\u8a55\u4f30\u88dc\u8cbc\u8cc7\u683c"
+              : "\u5df2\u6709 200+ \u6e2f\u6fb3\u9752\u5e74\u7528 AI \u81ea\u52a9\u8bc4\u4f30\u8865\u8d34\u8d44\u683c"}
           </p>
         </motion.div>
       </section>
@@ -315,122 +282,92 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Journey Section — Virtual Case Study Flow */}
-      <section id="journey" className="container py-20">
-        <motion.div 
-          initial={{ opacity: 0 }} 
-          whileInView={{ opacity: 1 }} 
-          viewport={{ once: true }} 
-          className="text-center space-y-4 mb-16"
-        >
-          <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-primary text-sm font-medium">
-            <TrendingUp className="inline h-4 w-4 mr-2" />
-            {language === "zh-HK" ? "創業者故事" : "创业者故事"}
-          </div>
+      {/* Lead Magnet Section */}
+      <section id="lead-magnet" className="container py-20">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center space-y-4 mb-16">
           <h2 className="text-4xl md:text-5xl font-bold">
-            {language === "zh-HK" 
-              ? "由迷茫到安心，佢點樣做到？" 
-              : "由迷茫到安心，他怎样做到？"}
+            {language === "zh-HK" ? "\u514d\u8cbb\u5de5\u5177\uff0c\u5373\u523b\u4f7f\u7528" : "\u514d\u8d39\u5de5\u5177\uff0c\u7acb\u523b\u4f7f\u7528"}
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            {language === "zh-HK"
-              ? "以下係虛擬案例，展示一個典型港澳創業者嘅完整旅程"
-              : "以下是虚拟案例，展示一个典型港澳创业者的完整旅程"}
+          <p className="text-xl text-muted-foreground">
+            {language === "zh-HK" ? "\u4e0d\u9700\u8a3b\u518a\uff0c\u4e0d\u9700\u7559\u8cc7\u8a0a\u3002\u958b\u59cb\u4f60\u7684\u524d\u6d77\u5275\u696d\u4e4b\u65c5\u3002" : "\u4e0d\u9700\u6ce8\u518c\uff0c\u4e0d\u9700\u7559\u8d44\u8baf\u3002\u5f00\u59cb\u4f60\u7684\u524d\u6d77\u521b\u4e1a\u4e4b\u65c5\u3002"}
           </p>
         </motion.div>
-
-        {/* Emotional Journey Steps */}
-        <div className="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto mb-16">
-          {[
-            {
-              icon: AlertCircle,
-              color: "text-amber-500",
-              bg: "bg-amber-500/10",
-              border: "border-amber-500/30",
-              date: "💭 " + (language === "zh-HK" ? "第一步：迷茫" : "第一步：迷茫"),
-              title: language === "zh-HK" ? "唔知自己合唔合資格" : "不知道合不合资格",
-              desc: language === "zh-HK" 
-                ? "陳生，35歲，香港 FinTech 從業員。想北上前海創業，但唔知道自己有冇資格申請補貼，又唔知邊度有錢拎。"
-                : "陈生，35岁，香港 FinTech 从业员。想北上前海创业，但不知道自己有没有资格申请补贴，又不知道哪里有钱拿。",
-            },
-            {
-              icon: Zap,
-              color: "text-primary",
-              bg: "bg-primary/10",
-              border: "border-primary/30",
-              date: "⚡ " + (language === "zh-HK" ? "第二步：AI 評估" : "第二步：AI 评估"),
-              title: language === "zh-HK" ? "3分鐘知道答案" : "3分钟知道答案",
-              desc: language === "zh-HK"
-                ? "用 Core Machine 免費 AI 評估，3分鐘就知道：符合前海創業補貼資格，預計可申請 HK$50,000。"
-                : "用 Core Machine 免费 AI 评估，3分钟就知道：符合前海创业补贴资格，预计可申请 HK$50,000。",
-            },
-            {
-              icon: FileText,
-              color: "text-secondary",
-              bg: "bg-secondary/10",
-              border: "border-secondary/30",
-              date: "📝 " + (language === "zh-HK" ? "第三步：準備文件" : "第三步：准备文件"),
-              title: language === "zh-HK" ? "AI 生成專業文件" : "AI 生成专业文件",
-              desc: language === "zh-HK"
-                ? "填完表格，AI 即時生成個人陳述 + 補貼申請文件草稿。專業團隊跟進，確保文件符合要求。"
-                : "填完表格，AI 即时生成个人陈述 + 补贴申请文件草稿。专业团队跟进，确保文件符合要求。",
-            },
-            {
-              icon: Check,
-              color: "text-green-500",
-              bg: "bg-green-500/10",
-              border: "border-green-500/30",
-              date: "🎉 " + (language === "zh-HK" ? "第四步：成功" : "第四步：成功"),
-              title: language === "zh-HK" ? "補貼到手 + 安心落地" : "补贴到手 + 安心落地",
-              desc: language === "zh-HK"
-                ? "成功獲批 HK$50,000 創業補貼，用呢筆錢租前海辦公室，正式開始大灣區創業之路。"
-                : "成功获批 HK$50,000 创业补贴，用这笔钱租前海办公室，正式开始大湾区创业之路。",
-            },
-          ].map((step, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="relative"
-            >
-              <Card className={`h-full border ${step.border} ${step.bg} hover:${step.border} transition-all`}>
-                <CardHeader className="pb-3">
-                  <div className={`w-12 h-12 ${step.bg} rounded-xl flex items-center justify-center mb-3`}>
-                    <step.icon className={`h-6 w-6 ${step.color}`} />
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {/* AI Assessment Card */}
+          <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
+            <Card className="h-full border-2 border-primary hover:border-primary/50 transition-all duration-300">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-3 bg-primary/10 rounded-xl">
+                    <Zap className="h-8 w-8 text-primary" />
                   </div>
-                  <div className="text-sm font-medium text-muted-foreground mb-1">{step.date}</div>
-                  <CardTitle className="text-lg">{step.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
-                </CardContent>
-              </Card>
-              {i < 3 && (
-                <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-px bg-border z-10">
-                  <ArrowRight className="h-4 w-4 text-border absolute -right-1 top-1/2 -translate-y-1/2" />
+                  <div>
+                    <CardTitle className="text-2xl">
+                      {language === "zh-HK" ? "AI \u8cc7\u683c\u8a55\u4f30" : "AI \u8d44\u683c\u8bc4\u4f30"}
+                    </CardTitle>
+                    <CardDescription>
+                      {language === "zh-HK" ? "30 \u79d2\u77e5\u9053\u4f60\u5408\u54ea\u7a2e\u8cc7\u52a9" : "30 \u79d2\u77e5\u9053\u4f60\u5408\u54ea\u79cd\u8d44\u52a9"}
+                    </CardDescription>
+                  </div>
                 </div>
-              )}
-            </motion.div>
-          ))}
-        </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {[1,2,3].map((_, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                    <span className="text-sm">
+                      {i === 0 && (language === "zh-HK" ? "\u81ea\u52d5\u5339\u914d\u6e2f\u6fb3\u9752\u5e74\u5275\u696d\u8cc7\u52a9" : "\u81ea\u52a8\u5339\u914d\u6e2f\u6fb3\u9752\u5e74\u521b\u4e1a\u8d44\u52a9")}
+                      {i === 1 && (language === "zh-HK" ? "\u5373\u6642\u751f\u6210\u5c08\u696d\u7533\u8acb\u6587\u4ef6" : "\u5373\u65f6\u751f\u6210\u4e13\u4e1a\u7533\u8bf7\u6587\u4ef6")}
+                      {i === 2 && (language === "zh-HK" ? "\u514d\u8cbb\u4e0b\u8f09\uff0c\u7121\u9700\u8a3b\u518a" : "\u514d\u8d39\u4e0b\u8f7d\uff0c\u65e0\u9700\u6ce8\u518c")}
+                    </span>
+                  </div>
+                ))}
+                <Button className="w-full mt-6 gap-2" onClick={() => setShowAIGenerator(true)}>
+                  <Zap className="h-4 w-4" />
+                  {language === "zh-HK" ? "\u7acb\u5373\u514d\u8cbb\u8a55\u4f30" : "\u7acb\u5373\u514d\u8d39\u8bc4\u4f30"}
+                </Button>
+              </CardContent>
+            </Card>
+          </motion.div>
 
-        {/* CTA after journey */}
-        <div className="text-center space-y-4">
-          <p className="text-lg text-muted-foreground">
-            {language === "zh-HK"
-              ? "你呢？想知道你可以拎到幾多補貼？"
-              : "你呢？想知道自己可以拿到多少补贴？"}
-          </p>
-          <Button 
-            size="lg" 
-            onClick={() => setShowAIGenerator(true)} 
-            className="gap-2 text-lg px-10"
-          >
-            <Zap className="h-5 w-5" />
-            {language === "zh-HK" ? "立即評估我合唔合資格" : "立即评估我合不合资格"}
-          </Button>
+          {/* Free Resources Card */}
+          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }}>
+            <Card className="h-full border-2 border-secondary hover:border-secondary/70 transition-all duration-300">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-3 bg-secondary/10 rounded-xl">
+                    <Download className="h-8 w-8 text-secondary" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-2xl">
+                      {language === "zh-HK" ? "\u514d\u8cbb\u8cc7\u6e90\u5eab" : "\u514d\u8d39\u8d44\u6e90\u5e93"}
+                    </CardTitle>
+                    <CardDescription>
+                      {language === "zh-HK" ? "\u6a21\u677f\u3001\u6307\u5357\u3001\u6aa2\u67e5\u6e05\u55ae" : "\u6a21\u677f\u3001\u6307\u5357\u3001\u68c0\u67e5\u6e05\u5355"}
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {[1,2,3].map((_, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <Check className="h-5 w-5 text-secondary mt-0.5 flex-shrink-0" />
+                    <span className="text-sm">
+                      {i === 0 && (language === "zh-HK" ? "\u524d\u6d77\u88dc\u8cbc\u7533\u8acb\u6587\u4ef6\u6a21\u677f" : "\u524d\u6d77\u8865\u8d34\u7533\u8bf7\u6587\u4ef6\u6a21\u677f")}
+                      {i === 1 && (language === "zh-HK" ? "\u500b\u4eba\u9673\u8ff0\u5c08\u696d\u6a21\u677f" : "\u4e2a\u4eba\u9648\u8ff0\u4e13\u4e1a\u6a21\u677f")}
+                      {i === 2 && (language === "zh-HK" ? "\u5275\u696d\u7533\u8acb\u6aa2\u67e5\u6e05\u55ae" : "\u521b\u4e1a\u7533\u8bf7\u68c0\u67e5\u6e05\u5355")}
+                    </span>
+                  </div>
+                ))}
+                <a href="/free-resources">
+                  <Button className="w-full mt-6 gap-2 bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+                    <Download className="h-4 w-4" />
+                    {language === "zh-HK" ? "\u700f\u89bd\u514d\u8cbb\u8cc7\u6e90" : "\u6d4f\u89c8\u514d\u8d39\u8d44\u6e90"}
+                  </Button>
+                </a>
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
       </section>
 
@@ -522,199 +459,90 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Platform & Vision Section */}
-      <section id="platform" className="container py-20">
-        <motion.div 
-          initial={{ opacity: 0 }} 
-          whileInView={{ opacity: 1 }} 
-          viewport={{ once: true }} 
-          className="max-w-5xl mx-auto space-y-16"
-        >
-          {/* Section Header */}
+      {/* Story Section */}
+      <section id="story" className="container py-20 bg-card/30 rounded-3xl my-20">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="max-w-4xl mx-auto space-y-12">
           <div className="text-center space-y-4">
+            <div className="inline-block px-4 py-2 bg-accent/10 border border-accent/30 rounded-full text-accent text-sm font-medium">
+              <Users className="inline h-4 w-4 mr-2" />{t("story.age")}
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold">{t("story.title")}</h2>
+            <p className="text-2xl text-accent font-semibold">{t("story.subtitle")}</p>
+            <p className="text-lg text-muted-foreground">{t("story.intro")}</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="border-accent/30">
+              <CardHeader><CardTitle className="text-accent">{t("story.challenge.title")}</CardTitle></CardHeader>
+              <CardContent><p className="text-sm text-muted-foreground leading-relaxed">{t("story.challenge.content")}</p></CardContent>
+            </Card>
+            <Card className="border-primary/30">
+              <CardHeader><CardTitle className="text-primary">{t("story.solution.title")}</CardTitle></CardHeader>
+              <CardContent><p className="text-sm text-muted-foreground leading-relaxed">{t("story.solution.content")}</p></CardContent>
+            </Card>
+            <Card className="border-secondary/30">
+              <CardHeader><CardTitle className="text-secondary">{t("story.vision.title")}</CardTitle></CardHeader>
+              <CardContent><p className="text-sm text-muted-foreground leading-relaxed">{t("story.vision.content")}</p></CardContent>
+            </Card>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Witness Journey Preview */}
+      <section id="journey-preview" className="container py-20">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="max-w-4xl mx-auto text-center space-y-12">
+          <div className="space-y-4">
             <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-primary text-sm font-medium">
-              <Target className="inline h-4 w-4 mr-2" />
-              {language === "zh-HK" ? "我們的使命" : "我们的使命"}
+              <TrendingUp className="inline h-4 w-4 mr-2" />
+              {language === "zh-HK" ? "\u898b\u8b49\u4e4b\u65c5" : "\u89c1\u8bc1\u4e4b\u65c5"}
             </div>
             <h2 className="text-4xl md:text-5xl font-bold">
-              {language === "zh-HK" 
-                ? "我哋存在，係為咗縮小資訊差距" 
-                : "我们存在，是为了缩小信息差距"}
+              {language === "zh-HK" ? "\u6211\u5011\u7684\u5275\u696d\u65c5\u7a0b" : "\u6211\u4eec\u7684\u521b\u4e1a\u65c5\u7a0b"}
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-muted-foreground">
               {language === "zh-HK"
-                ? "香港、澳門青年有大灣區嘅創業夢，但唔知道有邊啲補貼、點樣申請。我哋建立咗一套 AI 系統，由資格評估到文件生成，全部透明公開，陪你由零走到審批通過。"
-                : "香港、澳门青年有大湾区的创业梦，但不知道有哪些补贴、怎么申请。我们建立了一套 AI 系统，由资格评估到文件生成，全部透明公开，陪你由零走到审批通过。"}
+                ? "\u5f9e\u60f3\u6cd5\u5230\u843d\u5730\uff0c\u6bcf\u4e00\u6b65\u90fd\u5728\u9019\u88e1\u8a18\u9304\u3002\u8ffd\u8e64\u6211\u5011\u7684\u6210\u9577\uff0c\u4e5f\u70ba\u4f60\u7684\u5275\u696d\u4e4b\u8def\u63d0\u4f9b\u53c3\u8003\u3002"
+                : "\u4ece\u60f3\u6cd5\u5230\u843d\u5730\uff0c\u6bcf\u4e00\u6b65\u90fd\u5728\u8fd9\u91cc\u8bb0\u5f55\u3002\u8ffd\u8e2a\u6211\u4eec\u7684\u6210\u957f\uff0c\u4e5f\u4e3a\u4f60\u7684\u521b\u4e1a\u4e4b\u8def\u63d0\u4f9b\u53c2\u8003\u3002"}
             </p>
           </div>
 
-          {/* Service Capabilities Grid */}
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-4 gap-6">
             {[
-              {
-                icon: Zap,
-                color: "text-primary",
-                bg: "bg-primary/10",
-                border: "border-primary/30",
-                title: language === "zh-HK" ? "AI 資格評估" : "AI 资格评估",
-                desc: language === "zh-HK"
-                  ? "3分鐘知道你合唔合資格、預計可拎幾多補貼。唔使估，唔使估估下。"
-                  : "3分钟知道你合不合资格、预计可拿多少补贴。不用估，不用估紧估。",
-                metric: "200+",
-                metricLabel: language === "zh-HK" ? "已完成評估" : "已完成评估",
-              },
-              {
-                icon: FileText,
-                color: "text-secondary",
-                bg: "bg-secondary/10",
-                border: "border-secondary/30",
-                title: language === "zh-HK" ? "AI 文件生成" : "AI 文件生成",
-                desc: language === "zh-HK"
-                  ? "個人陳述、補貼申請文件，即時生成。可以直接下載，亦可以發送到你 email。"
-                  : "个人陈述、补贴申请文件，即时生成。可以直接下载，也可以发送到你 email。",
-                metric: "100%",
-                metricLabel: language === "zh-HK" ? "用户主權" : "用户主权",
-              },
-              {
-                icon: Mail,
-                color: "text-accent",
-                bg: "bg-accent/10",
-                border: "border-accent/30",
-                title: language === "zh-HK" ? "Email 直送服務" : "Email 直送服务",
-                desc: language === "zh-HK"
-                  ? "文件生成後直接 email 俾你。唔使填表、唔使等、我哋主動送到你手。"
-                  : "文件生成后直接 email 给你。不用填表、不用等、我们主动送到你手。",
-                metric: "24h",
-                metricLabel: language === "zh-HK" ? "極速回應" : "极速回应",
-              },
+              { icon: Rocket, date: "2025.03", title: language === "zh-HK" ? "\u7522\u751f\u60f3\u6cd5" : "\u4ea7\u751f\u60f3\u6cd5", desc: language === "zh-HK" ? "\u6c7a\u5b9a\u5317\u4e0a\u524d\u6d77\u5275\u696d" : "\u51b3\u5b9a\u5317\u4e0a\u524d\u6d77\u521b\u4e1a" },
+              { icon: Calendar, date: "2025.08", title: language === "zh-HK" ? "\u516c\u53f8\u8a3b\u518a" : "\u516c\u53f8\u6ce8\u518c", desc: language === "zh-HK" ? "\u524d\u6d77\u6df1\u6e2f\u9752\u5e74\u5922\u5de5\u5834\u5165\u99d0" : "\u524d\u6d77\u6df1\u6e2f\u9752\u5e74\u68a6\u5de5\u573a\u5165\u9a7b" },
+              { icon: Zap, date: "2025.12", title: language === "zh-HK" ? "AI \u5de5\u5177\u4e0a\u7dda" : "AI \u5de5\u5177\u4e0a\u7ebf", desc: language === "zh-HK" ? "\u63a8\u51fa\u8cc7\u683c\u8a55\u4f30\u548c\u6587\u4ef6\u751f\u6210" : "\u63a8\u51fa\u8d44\u683c\u8bc4\u4f30\u548c\u6587\u4ef6\u751f\u6210" },
+              { icon: TrendingUp, date: "2026.04", title: language === "zh-HK" ? "\u670d\u52d9\u767c\u5c55" : "\u670d\u52a1\u53d1\u5c55", desc: language === "zh-HK" ? "\u5efa\u7acb\u5b9a\u50f9\u8a02\u95b1\u6a21\u5f0f" : "\u5efa\u7acb\u5b9a\u4ef7\u8ba2\u9605\u6a21\u5f0f" },
             ].map((item, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-              >
-                <Card className={`h-full border ${item.border} ${item.bg} hover:${item.border} transition-all`}>
-                  <CardHeader className="pb-3">
-                    <div className={`w-12 h-12 ${item.bg} rounded-xl flex items-center justify-center mb-3`}>
-                      <item.icon className={`h-6 w-6 ${item.color}`} />
-                    </div>
-                    <CardTitle className="text-xl">{item.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-                    <div className="pt-3 border-t border-border/50">
-                      <div className="text-2xl font-bold text-primary">{item.metric}</div>
-                      <div className="text-xs text-muted-foreground">{item.metricLabel}</div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Johnny + EVA Partnership Note */}
-          <div className="bg-card/50 border border-border rounded-2xl p-8 text-center space-y-4">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-2">
-              <Rocket className="h-8 w-8 text-primary" />
-            </div>
-            <h3 className="text-2xl font-bold">
-              {language === "zh-HK" 
-                ? "人類判斷 + AI 速度 = 最佳結果" 
-                : "人类判断 + AI 速度 = 最佳结果"}
-            </h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              {language === "zh-HK"
-                ? "Core Machine 係 Johnny 與 AI 系統（EVA）共同運營。Johnny 負責策略方向與客戶關係，AI 負責日常評估與文件生成。你得到嘅係：專業判斷 + 極速效率，兩样都唔使點等。"
-                : "Core Machine 是 Johnny 与 AI 系统（EVA）共同运营。Johnny 负责策略方向与客户关系，AI 负责日常评估与文件生成。你得到的是：专业判断 + 极速效率，两样都不用点等。"}
-            </p>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Company Milestones */}
-      <section id="milestones" className="container py-20 bg-card/30 rounded-3xl">
-        <motion.div 
-          initial={{ opacity: 0 }} 
-          whileInView={{ opacity: 1 }} 
-          viewport={{ once: true }} 
-          className="max-w-4xl mx-auto space-y-12"
-        >
-          <div className="text-center space-y-4">
-            <div className="inline-block px-4 py-2 bg-accent/10 border border-accent/30 rounded-full text-accent text-sm font-medium">
-              <Calendar className="inline h-4 w-4 mr-2" />
-              {language === "zh-HK" ? "平台成長歷程" : "平台成长历程"}
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold">
-              {language === "zh-HK" ? "我哋做到咗乜" : "我们做到了什么"}
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              {language === "zh-HK"
-                ? "每一步都係學習，每個功能都係為咗幫你走少啲冤枉路"
-                : "每一步都是学习，每个功能都是为了帮你走少点冤枉路"}
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { 
-                date: "2025.Q1", 
-                title: language === "zh-HK" ? "系統誕生" : "系统诞生",
-                desc: language === "zh-HK" 
-                  ? "建立初始 AI 評估框架，確認前海創業補貼資格審核邏輯"
-                  : "建立初始 AI 评估框架，确认前海创业补贴资格审核逻辑",
-                icon: Rocket,
-              },
-              { 
-                date: "2025.Q3", 
-                title: language === "zh-HK" ? "服務上線" : "服务上线",
-                desc: language === "zh-HK"
-                  ? "開放免費 AI 評估，超過 200 位港澳青年使用"
-                  : "开放免费 AI 评估，超过 200 位港澳青年使用",
-                icon: Users,
-              },
-              { 
-                date: "2026.Q1", 
-                title: language === "zh-HK" ? "文件生成 + Email 直送" : "文件生成 + Email 直送",
-                desc: language === "zh-HK"
-                  ? "AI 即時生成補貼申請文件，直接 email 俾用戶，唔使任何中介"
-                  : "AI 即时生成补贴申请文件，直接 email 给用户，不用任何中介",
-                icon: FileText,
-              },
-              { 
-                date: "2026.Q2", 
-                title: language === "zh-HK" ? "持續迭代" : "持续迭代",
-                desc: language === "zh-HK"
-                  ? "根據用戶反饋優化流程，目標係幫到更多港澳青年喺大灣區落地"
-                  : "根据用户反馈优化流程，目标是帮到更多港澳青年在大湾区落地",
-                icon: TrendingUp,
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.15 }}
+                className="relative"
               >
                 <Card className="h-full border-border hover:border-primary/50 transition-all">
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 bg-primary/10 rounded-lg">
-                        <item.icon className="h-5 w-5 text-primary" />
-                      </div>
-                      <div className="text-xs font-mono text-muted-foreground">{item.date}</div>
-                    </div>
+                  <CardHeader className="pb-2">
+                    <item.icon className="h-8 w-8 text-primary mb-2" />
+                    <div className="text-xs text-muted-foreground font-mono">{item.date}</div>
                     <CardTitle className="text-lg">{item.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                    <p className="text-sm text-muted-foreground">{item.desc}</p>
                   </CardContent>
                 </Card>
+                {i < 3 && (
+                  <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-px bg-border" />
+                )}
               </motion.div>
             ))}
           </div>
+
+          <a href="/witness-journey">
+            <Button variant="outline" size="lg" className="gap-2">
+              {language === "zh-HK" ? "\u8ffd\u8e64\u6211\u5011\u7684\u6210\u9577" : "\u8ffd\u8e2a\u6211\u4eec\u7684\u6210\u957f"}
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          </a>
         </motion.div>
       </section>
 

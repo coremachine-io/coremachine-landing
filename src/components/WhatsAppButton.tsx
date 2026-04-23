@@ -2,22 +2,10 @@ import { MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-interface WhatsAppButtonProps {
-  phoneNumber: string;
-  message?: string;
-}
-
-export default function WhatsAppButton({ phoneNumber, message }: WhatsAppButtonProps) {
+export default function TelegramButton() {
   const { language } = useLanguage();
 
-  const defaultMessage = language === "zh-HK"
-    ? "你好！我想咨詢關於前海創業嘅服務。"
-    : "你好！我想咨询关于前海创业的服务。";
-
-  const whatsappMessage = message || defaultMessage;
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-
-  const tooltipText = language === "zh-HK" ? "WhatsApp 即時咨詢" : "WhatsApp 即时咨询";
+  const tooltipText = language === "zh-HK" ? "Telegram 聯絡 COO" : "Telegram 联络 COO";
 
   return (
     <motion.div
@@ -32,12 +20,12 @@ export default function WhatsAppButton({ phoneNumber, message }: WhatsAppButtonP
         <div className="absolute bottom-0 right-4 transform translate-y-1/2 rotate-45 w-2 h-2 bg-card border-r border-b border-border" />
       </div>
 
-      {/* WhatsApp Button */}
+      {/* Telegram Button */}
       <motion.a
-        href={whatsappUrl}
+        href="https://t.me/COOCMbot"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center justify-center w-16 h-16 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-full shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-110"
+        className="flex items-center justify-center w-16 h-16 bg-[#0088cc] hover:bg-[#0077b3] text-white rounded-full shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-110"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
@@ -46,7 +34,7 @@ export default function WhatsAppButton({ phoneNumber, message }: WhatsAppButtonP
 
       {/* Pulsing Ring Animation */}
       <motion.div
-        className="absolute inset-0 rounded-full bg-[#25D366] opacity-30"
+        className="absolute inset-0 rounded-full bg-[#0088cc] opacity-30"
         animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0, 0.3] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       />

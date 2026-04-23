@@ -128,6 +128,91 @@ export async function sendConsultationEmail(params: {
 }
 
 /**
+ * Sends the AI-generated document directly to the user's email.
+ */
+export async function sendAIDocumentEmail(params: {
+  toEmail: string;
+  name: string;
+  documentType: "subsidy_application" | "personal_statement";
+  language: "zh-HK" | "zh-CN";
+  documentContent: string;
+}): Promise<boolean> {
+  const { toEmail, name, documentType, language, documentContent } = params;
+  if (!toEmail) return false;
+
+  const isHK = language === "zh-HK";
+
+  const docLabel = documentType === "subsidy_application"
+    ? (isHK ? "前海創業補貼申請文件" : "前海创业补贴申请文件")
+    : (isHK ? "個人陳述文件" : "个人陈述文件");
+
+  const subject = isHK
+    ? `✅ 你的 ${docLabel} — Core Machine AI`
+    : `✅ 你的 ${docLabel} — Core Machine AI`;
+
+  // Convert markdown content to simple HTML for email
+  const contentHtml = escapeHtml(documentContent)
+    .replace(/\n\n/g, '</p><p style="margin: 16px 0; line-height: 1.8; color: #374151;">')
+    .replace(/\n/g, '<br/>');
+
+  const html = `
+<!DOCTYPE html>
+<html lang="${isHK ? "zh-HK" : "zh-CN"}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${subject}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: #1f2937; margin: 0; padding: 0; }
+    .wrapper { max-width: 680px; margin: 40px auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+    .header { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); padding: 40px; text-align: center; }
+    .header h1 { color: white; margin: 0; font-size: 24px; font-weight: 600; }
+    .header p { color: rgba(255,255,255,0.85); margin: 8px 0 0; font-size: 14px; }
+    .body { padding: 40px; }
+    .doc-label { display: inline-block; background: #f3f4f6; color: #6b7280; font-size: 12px; padding: 4px 12px; border-radius: 20px; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .doc-content { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 32px; font-size: 15px; line-height: 1.8; color: #374151; white-space: pre-wrap; word-break: break-word; }
+    .doc-content p { margin: 16px 0; }
+    .cta { text-align: center; margin-top: 32px; }
+    .cta a { display: inline-block; background: #6366f1; color: white; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 15px; }
+    .cta a:hover { background: #4f46e5; }
+    .footer { padding: 24px 40px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #9ca3af; text-align: center; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <h1>🎉 ${isHK ? "你的文件已生成" : "你的文件已生成"}</h1>
+      <p>${isHK ? "由 Core Machine AI 為你量身撰寫" : "由 Core Machine AI 为你量身撰写"}</p>
+    </div>
+    <div class="body">
+      <p class="doc-label">${docLabel}</p>
+      <div class="doc-content">
+        <p style="margin: 16px 0; line-height: 1.8; color: #374151;">${contentHtml}</p>
+      </div>
+      <div class="cta">
+        <a href="${isHK ? "https://coremachine.io" : "https://coremachine.io"}">${isHK ? "了解更多 Core Machine 服務" : "了解更多 Core Machine 服务"}</a>
+      </div>
+    </div>
+    <div class="footer">
+      <p>${isHK ? "此郵件由 Core Machine 官網自動發送" : "此邮件由 Core Machine 官网自动发送"} — ${new Date().toLocaleString(isHK ? "zh-HK" : "zh-CN")}</p>
+      <p>${isHK ? "如有任何問題，歡迎回覆此電郵至 iocoremachine@gmail.com" : "如有任何问题，欢迎回复此电邮至 iocoremachine@gmail.com"}</p>
+    </div>
+  </div>
+</body>
+</html>
+`;
+
+  // Send to user
+  const userSent = await sendEmail({
+    to: toEmail,
+    subject,
+    html,
+  });
+
+  return userSent;
+}
+
+/**
  * Sends an AI document generation notification email.
  */
 export async function sendAIGenerationEmail(params: {

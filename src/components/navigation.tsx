@@ -7,6 +7,7 @@ const links = [
   { href: '/', label: 'Home' },
   { href: '/services', label: '服務' },
   { href: '/qianhai', label: '前海機會' },
+  { href: '/retail-ai', label: '零售AI轉型' },
   { href: '/pricing', label: '收費模式' },
   { href: '/contact', label: '聯絡我們' },
 ];

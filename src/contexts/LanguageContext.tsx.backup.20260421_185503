@@ -15,7 +15,7 @@ const translations: Record<Language, Record<string, string>> = {
   "zh-HK": {
     // Navigation
     "nav.services": "服務方案",
-    "nav.story": "點解有張地圖",
+    "nav.story": "創辦人故事",
     "nav.templates": "免費模板",
     "nav.contact": "免費咨詢",
     
@@ -49,16 +49,16 @@ const translations: Record<Language, Record<string, string>> = {
     "services.cta": "立即咨詢",
     
     // Story
-    "story.title": "點解有張地圖",
-    "story.subtitle": "一個38歲香港人嘅歸零重啟",
+    "story.title": "創辦人故事",
+    "story.subtitle": "我行過嘅路，教你避坑",
     "story.age": "38歲",
-    "story.intro": "2023年，我38歲，在香港職場遇到瓶頸。我決定北上前海，從零開始。來到這裡發現，最難的並非做生意，而是搞清哪裡有資金領取、如何領取。我用了9個月自己摸索，走遍了所有彎路。這張地圖，就是我用心血繪製出來的。",
-    "story.challenge.title": "職場瓶頸",
-    "story.challenge.content": "38歲，從事了十多年金融和科技行業，發現香港的上升空間越來越窄。想轉型，但成本太高、風險太大。我問自己：是否要這樣做到退休？",
-    "story.solution.title": "歸零出發",
-    "story.solution.content": "我帶著兩個行李箱，一個人搬去前海。從找寫字樓、註冊公司、到搞清哪些補貼適合我申請——全部親自處理。走錯路、填錯表、漏交文件，每樣都經歷過。",
-    "story.vision.title": "畫張地圖俾你",
-    "story.vision.content": "我發現，九成香港創業者都和我一樣：不了解有什麼資助、不懂得如何申請、擔心受騙。所以我創立了 Core Machine——並非代你前行，而是繪製地圖給你，讓你學會自己前行。因為最可靠的導航，是你自己學會看路。",
+    "story.intro": "我係一個38歲嘅香港人，曾經喺職場遇到瓶頸，決定北上前海重新開始。呢條路唔易行，但我相信每個人都有翻身嘅機會。",
+    "story.challenge.title": "挑戰與困境",
+    "story.challenge.content": "喺香港，我面對住激烈嘅競爭同有限嘅上升空間。38歲，好多人會選擇安穩，但我選擇咗歸零再出發。北上創業嘅過程充滿挑戰：語言障礙、政策複雜、資金有限。但正正係呢啲挑戰，令我更加堅定。",
+    "story.solution.title": "解決方案",
+    "story.solution.content": "我花咗大量時間研究前海政策，親身經歷咗公司註冊、補貼申請嘅全過程。我發現，好多香港創業者都面對住同樣嘅困難。於是，我決定創辦 Core Machine，用我嘅經驗幫助更多人避開我行過嘅坑。",
+    "story.vision.title": "願景與使命",
+    "story.vision.content": "我哋嘅目標唔單止係幫你完成註冊，更係成為你創業路上嘅夥伴。我哋提供嘅唔單止係服務，仲有真實嘅經驗同避坑指南。因為我明白，創業路上最寶貴嘅，係有人行過呢條路，願意分享佢嘅故事。",
     
     // Templates
     "templates.title": "免費 AI 模板下載",
@@ -150,7 +150,7 @@ const translations: Record<Language, Record<string, string>> = {
   "zh-CN": {
     // Navigation
     "nav.services": "服务方案",
-    "nav.story": "為什麼有張地图",
+    "nav.story": "创办人故事",
     "nav.templates": "免费模板",
     "nav.contact": "免费咨询",
     
@@ -184,16 +184,16 @@ const translations: Record<Language, Record<string, string>> = {
     "services.cta": "立即咨询",
     
     // Story
-    "story.title": "為什麼有張地图",
-    "story.subtitle": "一個38歲香港人的歸零重啟",
-    "story.age": "38歲",
-    "story.intro": "2023年，我38歲，在香港職場撞到天花板。我決定北上前海，從零開始。下來發現，最難的不是做生意，是搞清哪裡有錢拿、怎麼拿。我用了9個月自己摸索，走遍所有彎路。這張地圖，就是我用血淚畫出來的。",
-    "story.challenge.title": "職場瓶頸",
-    "story.challenge.content": "38歲，做過10幾年金融和科技行業，發現香港的上升空間越來越窄。想轉型，但成本太高、風險太大。我問自己：是不是要這樣做到退休？",
-    "story.solution.title": "歸零出發",
-    "story.solution.content": "我帶著兩個行李箱，一個人搬去前海。從找寫字樓、註冊公司、到搞清哪些補貼適合我申請——全部自己來。走錯路、填錯表、漏交文件，樣樣試過。",
-    "story.vision.title": "畫張地圖給你",
-    "story.vision.content": "我發現，九成香港創業者都和我一樣：不知道有什麼資助、不會怎麼申請、怕被騙。所以我做了 Core Machine——不是替你走，是畫張地圖給你，讓你自己會走。因為最可靠的導航，是你自己學會看路。",
+    "story.title": "创办人故事",
+    "story.subtitle": "我走过的路，教你避坑",
+    "story.age": "38岁",
+    "story.intro": "我是一个38岁的香港人，曾经在职场遇到瓶颈，决定北上前海重新开始。这条路不容易，但我相信每个人都有翻身的机会。",
+    "story.challenge.title": "挑战与困境",
+    "story.challenge.content": "在香港，我面对着激烈的竞争和有限的上升空间。38岁，很多人会选择安稳，但我选择了归零再出发。北上创业的过程充满挑战：语言障碍、政策复杂、资金有限。但正是这些挑战，让我更加坚定。",
+    "story.solution.title": "解决方案",
+    "story.solution.content": "我花了大量时间研究前海政策，亲身经历了公司注册、补贴申请的全过程。我发现，很多香港创业者都面对着同样的困难。于是，我决定创办 Core Machine，用我的经验帮助更多人避开我走过的坑。",
+    "story.vision.title": "愿景与使命",
+    "story.vision.content": "我们的目标不仅是帮您完成注册，更是成为您创业路上的伙伴。我们提供的不仅是服务，还有真实的经验和避坑指南。因为我明白，创业路上最宝贵的，是有人走过这条路，愿意分享他的故事。",
     
     // Templates
     "templates.title": "免费 AI 模板下载",

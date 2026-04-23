@@ -5,7 +5,7 @@ import { publicProcedure, rateLimitedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { createConsultation, trackTemplateDownload, getCredits, deductCredit, canUseAI } from "./db";
-import { sendConsultationEmail, sendAIGenerationEmail } from "./_core/email";
+import { sendConsultationEmail, sendAIGenerationEmail, sendAIDocumentEmail } from "./_core/email";
 import { invokeMiniMaxLLM } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import { stripeRouter } from "./_core/stripe";
@@ -169,6 +169,23 @@ export const appRouter = router({
           }
 
           const generatedContent = response.choices?.[0]?.message?.content || "";
+
+          // If user provided email, send the document directly to them
+          if (input.email) {
+            try {
+              await sendAIDocumentEmail({
+                toEmail: input.email,
+                name: input.userInfo.name,
+                documentType: input.documentType,
+                language: input.language,
+                documentContent: generatedContent,
+              });
+              console.log(`[Email] Document sent to user: ${input.email}`);
+            } catch (emailError) {
+              console.warn("[Email] Failed to send document to user:", emailError);
+              // Non-blocking — document still returns to user via download
+            }
+          }
 
           // 發送電郵通知（可選 — 不影響文件生成）
           try {
