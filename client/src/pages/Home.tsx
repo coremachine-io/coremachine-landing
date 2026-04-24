@@ -652,7 +652,7 @@ export default function Home() {
                 <h3 className="text-2xl font-bold flex items-center gap-2"><Sparkles className="h-6 w-6 text-primary" />{t("ai.title")}</h3>
                 <p className="text-sm text-muted-foreground mt-1">{t("ai.subtitle")}</p>
               </div>
-              <button onClick={() => setShowAIGenerator(false)} className="text-muted-foreground hover:text-foreground text-2xl">\u00d7</button>
+              <button onClick={() => setShowAIGenerator(false)} className="text-muted-foreground hover:text-foreground text-2xl">&times;</button>
             </div>
             <div className="p-6 space-y-6">
               {/* Progress */}
