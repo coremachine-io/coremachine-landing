@@ -252,7 +252,7 @@ export default function Pricing() {
                   className="w-full mt-6"
                   asChild
                 >
-                  <a href="/#contact">
+                  <a href="/#contact-form">
                     {t("pricing.pro.cta")}
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </a>
@@ -278,7 +278,7 @@ export default function Pricing() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild className="bg-primary hover:bg-primary/90">
-                <a href="/#contact">
+                <a href="/#contact-form">
                   <Building2 className="h-4 w-4 mr-2" />
                   {t("pricing.enterprise.cta")}
                   <ArrowRight className="h-4 w-4 ml-2" />

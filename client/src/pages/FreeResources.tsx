@@ -128,7 +128,7 @@ export default function FreeResources() {
               <Button size="lg" asChild>
                 <Link to="/free-assessment">立即評估資格</Link>
               </Button>
-              <Button size="lg" variant="outline" onClick={() => window.location.href = "/#vision"}>
+              <Button size="lg" variant="outline" onClick={() => window.location.href = "/#vision-section"}>
                 試用 AI 生成文件
               </Button>
             </div>
@@ -145,7 +145,7 @@ export default function FreeResources() {
               <Link to="/pricing">查看定價</Link>
             </Button>
             <Button asChild>
-              <Link to="/#contact">免費咨詢</Link>
+              <Link to="/#contact-form">免費咨詢</Link>
             </Button>
           </div>
         </section>

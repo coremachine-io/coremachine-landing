@@ -196,9 +196,7 @@ export default function Home() {
           {/* Main Headline */}
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight">
             <span className="neon-text">
-              {language === "zh-HK" 
-                ? "我 38 歲，由香港走到前海" 
-                : "我 38 岁，由香港走到前海"}
+              {t("founder.greeting")}
             </span>
             <br />
             <span className="text-3xl md:text-5xl text-muted-foreground mt-4 block">
@@ -260,7 +258,7 @@ export default function Home() {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-5xl mx-auto space-y-12">
           <div className="text-center space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold">
-              {language === "zh-HK" ? "九成香港創業者都遇到這三個問題" : "九成香港创业者都遇到这三个问题"}
+              {t("founder.problem.title")}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               {language === "zh-HK"
@@ -273,7 +271,7 @@ export default function Home() {
               <CardHeader className="pb-3">
                 <AlertCircle className="h-8 w-8 text-destructive mb-2" />
                 <CardTitle className="text-lg">
-                  {language === "zh-HK" ? "不了解有什麼資助適合自己" : "不知道有什么资助适合自己"}
+                  {t("founder.problem.card1")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -288,7 +286,7 @@ export default function Home() {
               <CardHeader className="pb-3">
                 <FileText className="h-8 w-8 text-amber-600 mb-2" />
                 <CardTitle className="text-lg">
-                  {language === "zh-HK" ? "文件繁復，不知如何填寫" : "文件复杂，不知道怎么填"}
+                  {t("founder.problem.card2")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -303,7 +301,7 @@ export default function Home() {
               <CardHeader className="pb-3">
                 <Users className="h-8 w-8 text-secondary mb-2" />
                 <CardTitle className="text-lg">
-                  {language === "zh-HK" ? "擔心受骗，對中介缺乏信任" : "怕被骗，不敢信中介"}
+                  {t("founder.problem.card3")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -339,7 +337,7 @@ export default function Home() {
               {language === "zh-HK" ? "你適合嗎？" : "你适合吗？"}
             </div>
             <h2 className="text-3xl md:text-4xl font-bold">
-              {language === "zh-HK" ? "我哋為呢種人而設" : "我们为这种人而设"}
+              {t("founder.target.title")}
             </h2>
             <p className="text-lg text-muted-foreground">
               {language === "zh-HK"
@@ -351,7 +349,7 @@ export default function Home() {
           {/* 適合的人 */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-primary">
-              {language === "zh-HK" ? "✅ 你係我哋嘅目標客戶如果：" : "✅ 你是我们的目标客户如果："}
+              {t("founder.target.checklist")}
             </h3>
             {[
               language === "zh-HK" 
@@ -380,7 +378,7 @@ export default function Home() {
           {/* 不適合的人 */}
           <div className="space-y-4 pt-4 border-t border-border">
             <h3 className="text-lg font-semibold text-muted-foreground">
-              {language === "zh-HK" ? "❌ 你唔係我哋嘅目標客戶如果：" : "❌ 你不是我们的目标客户如果："}
+              {t("founder.notTarget.title")}
             </h3>
             {[
               language === "zh-HK"
@@ -420,7 +418,7 @@ export default function Home() {
       </section>
 
       {/* Vision & Mission Section — 願景與使命 (Replaces fake case study) */}
-      <section id="vision" className="container py-24">
+      <section id="vision-section" className="container py-24">
         <motion.div 
           initial={{ opacity: 0 }} 
           whileInView={{ opacity: 1 }} 
@@ -433,9 +431,7 @@ export default function Home() {
           </div>
           
           <h2 className="text-4xl md:text-5xl font-bold">
-            {language === "zh-HK" 
-              ? "我哋存在，係為咗縮小資訊差距" 
-              : "我们存在，是为了缩小资讯差距"}
+            {t("founder.mission.title")}
           </h2>
           
           <p className="text-xl text-muted-foreground leading-relaxed">
@@ -515,9 +511,7 @@ export default function Home() {
               {language === "zh-HK" ? "核心技術" : "核心技术"}
             </div>
             <h2 className="text-4xl md:text-5xl font-bold">
-              {language === "zh-HK" 
-                ? "雙模型把關，你嘅文件有兩次 AI 審閱" 
-                : "双模型把关，你的文件有两次 AI 审阅"}
+              {t("founder.dualModel.title")}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               {language === "zh-HK"
@@ -669,7 +663,7 @@ export default function Home() {
               {language === "zh-HK" ? "創辦人故事" : "创始人故事"}
             </div>
             <h2 className="text-4xl md:text-5xl font-bold">
-              {language === "zh-HK" ? "點解係我？我可以幫你乜？" : "为什么是我？我可以帮你什么？"}
+              {t("founder.why.title")}
             </h2>
           </div>
 
@@ -683,7 +677,7 @@ export default function Home() {
                 </div>
                 <div className="space-y-3 flex-1">
                   <h3 className="text-xl font-bold">
-                    {language === "zh-HK" ? "Q1：點解要放棄香港嘅一切？" : "Q1：为什么要放弃香港的一切？"}
+                    {t("founder.why.q1")}
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
                     {language === "zh-HK"
@@ -707,7 +701,7 @@ export default function Home() {
                 </div>
                 <div className="space-y-3 flex-1">
                   <h3 className="text-xl font-bold">
-                    {language === "zh-HK" ? "Q2：北上之後遇到咩困難？" : "Q2：北上之后遇到什么困难？"}
+                    {t("founder.why.q2")}
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
                     {language === "zh-HK"
@@ -731,7 +725,7 @@ export default function Home() {
                 </div>
                 <div className="space-y-3 flex-1">
                   <h3 className="text-xl font-bold">
-                    {language === "zh-HK" ? "Q3：點解我要做 Core Machine？" : "Q3：为什么我要做 Core Machine？"}
+                    {t("founder.why.q3")}
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
                     {language === "zh-HK"
@@ -781,7 +775,7 @@ export default function Home() {
               {language === "zh-HK" ? "平台成長歷程" : "平台成长历程"}
             </div>
             <h2 className="text-4xl md:text-5xl font-bold">
-              {language === "zh-HK" ? "我哋做到咗乜" : "我们做到了什么"}
+              {t("founder.achievements.title")}
             </h2>
             <p className="text-lg text-muted-foreground">
               {language === "zh-HK"
@@ -853,7 +847,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="container py-20 bg-card/30 rounded-3xl my-20">
+      <section id="contact-form" className="container py-20 bg-card/30 rounded-3xl my-20">
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="max-w-2xl mx-auto">
           <div className="text-center space-y-4 mb-12">
             <h2 className="text-4xl md:text-5xl font-bold">{t("contact.title")}</h2>
@@ -1041,6 +1035,13 @@ export default function Home() {
                 <a href="/free-resources" className="block hover:text-primary transition-colors">{t("footer.resources.templates")}</a>
                 <a href="/free-resources#eligibility-checker" className="block hover:text-primary transition-colors">{language === "zh-HK" ? "資助配對" : "资助配对"}</a>
                 <a href="/free-assessment" className="block hover:text-primary transition-colors">{language === "zh-HK" ? "AI 評估" : "AI 评估"}</a>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <h3 className="font-semibold">{t("footer.legal.title")}</h3>
+              <div className="space-y-2 text-sm text-muted-foreground">
+                <a href="/terms" className="block hover:text-primary transition-colors">{t("footer.legal.terms")}</a>
+                <a href="/privacy" className="block hover:text-primary transition-colors">{t("footer.legal.privacy")}</a>
               </div>
             </div>
           </div>
