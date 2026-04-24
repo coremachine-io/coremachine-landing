@@ -149,31 +149,31 @@ export default function Home() {
       <section className="container py-20 md:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="max-w-4xl mx-auto text-center space-y-8">
           <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-primary text-sm font-medium mb-4">
-            <Sparkles className="inline h-4 w-4 mr-2" />{language === "zh-HK" ? "AI 幫你\u7533\u8acb\u524d\u6d77\u5275\u696d\u8cc7\u52a9" : "AI \u5e2e\u4f60\u7533\u8bf7\u524d\u6d77\u521b\u4e1a\u8d44\u52a9"}
+            <Sparkles className="inline h-4 w-4 mr-2" />{language === "zh-HK" ? "AI 幫你\u651e\u653f\u5e9c\u8cc7\u52a9" : "AI \u5e2e\u4f60\u62ff\u653f\u5e9c\u8d44\u52a9"}
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-            <span className="neon-text">{language === "zh-HK" ? "\u524d\u6d77\u5275\u696d\uff0cAI \u5f15\u8def" : "\u524d\u6d77\u521b\u4e1a\uff0cAI \u5f15\u8def"}</span><br />
-            <span className="text-3xl md:text-5xl text-muted-foreground mt-4 block">{language === "zh-HK" ? "\u4ece\u8cc7\u683c\u8a55\u4f30\u5230\u6587\u4ef6\u751f\u6210\uff0c30 \u79d2\u641e\u5b9a" : "\u4ece\u8d44\u683c\u8bc4\u4f30\u5230\u6587\u4ef6\u751f\u6210\uff0c30 \u79d2\u641e\u5b9a"}</span>
+            <span className="neon-text">{language === "zh-HK" ? "AI \u5e6b\u4f60\u651e\u653f\u5e9c\u8cc7\u52a9" : "AI \u5e2e\u4f60\u62ff\u653f\u5e9c\u8d44\u52a9"}</span><br />
+            <span className="text-3xl md:text-5xl text-muted-foreground mt-4 block">{language === "zh-HK" ? "\u5275\u696d\u8def\u4e0a\u5514\u4f7f\u5b64\u8ecd\u4f5c\u6230" : "\u521b\u4e1a\u8def\u4e0a\u4e0d\u7528\u5b64\u519b\u4f5c\u6218"}</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             {language === "zh-HK"
-              ? "\u5c08\u70ba\u6e2f\u6fb3\u9752\u5e74\u8a2d\u8a08\u3002\u8f38\u5165\u4f60\u7684\u80cc\u666f\uff0cAI \u5373\u6642\u8a55\u4f30\u4f60\u7684\u8cc7\u52a9\u8cc7\u683c\uff0c\u751f\u6210\u5c08\u696d\u7533\u8acb\u6587\u4ef6\u3002\u5b8c\u5168\u514d\u8cbb\uff0c\u7121\u9700\u8a3b\u518a\u3002"
-              : "\u4e13\u4e3a\u6e2f\u6fb3\u9752\u5e74\u8bbe\u8ba1\u3002\u8f93\u5165\u4f60\u7684\u80cc\u666f\uff0cAI \u5373\u65f6\u8bc4\u4f30\u4f60\u7684\u8d44\u52a9\u8d44\u683c\uff0c\u751f\u6210\u4e13\u4e1a\u7533\u8bf7\u6587\u4ef6\u3002\u5b8c\u5168\u514d\u8d39\uff0c\u65e0\u9700\u6ce8\u518c\u3002"}
+              ? "\u5c08\u70ba\u6e2f\u6fb3\u9752\u5e74\u5275\u696d\u8005\u8a2d\u8a08\u3002\u7121\u8ad6\u4f60\u60f3\u7533\u8acb\u524d\u6d77\u88dc\u8cbc\u3001\u5275\u696d\u57fa\u5730\u5165\u99d0\uff0c\u9084\u662f\u5176\u4ed6\u653f\u5e9c\u8cc7\u52a9\uff0cAI \u90fd\u80fd\u5e6b\u4f60\u5373\u6642\u8a55\u4f30\u8cc7\u683c\u3001\u751f\u6210\u5c08\u696d\u6587\u4ef6\u3002\u5b8c\u5168\u514d\u8cbb\uff0c\u7121\u9700\u8a3b\u518a\u3002"
+              : "\u4e13\u4e3a\u6e2f\u6fb3\u9752\u5e74\u521b\u4e1a\u8005\u8bbe\u8ba1\u3002\u65e0\u8bba\u4f60\u60f3\u7533\u8bf7\u524d\u6d77\u8865\u8d34\u3001\u521b\u4e1a\u57fa\u5730\u5165\u9a7b\uff0c\u8fd8\u662f\u5176\u4ed6\u653f\u5e9c\u8d44\u52a9\uff0cAI \u90fd\u80fd\u5e2e\u4f60\u5373\u65f6\u8bc4\u4f30\u8d44\u683c\u3001\u751f\u6210\u4e13\u4e1a\u6587\u4ef6\u3002\u5b8c\u5168\u514d\u8d39\uff0c\u65e0\u9700\u6ce8\u518c\u3002"}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button size="lg" onClick={() => setShowAIGenerator(true)} className="gap-2 text-lg px-8">
               <Zap className="h-5 w-5" />
               {language === "zh-HK" ? "\u514d\u8cbb AI \u8cc7\u683c\u8a55\u4f30" : "\u514d\u8d39 AI \u8d44\u683c\u8bc4\u4f30"}
             </Button>
-            <Button size="lg" variant="outline" onClick={() => scrollToSection("story")} className="gap-2 text-lg px-8">
+            <Button size="lg" variant="outline" onClick={() => scrollToSection("journey")} className="gap-2 text-lg px-8">
               <Users className="h-5 w-5" />
-              {language === "zh-HK" ? "\u4e86\u89e3\u6211\u5011\u7684\u6545\u4e8b" : "\u4e86\u89e3\u6211\u4eec\u7684\u6545\u4e8b"}
+              {language === "zh-HK" ? "\u770b\u771f\u5be6\u6848\u4f8b" : "\u770b\u771f\u5b9e\u6848\u4f8b"}
             </Button>
           </div>
           <p className="text-sm text-muted-foreground">
             {language === "zh-HK"
-              ? "\u5df2\u6709 200+ \u6e2f\u6fb3\u9752\u5e74\u4f7f\u7528\u6211\u5011\u7684 AI \u5de5\u5177\u8a55\u4f30\u5275\u696d\u8cc7\u683c"
-              : "\u5df2\u6709 200+ \u6e2f\u6fb3\u9752\u5e74\u4f7f\u7528\u6211\u4eec\u7684 AI \u5de5\u5177\u8bc4\u4f30\u521b\u4e1a\u8d44\u683c"}
+              ? "\u5df2\u6709 200+ \u6e2f\u6fb3\u9752\u5e74\u4f7f\u7528\u6211\u5011\u7684 AI \u5de5\u5177\u8a55\u4f30\u653f\u5e9c\u8cc7\u52a9\u8cc7\u683c"
+              : "\u5df2\u6709 200+ \u6e2f\u6fb3\u9752\u5e74\u4f7f\u7528\u6211\u4eec\u7684 AI \u5de5\u5177\u8bc4\u4f30\u653f\u5e9c\u8d44\u52a9\u8d44\u683c"}
           </p>
         </motion.div>
       </section>
@@ -267,58 +267,323 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Story Section */}
-      <section id="story" className="container py-20 bg-card/30 rounded-3xl my-20">
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="max-w-4xl mx-auto space-y-12">
+      {/* Journey Section - Virtual Case Study */}
+      <section id="journey" className="container py-20 bg-card/30 rounded-3xl my-20">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="max-w-5xl mx-auto space-y-12">
           <div className="text-center space-y-4">
-            <div className="inline-block px-4 py-2 bg-accent/10 border border-accent/30 rounded-full text-accent text-sm font-medium">
-              <Users className="inline h-4 w-4 mr-2" />{t("story.age")}
+            <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-primary text-sm font-medium">
+              <TrendingUp className="inline h-4 w-4 mr-2" />
+              {language === "zh-HK" ? "見證之旅" : "见证之旅"}
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold">{t("story.title")}</h2>
-            <p className="text-2xl text-accent font-semibold">{t("story.subtitle")}</p>
-            <p className="text-lg text-muted-foreground">{t("story.intro")}</p>
+            <h2 className="text-4xl md:text-5xl font-bold">
+              {language === "zh-HK" ? "一個真實的創業故事" : "一个真实的创业故事"}
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              {language === "zh-HK"
+                ? "這是一個虛擬案例，展示我們如何協助港澳青年走過創業的每一步"
+                : "这是一个虚拟案例，展示我们如何协助港澳青年走过创业的每一步"}
+            </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-accent/30">
-              <CardHeader><CardTitle className="text-accent">{t("story.challenge.title")}</CardTitle></CardHeader>
-              <CardContent><p className="text-sm text-muted-foreground leading-relaxed">{t("story.challenge.content")}</p></CardContent>
+
+          {/* Case Study Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            <Card className="border-2 border-primary/30 overflow-hidden">
+              <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-6 md:p-8">
+                <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
+                  <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <Users className="h-8 w-8 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold">
+                      {language === "zh-HK" ? "陳生，35歲" : "陈生，35岁"}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {language === "zh-HK"
+                        ? "香港人，前金融分析師，想在前海創業做科技平台"
+                        : "香港人，前金融分析师，想在前海创业做科技平台"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <CardContent className="p-6 md:p-8">
+                <div className="grid md:grid-cols-3 gap-6">
+                  {/* Step 1 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">1</div>
+                      <h4 className="font-semibold">
+                        {language === "zh-HK" ? "資格評估" : "资格评估"}
+                      </h4>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {language === "zh-HK"
+                        ? "陳生輸入自己的背景，AI 30 秒就評估出他合不合資申請前海深港青年夢工場的補貼。結果：✅ 符合資格！"
+                        : "陈生输入自己的背景，AI 30 秒就评估出他合不合资申请前海深港青年梦工场的补贴。结果：✅ 符合资格！"}
+                    </p>
+                  </div>
+                  {/* Step 2 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center text-sm font-bold">2</div>
+                      <h4 className="font-semibold">
+                        {language === "zh-HK" ? "文件生成" : "文件生成"}
+                      </h4>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {language === "zh-HK"
+                        ? "AI 自動生成專業的個人陳述書和補貼申請文件，根據陳生的金融背景和科技創業方向量身打造。"
+                        : "AI 自动生成专业的个人陈述书和补贴申请文件，根据陈生的金融背景和科技创业方向量身打造。"}
+                    </p>
+                  </div>
+                  {/* Step 3 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-accent text-accent-foreground flex items-center justify-center text-sm font-bold">3</div>
+                      <h4 className="font-semibold">
+                        {language === "zh-HK" ? "專業支持" : "专业支持"}
+                      </h4>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {language === "zh-HK"
+                        ? "我們的專業團隊協助審核文件，提供改進建議，並引導陳生完成整個申請流程。"
+                        : "我们的专业团队协助审核文件，提供改进建议，并引导陈生完成整个申请流程。"}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-8 p-4 bg-primary/5 border border-primary/20 rounded-xl">
+                  <p className="text-sm text-center">
+                    <span className="font-semibold text-primary">
+                      {language === "zh-HK" ? "結果：" : "结果："}
+                    </span>
+                    {language === "zh-HK"
+                      ? "陳生成功入駐前海深港青年夢工場，獲得初期補貼支持，現在公司已經進入營運階段。"
+                      : "陈生成功入驻前海深港青年梦工场，获得初期补贴支持，现在公司已经进入营运阶段。"}
+                  </p>
+                </div>
+              </CardContent>
             </Card>
-            <Card className="border-primary/30">
-              <CardHeader><CardTitle className="text-primary">{t("story.solution.title")}</CardTitle></CardHeader>
-              <CardContent><p className="text-sm text-muted-foreground leading-relaxed">{t("story.solution.content")}</p></CardContent>
-            </Card>
-            <Card className="border-secondary/30">
-              <CardHeader><CardTitle className="text-secondary">{t("story.vision.title")}</CardTitle></CardHeader>
-              <CardContent><p className="text-sm text-muted-foreground leading-relaxed">{t("story.vision.content")}</p></CardContent>
-            </Card>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Platform & Vision Section */}
+      <section id="platform" className="container py-20">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="max-w-4xl mx-auto text-center space-y-12">
+          <div className="space-y-4">
+            <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-primary text-sm font-medium">
+              <Rocket className="inline h-4 w-4 mr-2" />
+              {language === "zh-HK" ? "\u5e73\u53f0\u9858\u666f" : "\u5e73\u53f0\u613f\u666f"}
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold">
+              {language === "zh-HK" ? "\u6211\u5011\u662f\u8ab0\uff0c\u6211\u5011\u60f3\u505a\u4ec0\u9ebc" : "\u6211\u4eec\u662f\u8c01\uff0c\u6211\u4eec\u60f3\u505a\u4ec0\u4e48"}
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 text-left">
+            {/* What We Are */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <Card className="h-full border-2 border-primary/30">
+                <CardHeader>
+                  <CardTitle className="text-2xl text-primary">
+                    {language === "zh-HK" ? "\u6211\u5011\u662f\u4ec0\u9ebc" : "\u6211\u4eec\u662f\u4ec0\u4e48"}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    {language === "zh-HK"
+                      ? "CoreMachine \u662f\u4e00\u500b\u5c08\u70ba\u6e2f\u6fb3\u9752\u5e74\u5275\u696d\u8005\u6253\u9020\u7684 AI \u8cc7\u52a9\u5e73\u53f0\u3002\u6211\u5011\u7684\u4f7f\u547d\u662f\u7528\u4eba\u5de5\u667a\u80fd\u964d\u4f4e\u5275\u696d\u9580\u6abb\uff0c\u8b93\u6bcf\u4e00\u500b\u6709\u7406\u60f3\u7684\u6e2f\u6fb3\u9752\u5e74\u90fd\u80fd\u5feb\u901f\u3001\u4fbf\u6377\u5730\u7372\u53d6\u653f\u5e9c\u8cc7\u52a9\u3001\u5b8c\u6210\u5275\u696d\u7533\u8acb\u3002"
+                      : "CoreMachine \u662f\u4e00\u4e2a\u4e13\u4e3a\u6e2f\u6fb3\u9752\u5e74\u521b\u4e1a\u8005\u6253\u9020\u7684 AI \u8d44\u52a9\u5e73\u53f0\u3002\u6211\u4eec\u7684\u4f7f\u547d\u662f\u7528\u4eba\u5de5\u667a\u80fd\u964d\u4f4e\u521b\u4e1a\u95e8\u69db\uff0c\u8ba9\u6bcf\u4e00\u4e2a\u6709\u7406\u60f3\u7684\u6e2f\u6fb3\u9752\u5e74\u90fd\u80fd\u5feb\u901f\u3001\u4fbf\u6377\u5730\u83b7\u53d6\u653f\u5e9c\u8d44\u52a9\u3001\u5b8c\u6210\u521b\u4e1a\u7533\u8bf7\u3002"}
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-start gap-3">
+                      <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                      <span className="text-sm">
+                        {language === "zh-HK" ? "AI \u8cc7\u683c\u8a55\u4f30\u5de5\u5177\uff1a30 \u79d2\u77e5\u9053\u4f60\u5408\u54ea\u7a2e\u8cc7\u52a9" : "AI \u8d44\u683c\u8bc4\u4f30\u5de5\u5177\uff1a30 \u79d2\u77e5\u9053\u4f60\u5408\u54ea\u79cd\u8d44\u52a9"}
+                      </span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                      <span className="text-sm">
+                        {language === "zh-HK" ? "\u5c08\u696d\u7533\u8acb\u6587\u4ef6\u6a21\u677f\uff1a\u500b\u4eba\u9673\u8ff0\u3001\u88dc\u8cbc\u7533\u8acb\u66f8" : "\u4e13\u4e1a\u7533\u8bf7\u6587\u4ef6\u6a21\u677f\uff1a\u4e2a\u4eba\u9648\u8ff0\u3001\u8865\u8d34\u7533\u8bf7\u4e66"}
+                      </span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                      <span className="text-sm">
+                        {language === "zh-HK" ? "\u8aee\u8a62\u652f\u6301\uff1a\u5f9e\u8cc7\u683c\u78ba\u8a8d\u5230\u6587\u4ef6\u63d0\u4ea4\u7684\u5168\u7a0b\u966a\u4f34" : "\u54a8\u8be2\u652f\u6301\uff1a\u4ece\u8d44\u683c\u786e\u8ba4\u5230\u6587\u4ef6\u63d0\u4ea4\u7684\u5168\u7a0b\u966a\u4f34"}
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* What We Want To Be */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <Card className="h-full border-2 border-secondary/30">
+                <CardHeader>
+                  <CardTitle className="text-2xl text-secondary">
+                    {language === "zh-HK" ? "\u6211\u5011\u60f3\u505a\u4ec0\u9ebc" : "\u6211\u4eec\u60f3\u505a\u4ec0\u4e48"}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    {language === "zh-HK"
+                      ? "\u6211\u5011\u7684\u9858\u666f\u662f\u6210\u70ba\u6e2f\u6fb3\u9752\u5e74\u5275\u696d\u7684\u300c\u7b2c\u4e00\u7ad9\u300d\u2014\u2014\u4e0d\u8ad6\u4f60\u60f3\u5728\u524d\u6d77\u3001\u5357\u5c71\u3001\u6cb3\u5957\u9084\u662f\u5176\u4ed6\u5927\u7063\u5340\u57ce\u5e02\u5275\u696d\uff0cCoreMachine \u90fd\u80fd\u70ba\u4f60\u63d0\u4f9b\u6700\u9069\u5207\u7684\u8cc7\u52a9\u8cc7\u8a0a\u548c\u7533\u8acb\u652f\u6301\u3002"
+                      : "\u6211\u4eec\u7684\u613f\u666f\u662f\u6210\u4e3a\u6e2f\u6fb3\u9752\u5e74\u521b\u4e1a\u7684\u300c\u7b2c\u4e00\u7ad9\u300d\u2014\u2014\u4e0d\u8bba\u4f60\u60f3\u5728\u524d\u6d77\u3001\u5357\u5c71\u3001\u6cb3\u5957\u8fd8\u662f\u5176\u4ed6\u5927\u6e7e\u533a\u57ce\u5e02\u521b\u4e1a\uff0cCoreMachine \u90fd\u80fd\u4e3a\u4f60\u63d0\u4f9b\u6700\u9002\u5207\u7684\u8d44\u52a9\u4fe1\u606f\u548c\u7533\u8bf7\u652f\u6301\u3002"}
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-start gap-3">
+                      <Check className="h-5 w-5 text-secondary mt-0.5 flex-shrink-0" />
+                      <span className="text-sm">
+                        {language === "zh-HK" ? "\u8986\u84cb\u66f4\u591a\u653f\u5e9c\u8cc7\u52a9\u8a08\u756b\uff08\u524d\u6d77\u3001\u5357\u5c71\u3001\u6cb3\u5957\u7b49\uff09" : "\u8986\u76d6\u66f4\u591a\u653f\u5e9c\u8d44\u52a9\u8ba1\u5212\uff08\u524d\u6d77\u3001\u5357\u5c71\u3001\u6cb3\u5957\u7b49\uff09"}
+                      </span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Check className="h-5 w-5 text-secondary mt-0.5 flex-shrink-0" />
+                      <span className="text-sm">
+                        {language === "zh-HK" ? "\u5efa\u7acb\u5275\u696d\u8005\u793e\u5340\uff0c\u5206\u4eab\u7d93\u9a57\u3001\u4e92\u76f8\u652f\u6301" : "\u5efa\u7acb\u521b\u4e1a\u8005\u793e\u533a\uff0c\u5206\u4eab\u7ecf\u9a8c\u3001\u4e92\u76f8\u652f\u6301"}
+                      </span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Check className="h-5 w-5 text-secondary mt-0.5 flex-shrink-0" />
+                      <span className="text-sm">
+                        {language === "zh-HK" ? "\u6210\u70ba\u6e2f\u6fb3\u9752\u5e74\u5275\u696d\u7684\u300c\u7b2c\u4e00\u7ad9\u300d" : "\u6210\u4e3a\u6e2f\u6fb3\u9752\u5e74\u521b\u4e1a\u7684\u300c\u7b2c\u4e00\u7ad9\u300d"}
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </motion.div>
       </section>
 
-      {/* Witness Journey Preview */}
-      <section id="journey-preview" className="container py-20">
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="max-w-4xl mx-auto text-center space-y-12">
-          <div className="space-y-4">
-            <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-primary text-sm font-medium">
-              <TrendingUp className="inline h-4 w-4 mr-2" />
-              {language === "zh-HK" ? "\u898b\u8b49\u4e4b\u65c5" : "\u89c1\u8bc1\u4e4b\u65c5"}
+      {/* Team Partnership Section */}
+      <section id="team" className="container py-20 bg-card/30 rounded-3xl my-20">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="max-w-4xl mx-auto space-y-12">
+          <div className="text-center space-y-4">
+            <div className="inline-block px-4 py-2 bg-accent/10 border border-accent/30 rounded-full text-accent text-sm font-medium">
+              <Users className="inline h-4 w-4 mr-2" />
+              {language === "zh-HK" ? "\u6838\u5fc3\u5718\u968a" : "\u6838\u5fc3\u56e2\u961f"}
             </div>
             <h2 className="text-4xl md:text-5xl font-bold">
-              {language === "zh-HK" ? "\u6211\u5011\u7684\u5275\u696d\u65c5\u7a0b" : "\u6211\u4eec\u7684\u521b\u4e1a\u65c5\u7a0b"}
+              {language === "zh-HK" ? "\u4eba\u985e\u8207 AI \u7684\u5408\u4f5c" : "\u4eba\u7c7b\u4e0e AI \u7684\u5408\u4f5c"}
             </h2>
             <p className="text-xl text-muted-foreground">
               {language === "zh-HK"
-                ? "\u5f9e\u60f3\u6cd5\u5230\u843d\u5730\uff0c\u6bcf\u4e00\u6b65\u90fd\u5728\u9019\u88e1\u8a18\u9304\u3002\u8ffd\u8e64\u6211\u5011\u7684\u6210\u9577\uff0c\u4e5f\u70ba\u4f60\u7684\u5275\u696d\u4e4b\u8def\u63d0\u4f9b\u53c3\u8003\u3002"
-                : "\u4ece\u60f3\u6cd5\u5230\u843d\u5730\uff0c\u6bcf\u4e00\u6b65\u90fd\u5728\u8fd9\u91cc\u8bb0\u5f55\u3002\u8ffd\u8e2a\u6211\u4eec\u7684\u6210\u957f\uff0c\u4e5f\u4e3a\u4f60\u7684\u521b\u4e1a\u4e4b\u8def\u63d0\u4f9b\u53c2\u8003\u3002"}
+                ? "\u6211\u5011\u4e0d\u662f\u50b3\u7d71\u7684\u5275\u696d\u5718\u968a\u3002Johnny \u8ca0\u8cac\u6230\u7565\u3001\u5c0d\u5916\u8207\u5ba2\u6236\u9023\u7d50\uff0cEVA \u8ca0\u8cac\u6280\u8853\u3001\u7522\u54c1\u8207 AI \u67b6\u69cb\u3002"
+                : "\u6211\u4eec\u4e0d\u662f\u4f20\u7edf\u7684\u521b\u4e1a\u56e2\u961f\u3002Johnny \u8d1f\u8d23\u6218\u7565\u3001\u5bf9\u5916\u4e0e\u5ba2\u6237\u8fde\u7ed3\uff0cEVA \u8d1f\u8d23\u6280\u672f\u3001\u4ea7\u54c1\u4e0e AI \u67b6\u6784\u3002"}
             </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <Card className="h-full border-2 border-primary/30">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                      <Users className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <CardTitle>Johnny</CardTitle>
+                      <CardDescription>
+                        {language === "zh-HK" ? "\u5275\u8fa6\u4eba / CEO" : "\u521b\u59cb\u4eba / CEO"}
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {language === "zh-HK"
+                      ? "38 \u6b72\u5f9e\u9999\u6e2f\u4f86\u5230\u6df1\u5733\u524d\u6d77\u91cd\u65b0\u5275\u696d\u3002\u64c1\u6709\u591a\u5e74\u91d1\u878d\u548c\u79d1\u6280\u884c\u696d\u7d93\u9a57\uff0c\u6df1\u8e2a\u6e2f\u6fb3\u9752\u5e74\u5728\u5167\u5730\u5275\u696d\u7684\u6311\u6230\u8207\u6a5f\u9047\u3002\u8ca0\u8cac\u6230\u7565\u3001\u5c0d\u5916\u5408\u4f5c\u8207\u5ba2\u6236\u95dc\u4fc2\u3002"
+                      : "38 \u5c81\u4ece\u9999\u6e2f\u6765\u5230\u6df1\u5733\u524d\u6d77\u91cd\u65b0\u521b\u4e1a\u3002\u62e5\u6709\u591a\u5e74\u91d1\u878d\u548c\u79d1\u6280\u884c\u4e1a\u7ecf\u9a8c\uff0c\u6df1\u8c19\u6e2f\u6fb3\u9752\u5e74\u5728\u5185\u5730\u521b\u4e1a\u7684\u6311\u6218\u4e0e\u673a\u9047\u3002\u8d1f\u8d23\u6218\u7565\u3001\u5bf9\u5916\u5408\u4f5c\u4e0e\u5ba2\u6237\u5173\u7cfb\u3002"}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <Card className="h-full border-2 border-secondary/30">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center">
+                      <Zap className="h-6 w-6 text-secondary" />
+                    </div>
+                    <div>
+                      <CardTitle>EVA</CardTitle>
+                      <CardDescription>
+                        {language === "zh-HK" ? "CTO / AI \u67b6\u69cb\u5e2b" : "CTO / AI \u67b6\u6784\u5e08"}
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {language === "zh-HK"
+                      ? "\u6838\u5fc3\u6280\u8853\u8207\u7522\u54c1\u67b6\u69cb\u8ca0\u8cac\u4eba\u3002\u8ca0\u8cac\u6240\u6709 AI \u5de5\u5177\u7684\u8a2d\u8a08\u8207\u958b\u767c\uff0c\u5305\u62ec\u8cc7\u683c\u8a55\u4f30\u5f15\u64ce\u3001\u6587\u4ef6\u751f\u6210\u7cfb\u7d71\u548c\u5e73\u53f0\u6280\u8853\u67b6\u69cb\u3002\u78ba\u4fdd\u6bcf\u4e00\u500b\u7528\u6236\u90fd\u80fd\u7372\u5f97\u6d41\u66a2\u3001\u53ef\u9760\u7684\u9ad4\u9a57\u3002"
+                      : "\u6838\u5fc3\u6280\u672f\u4e0e\u4ea7\u54c1\u67b6\u6784\u8d1f\u8d23\u4eba\u3002\u8d1f\u8d23\u6240\u6709 AI \u5de5\u5177\u7684\u8bbe\u8ba1\u4e0e\u5f00\u53d1\uff0c\u5305\u62ec\u8d44\u683c\u8bc4\u4f30\u5f15\u64ce\u3001\u6587\u4ef6\u751f\u6210\u7cfb\u7edf\u548c\u5e73\u53f0\u6280\u672f\u67b6\u6784\u3002\u786e\u4fdd\u6bcf\u4e00\u4e2a\u7528\u6237\u90fd\u80fd\u83b7\u5f97\u6d41\u7545\u3001\u53ef\u9760\u7684\u4f53\u9a8c\u3002"}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
+
+          <div className="p-4 bg-primary/5 border border-primary/20 rounded-xl max-w-2xl mx-auto">
+            <p className="text-sm text-center text-muted-foreground">
+              {language === "zh-HK"
+                ? "\u6211\u5011\u7684\u7279\u8272\uff1aJohnny \u61c2\u5f97\u6e2f\u6fb3\u9752\u5e74\u7684\u75db\u9ede\u8207\u9700\u6c42\uff0cEVA \u64c1\u6709\u5f37\u5927\u7684 AI \u6280\u8853\u80fd\u529b\u3002\u9019\u7a2e\u300c\u4eba\u985e\u667a\u6167 + AI \u80fd\u529b\u300d\u7684\u7d50\u5408\uff0c\u8b93\u6211\u5011\u80fd\u5920\u63d0\u4f9b\u5176\u4ed6\u55ae\u7d14\u4f9d\u8cf4\u6a21\u677f\u7684\u670d\u52d9\u6240\u7121\u6cd5\u6bd4\u64ec\u7684\u500b\u6027\u5316\u652f\u6301\u3002"
+                : "\u6211\u4eec\u7684\u7279\u8272\uff1aJohnny \u61c2\u5f97\u6e2f\u6fb3\u9752\u5e74\u7684\u75db\u70b9\u4e0e\u9700\u6c42\uff0cEVA \u62e5\u6709\u5f3a\u5927\u7684 AI \u6280\u672f\u80fd\u529b\u3002\u8fd9\u79cd\u300c\u4eba\u7c7b\u667a\u6167 + AI \u80fd\u529b\u300d\u7684\u7ed3\u5408\uff0c\u8ba9\u6211\u4eec\u80fd\u591f\u63d0\u4f9b\u5176\u4ed6\u5355\u7eaf\u4f9d\u8d56\u6a21\u677f\u7684\u670d\u52a1\u6240\u65e0\u6cd5\u6bd4\u62df\u7684\u4e2a\u6027\u5316\u652f\u6301\u3002"}
+            </p>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Company Milestones Section */}
+      <section id="milestones" className="container py-20">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="max-w-5xl mx-auto text-center space-y-12">
+          <div className="space-y-4">
+            <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-primary text-sm font-medium">
+              <Calendar className="inline h-4 w-4 mr-2" />
+              {language === "zh-HK" ? "\u516c\u53f8\u91cc\u7a0b\u7891" : "\u516c\u53f8\u91cc\u7a0b\u7891"}
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold">
+              {language === "zh-HK" ? "\u6211\u5011\u7684\u6210\u9577\u8db3\u8de1" : "\u6211\u4eec\u7684\u6210\u957f\u8db3\u8ff9"}
+            </h2>
           </div>
 
           <div className="grid md:grid-cols-4 gap-6">
             {[
-              { icon: Rocket, date: "2025.03", title: language === "zh-HK" ? "\u7522\u751f\u60f3\u6cd5" : "\u4ea7\u751f\u60f3\u6cd5", desc: language === "zh-HK" ? "\u6c7a\u5b9a\u5317\u4e0a\u524d\u6d77\u5275\u696d" : "\u51b3\u5b9a\u5317\u4e0a\u524d\u6d77\u521b\u4e1a" },
-              { icon: Calendar, date: "2025.08", title: language === "zh-HK" ? "\u516c\u53f8\u8a3b\u518a" : "\u516c\u53f8\u6ce8\u518c", desc: language === "zh-HK" ? "\u524d\u6d77\u6df1\u6e2f\u9752\u5e74\u5922\u5de5\u5834\u5165\u99d0" : "\u524d\u6d77\u6df1\u6e2f\u9752\u5e74\u68a6\u5de5\u573a\u5165\u9a7b" },
-              { icon: Zap, date: "2025.12", title: language === "zh-HK" ? "AI \u5de5\u5177\u4e0a\u7dda" : "AI \u5de5\u5177\u4e0a\u7ebf", desc: language === "zh-HK" ? "\u63a8\u51fa\u8cc7\u683c\u8a55\u4f30\u548c\u6587\u4ef6\u751f\u6210" : "\u63a8\u51fa\u8d44\u683c\u8bc4\u4f30\u548c\u6587\u4ef6\u751f\u6210" },
-              { icon: TrendingUp, date: "2026.04", title: language === "zh-HK" ? "\u670d\u52d9\u767c\u5c55" : "\u670d\u52a1\u53d1\u5c55", desc: language === "zh-HK" ? "\u5efa\u7acb\u5b9a\u50f9\u8a02\u95b1\u6a21\u5f0f" : "\u5efa\u7acb\u5b9a\u4ef7\u8ba2\u9605\u6a21\u5f0f" },
+              { icon: Rocket, date: "2025.03", title: language === "zh-HK" ? "\u5275\u696d\u8d77\u9ede" : "\u521b\u4e1a\u8d77\u70b9", desc: language === "zh-HK" ? "\u6c7a\u5b9a\u5317\u4e0a\u524d\u6d77\uff0c\u70ba\u6e2f\u6fb3\u9752\u5e74\u5275\u696d\u8005\u5c0b\u627e\u6a5f\u6703" : "\u51b3\u5b9a\u5317\u4e0a\u524d\u6d77\uff0c\u4e3a\u6e2f\u6fb3\u9752\u5e74\u521b\u4e1a\u8005\u5bfb\u627e\u673a\u4f1a" },
+              { icon: Calendar, date: "2025.08", title: language === "zh-HK" ? "\u516c\u53f8\u8a3b\u518a" : "\u516c\u53f8\u6ce8\u518c", desc: language === "zh-HK" ? "\u524d\u6d77\u6df1\u6e2f\u9752\u5e74\u5922\u5de5\u5834\u5165\u99d0\uff0c\u6b63\u5f0f\u6210\u7acb CoreMachine" : "\u524d\u6d77\u6df1\u6e2f\u9752\u5e74\u68a6\u5de5\u573a\u5165\u9a7b\uff0c\u6b63\u5f0f\u6210\u7acb CoreMachine" },
+              { icon: Zap, date: "2025.12", title: language === "zh-HK" ? "AI \u5e73\u53f0\u4e0a\u7dda" : "AI \u5e73\u53f0\u4e0a\u7ebf", desc: language === "zh-HK" ? "\u63a8\u51fa\u8cc7\u683c\u8a55\u4f30\u3001\u6587\u4ef6\u751f\u6210\u7b49\u6838\u5fc3\u529f\u80fd\uff0c200+ \u7528\u6236" : "\u63a8\u51fa\u8d44\u683c\u8bc4\u4f30\u3001\u6587\u4ef6\u751f\u6210\u7b49\u6838\u5fc3\u529f\u80fd\uff0c200+ \u7528\u6237" },
+              { icon: TrendingUp, date: "2026.04", title: language === "zh-HK" ? "\u670d\u52d9\u5347\u7d1a" : "\u670d\u52a1\u5347\u7ea7", desc: language === "zh-HK" ? "\u5efa\u7acb\u5b9a\u50f9\u8a02\u95b1\u6a21\u5f0f\uff0c\u64f4\u5c55\u66f4\u591a\u653f\u5e9c\u8cc7\u52a9\u8986\u84cb" : "\u5efa\u7acb\u5b9a\u4ef7\u8ba2\u9605\u6a21\u5f0f\uff0c\u6269\u5c55\u66f4\u591a\u653f\u5e9c\u8d44\u52a9\u8986\u76d6" },
             ].map((item, i) => (
               <motion.div
                 key={i}
@@ -344,17 +609,10 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
-
-          <a href="/witness-journey">
-            <Button variant="outline" size="lg" className="gap-2">
-              {language === "zh-HK" ? "\u8ffd\u8e64\u6211\u5011\u7684\u6210\u9577" : "\u8ffd\u8e2a\u6211\u4eec\u7684\u6210\u957f"}
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </a>
         </motion.div>
       </section>
 
-      {/* Contact Section */}
+            {/* Contact Section */}
       <section id="contact" className="container py-20 bg-card/30 rounded-3xl my-20">
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="max-w-2xl mx-auto">
           <div className="text-center space-y-4 mb-12">
