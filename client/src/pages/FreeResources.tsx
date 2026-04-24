@@ -128,8 +128,8 @@ export default function FreeResources() {
               <Button size="lg" asChild>
                 <Link to="/free-assessment">立即評估資格</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link to="/#ai-generator">試用 AI 生成文件</Link>
+              <Button size="lg" variant="outline" onClick={() => window.location.href = "/#vision"}>
+                試用 AI 生成文件
               </Button>
             </div>
           </div>

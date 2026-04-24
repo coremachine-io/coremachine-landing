@@ -26,6 +26,7 @@ function Router() {
       <Route path="/payment-success" component={PaymentSuccess} />
       <Route path="/payment-cancel" component={PaymentCancel} />
       <Route path="/free-assessment" component={FreeAssessment} />
+      <Route path="/witness-journey" component={Home} />
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

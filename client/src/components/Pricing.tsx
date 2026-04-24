@@ -151,7 +151,7 @@ export default function Pricing() {
           >
             <Card className="h-full border-2 border-accent hover:border-accent/70 transition-all duration-300 relative">
               <div className="absolute top-4 right-4 bg-accent text-accent-foreground px-3 py-1 rounded-full text-xs font-bold">
-                {language === "zh-HK" ? "最受歡迎" : "最受欢迎"}
+                {t("pricing.starter.tag")}
               </div>
               <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
@@ -227,7 +227,7 @@ export default function Pricing() {
             <Card className="h-full border-2 border-primary hover:border-primary/70 transition-all duration-300 relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
               <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-bold">
-                {language === "zh-HK" ? "旗艦" : "旗舰"}
+                {t("pricing.pro.tag")}
               </div>
               <CardHeader>
                 <div className="flex items-center gap-2 mb-2">

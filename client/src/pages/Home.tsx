@@ -164,7 +164,7 @@ export default function Home() {
           <div className="hidden md:flex items-center gap-6">
             <a href="/free-resources" className="text-sm hover:text-primary transition-colors">免費資源</a>
             <a href="/witness-journey" className="text-sm hover:text-primary transition-colors">見證之旅</a>
-            <a href="/subscription" className="text-sm hover:text-primary transition-colors">訂閱方案</a>
+            <a href="/pricing" className="text-sm hover:text-primary transition-colors">訂閱方案</a>
             <button onClick={() => scrollToSection("contact")} className="text-sm hover:text-primary transition-colors">聯絡我們</button>
           </div>
           <div className="flex items-center gap-3">
@@ -1030,17 +1030,17 @@ export default function Home() {
             <div className="space-y-4">
               <h3 className="font-semibold">{t("footer.services.title")}</h3>
               <div className="space-y-2 text-sm text-muted-foreground">
-                <a href="/free-resources" className="block hover:text-primary transition-colors">{language === "zh-HK" ? "\u514d\u8cbb\u8cc7\u6e90" : "\u514d\u8d39\u8d44\u6e90"}</a>
-                <a href="/subscription" className="block hover:text-primary transition-colors">{language === "zh-HK" ? "\u8a02\u95b1\u65b9\u6848" : "\u8ba2\u9605\u65b9\u6848"}</a>
-                <a href="/witness-journey" className="block hover:text-primary transition-colors">{language === "zh-HK" ? "\u898b\u8b49\u4e4b\u65c5" : "\u89c1\u8bc1\u4e4b\u65c5"}</a>
+                <a href="/free-resources" className="block hover:text-primary transition-colors">{language === "zh-HK" ? "免費資源" : "免费资源"}</a>
+                <a href="/pricing" className="block hover:text-primary transition-colors">{language === "zh-HK" ? "訂閱方案" : "订阅方案"}</a>
+                <a href="/witness-journey" className="block hover:text-primary transition-colors">{language === "zh-HK" ? "見證之旅" : "见证之旅"}</a>
               </div>
             </div>
             <div className="space-y-4">
               <h3 className="font-semibold">{t("footer.resources.title")}</h3>
               <div className="space-y-2 text-sm text-muted-foreground">
-                <p>{t("footer.resources.templates")}</p>
-                <p>{t("footer.resources.blog")}</p>
-                <p>{t("footer.resources.faq")}</p>
+                <a href="/free-resources" className="block hover:text-primary transition-colors">{t("footer.resources.templates")}</a>
+                <a href="/free-resources#eligibility-checker" className="block hover:text-primary transition-colors">{language === "zh-HK" ? "資助配對" : "资助配对"}</a>
+                <a href="/free-assessment" className="block hover:text-primary transition-colors">{language === "zh-HK" ? "AI 評估" : "AI 评估"}</a>
               </div>
             </div>
           </div>
