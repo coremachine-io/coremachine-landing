@@ -156,9 +156,6 @@ export default function Pricing() {
               <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                   <Sparkles className="h-5 w-5 text-accent" />
-                  <span className="text-sm font-medium px-2 py-1 bg-accent/10 text-accent rounded-full">
-                    {t("pricing.starter.tag")}
-                  </span>
                 </div>
                 <CardTitle className="text-2xl">{t("pricing.starter.title")}</CardTitle>
                 <CardDescription className="text-2xl font-bold text-accent mt-2">
@@ -230,12 +227,7 @@ export default function Pricing() {
                 {t("pricing.pro.tag")}
               </div>
               <CardHeader>
-                <div className="flex items-center gap-2 mb-2">
-                  <Building2 className="h-5 w-5 text-primary" />
-                  <span className="text-sm font-medium px-2 py-1 bg-primary/10 text-primary rounded-full">
-                    {t("pricing.pro.tag")}
-                  </span>
-                </div>
+                <Building2 className="h-5 w-5 text-primary mb-2" />
                 <CardTitle className="text-2xl">{t("pricing.pro.title")}</CardTitle>
                 <CardDescription className="text-xl font-bold text-primary mt-2">
                   {t("pricing.pro.price")}
