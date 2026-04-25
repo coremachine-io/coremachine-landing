@@ -26,7 +26,16 @@ function Router() {
       <Route path="/payment-success" component={PaymentSuccess} />
       <Route path="/payment-cancel" component={PaymentCancel} />
       <Route path="/free-assessment" component={FreeAssessment} />
-      <Route path="/witness-journey" component={Home} />
+      <Route path="/assessment">
+        {() => { window.location.href = '/free-assessment'; return null; }}
+      </Route>
+      <Route path="/resources">
+        {() => { window.location.href = '/free-resources'; return null; }}
+      </Route>
+      {/* Temporarily redirect witness-journey to home until content is ready */}
+      <Route path="/witness-journey">
+        {() => { window.location.href = '/'; return null; }}
+      </Route>
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

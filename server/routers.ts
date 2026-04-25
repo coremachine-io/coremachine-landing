@@ -10,6 +10,25 @@ import { invokeMiniMaxLLM } from "./_core/llm";
 import { notifyOwner } from "./_core/notification";
 import { stripeRouter } from "./_core/stripe";
 
+// Simple CSRF token generator (for non-authenticated forms)
+const CSRF_TOKENS = new Map<string, { token: string; expires: number }>();
+
+function generateCSRFToken(sessionId: string): string {
+  const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
+  CSRF_TOKENS.set(sessionId, { token, expires: Date.now() + 3600000 }); // 1 hour expiry
+  return token;
+}
+
+function validateCSRFToken(sessionId: string, token: string): boolean {
+  const stored = CSRF_TOKENS.get(sessionId);
+  if (!stored) return false;
+  if (Date.now() > stored.expires) {
+    CSRF_TOKENS.delete(sessionId);
+    return false;
+  }
+  return stored.token === token;
+}
+
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
@@ -25,6 +44,16 @@ export const appRouter = router({
     }),
   }),
 
+  // CSRF Token 獲取（用於非認證表單）
+  csrf: router({
+    getToken: publicProcedure
+      .query(({ ctx }) => {
+        const sessionId = (ctx.req as any).sessionID || `guest_${Date.now()}_${Math.random().toString(36).substring(2)}`;
+        const token = generateCSRFToken(sessionId);
+        return { token, sessionId };
+      }),
+  }),
+
   // 咨詢表單提交
   consultation: router({
     submit: rateLimitedProcedure("consultation")
@@ -34,8 +63,17 @@ export const appRouter = router({
         email: z.union([z.string().email("請輸入有效電子郵件"), z.literal(""), z.undefined()]).optional().transform(v => v === "" ? undefined : v),
         needs: z.string().min(10, "請詳細描述您的需求（至少10字）"),
         language: z.enum(["zh-HK", "zh-CN"]).default("zh-HK"),
+        csrfToken: z.string().min(1, "CSRF token 缺失"),
+        sessionId: z.string().min(1, "Session ID 缺失"),
       }))
       .mutation(async ({ input }) => {
+        // CSRF 驗證
+        if (!validateCSRFToken(input.sessionId, input.csrfToken)) {
+          throw new TRPCError({
+            code: "FORBIDDEN",
+            message: "CSRF 驗證失敗，請重新整理頁面再試",
+          });
+        }
         try {
           // 儲存咨詢記錄
           await createConsultation({

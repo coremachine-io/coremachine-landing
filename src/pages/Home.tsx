@@ -19,7 +19,24 @@ export default function Home() {
     email: "",
     needs: "",
   });
+  const [csrfToken, setCsrfToken] = useState("");
+  const [csrfSessionId, setCsrfSessionId] = useState("");
   const [templateEmail, setTemplateEmail] = useState("");
+
+  // 獲取 CSRF Token
+  const csrfQuery = trpc.csrf.getToken.useQuery(undefined, {
+    enabled: false, // 手動觸發
+  });
+
+  useEffect(() => {
+    // 頁面載入時獲取 CSRF token
+    csrfQuery.refetch().then((result) => {
+      if (result.data) {
+        setCsrfToken(result.data.token);
+        setCsrfSessionId(result.data.sessionId);
+      }
+    });
+  }, []);
 
   // AI Generator states
   const [showAIGenerator, setShowAIGenerator] = useState(false);
@@ -112,7 +129,36 @@ export default function Home() {
 
   const handleConsultationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    submitConsultation.mutate({ ...consultationForm, language });
+    // 前端驗證
+    if (!consultationForm.name.trim()) {
+      toast.error(language === "zh-HK" ? "請輸入姓名" : "请输入姓名");
+      return;
+    }
+    if (!consultationForm.contact.trim()) {
+      toast.error(language === "zh-HK" ? "請輸入聯絡方式" : "请输入联络方式");
+      return;
+    }
+    if (consultationForm.needs.trim().length < 10) {
+      toast.error(language === "zh-HK" ? "請詳細描述您的需求（至少10字）" : "请详细描述您的需求（至少10字）");
+      return;
+    }
+    if (!csrfToken || !csrfSessionId) {
+      toast.error(language === "zh-HK" ? "安全驗證載入中，請稍候再試" : "安全验证载入中，请稍候再试");
+      // 重新獲取 token
+      csrfQuery.refetch().then((result) => {
+        if (result.data) {
+          setCsrfToken(result.data.token);
+          setCsrfSessionId(result.data.sessionId);
+        }
+      });
+      return;
+    }
+    submitConsultation.mutate({
+      ...consultationForm,
+      language,
+      csrfToken,
+      sessionId: csrfSessionId,
+    });
   };
 
   const handleTemplateDownload = (templateType: "subsidy_application" | "personal_statement") => {

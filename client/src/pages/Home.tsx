@@ -1,4 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import NavBar from "@/components/NavBar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,12 +8,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { trpc } from "@/lib/trpc-client";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { Rocket, Sparkles, FileText, Users, Check, Download, Globe, ArrowRight, MessageCircle, Zap, TrendingUp, Calendar, AlertCircle } from "lucide-react";
+import { Sparkles, FileText, Users, Check, Download, ArrowRight, MessageCircle, Zap, TrendingUp, Calendar, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
+import { useGA4, GA_EVENTS } from "@/lib/analytics";
+
 export default function Home() {
   const { language, setLanguage, t } = useLanguage();
+  const { trackEvent } = useGA4();
   const [consultationForm, setConsultationForm] = useState({
     name: "",
     contact: "",
@@ -112,10 +116,20 @@ export default function Home() {
 
   const handleConsultationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    trackEvent({
+      action: GA_EVENTS.CONSULTATION_SUBMIT,
+      category: "conversion",
+      label: language,
+    });
     submitConsultation.mutate({ ...consultationForm, language });
   };
 
   const handleTemplateDownload = (templateType: "subsidy_application" | "personal_statement") => {
+    trackEvent({
+      action: GA_EVENTS.TEMPLATE_DOWNLOAD,
+      category: "engagement",
+      label: templateType,
+    });
     downloadTemplate.mutate({
       templateType,
       language,
@@ -126,6 +140,11 @@ export default function Home() {
   };
 
   const handleAIGenerate = (documentType: "subsidy_application" | "personal_statement") => {
+    trackEvent({
+      action: GA_EVENTS.AI_GENERATE_DOCUMENT,
+      category: "conversion",
+      label: documentType,
+    });
     generateAIDocument.mutate({
       documentType,
       language,
@@ -154,30 +173,8 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground cyber-grid">
       <WhatsAppButton phoneNumber="85291444340" />
 
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
-        <div className="container flex items-center justify-between py-4">
-          <a href="/" className="flex items-center gap-2">
-            <Rocket className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold neon-text">{t("hero.title")}</span>
-          </a>
-          <div className="hidden md:flex items-center gap-6">
-            <a href="/free-resources" className="text-sm hover:text-primary transition-colors">免費資源</a>
-            <a href="/witness-journey" className="text-sm hover:text-primary transition-colors">見證之旅</a>
-            <a href="/pricing" className="text-sm hover:text-primary transition-colors">訂閱方案</a>
-            <button onClick={() => scrollToSection("contact")} className="text-sm hover:text-primary transition-colors">聯絡我們</button>
-          </div>
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="sm" onClick={() => setLanguage(language === "zh-HK" ? "zh-CN" : "zh-HK")} className="gap-2">
-              <Globe className="h-4 w-4" />
-              {language === "zh-HK" ? "繁" : "简"}
-            </Button>
-            <Button onClick={() => setShowAIGenerator(true)} className="gap-2">
-              <Zap className="h-4 w-4" />免費 AI 評估
-            </Button>
-          </div>
-        </div>
-      </nav>
+      {/* Navigation - Unified NavBar component */}
+      <NavBar />
 
       {/* Hero Section — Johnny's Personal Story */}
       <section className="container py-24 md:py-36">
@@ -853,22 +850,22 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold">{t("contact.title")}</h2>
             <p className="text-xl text-muted-foreground">{t("contact.subtitle")}</p>
           </div>
-          <form onSubmit={handleConsultationSubmit} className="space-y-6">
+          <form onSubmit={handleConsultationSubmit} className="space-y-6" method="POST">
             <div className="space-y-2">
               <Label htmlFor="name">{t("contact.form.name")}</Label>
-              <Input id="name" required placeholder={t("contact.form.name.placeholder")} value={consultationForm.name} onChange={(e) => setConsultationForm({ ...consultationForm, name: e.target.value })} />
+              <Input id="name" name="name" required placeholder={t("contact.form.name.placeholder")} value={consultationForm.name} onChange={(e) => setConsultationForm({ ...consultationForm, name: e.target.value })} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="contact">{t("contact.form.contact")}</Label>
-              <Input id="contact" required placeholder={t("contact.form.contact.placeholder")} value={consultationForm.contact} onChange={(e) => setConsultationForm({ ...consultationForm, contact: e.target.value })} />
+              <Input id="contact" name="contact" required placeholder={t("contact.form.contact.placeholder")} value={consultationForm.contact} onChange={(e) => setConsultationForm({ ...consultationForm, contact: e.target.value })} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">{t("contact.form.email")}</Label>
-              <Input id="email" type="email" placeholder={t("contact.form.email.placeholder")} value={consultationForm.email} onChange={(e) => setConsultationForm({ ...consultationForm, email: e.target.value })} />
+              <Input id="email" name="email" type="email" placeholder={t("contact.form.email.placeholder")} value={consultationForm.email} onChange={(e) => setConsultationForm({ ...consultationForm, email: e.target.value })} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="needs">{t("contact.form.needs")}</Label>
-              <Textarea id="needs" required rows={5} placeholder={t("contact.form.needs.placeholder")} value={consultationForm.needs} onChange={(e) => setConsultationForm({ ...consultationForm, needs: e.target.value })} />
+              <Textarea id="needs" name="needs" required rows={5} placeholder={t("contact.form.needs.placeholder")} value={consultationForm.needs} onChange={(e) => setConsultationForm({ ...consultationForm, needs: e.target.value })} />
             </div>
             <Button type="submit" className="w-full text-lg py-6" disabled={submitConsultation.isPending}>
               {submitConsultation.isPending ? t("contact.form.submitting") : t("contact.form.submit")}
