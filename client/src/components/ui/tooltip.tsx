@@ -1,13 +1,14 @@
-// Simple tooltip (placeholder - extend as needed)
-export function TooltipProvider({ children }: { children: React.ReactNode }) {
+import * as React from "react";
+
+export function TooltipProvider({ children, delayDuration }: { children: React.ReactNode; delayDuration?: number }) {
   return <>{children}</>;
 }
 export function Tooltip({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
-export function TooltipTrigger({ children }: { children: React.ReactNode }) {
+export function TooltipTrigger({ children, asChild }: { children: React.ReactNode; asChild?: boolean }) {
   return <>{children}</>;
 }
-export function TooltipContent({ children }: { children: React.ReactNode }) {
+export function TooltipContent({ children, side, align, hidden, ...props }: { children: React.ReactNode; side?: string; align?: string; hidden?: boolean; [key: string]: any }) {
   return <>{children}</>;
 }

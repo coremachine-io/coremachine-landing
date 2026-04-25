@@ -12,6 +12,7 @@ import { createOrUpdateSubscription, addCredits, getUserByOpenId, upsertUser, ge
 import { sendWelcomeEmail } from "./email";
 import { notifyOwner } from "./notification";
 import { stripe } from "./stripe"; // Reuse graceful Stripe instance
+import type Stripe from "stripe";
 import { generalRateLimiter, contactRateLimiter, evaluateRateLimiter } from "./rateLimiter";
 import { users } from "../../drizzle/schema";
 

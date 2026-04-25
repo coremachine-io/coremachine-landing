@@ -32,7 +32,7 @@ function validateCSRFToken(sessionId: string, token: string): boolean {
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
-  __diagnostic: { evaluateSubsidyEligibilityExists: true },
+  // __diagnostic intentionally omitted — boolean is not a valid router child
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
@@ -206,7 +206,7 @@ export const appRouter = router({
             });
           }
 
-          const generatedContent = response.choices?.[0]?.message?.content || "";
+          const generatedContent = (response.choices?.[0]?.message?.content as string | undefined) || "";
 
           // If user provided email, send the document directly to them
           if (input.email) {
@@ -402,15 +402,17 @@ export const appRouter = router({
           let parsed;
           try {
             // 移除 markdown 代碼塊
-            const jsonStr = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+            const contentStr = content as string;
+            const jsonStr = contentStr.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
             parsed = JSON.parse(jsonStr);
           } catch {
             // 如果解析失敗，返回基本結果
+            const contentStr = content as string;
             parsed = {
               score: 50,
               eligible: "有機會",
               maxSubsidy: "待評估",
-              analysis: content.substring(0, 300),
+              analysis: contentStr.substring(0, 300),
               recommendations: ["請聯絡我們获取詳細評估"],
             };
           }
@@ -465,7 +467,7 @@ Core Machine 個案管理 | ${new Date().toLocaleString("zh-HK")}`;
           // ─── 升級 Telegram 通知 ───────────────────────────────────
           const PRIORITY_TAG = { high: "🔴 高優先", medium: "🟡 中優先", low: "🟢 低優先" };
           const eligibleLabel = eligible === true ? "✅ 符合資格" : eligible === "有機會" ? "⚠️ 有機會" : "❌ 暫不符合";
-          const langLabel = input.language === "zh-HK" ? "繁體" : "簡體";
+          const langLabel = (input as any).language === "zh-HK" ? "繁體" : "簡體";
 
           try {
             await notifyOwner({
@@ -582,11 +584,12 @@ Core Machine 背景：
             throw new Error("案例生成服務暫時不可用，請稍後再試");
           }
 
-          const content = response.choices?.[0]?.message?.content || "";
+          const content = (response.choices?.[0]?.message?.content as string | undefined) || "";
 
           let parsed;
           try {
-            const jsonStr = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+            const contentStr = content as string;
+            const jsonStr = contentStr.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
             parsed = JSON.parse(jsonStr);
           } catch {
             throw new Error("案例格式解析失敗");

@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { trpc } from "@/lib/trpc-client";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { Sparkles, FileText, Users, Check, Download, ArrowRight, MessageCircle, Zap, TrendingUp, Calendar, AlertCircle } from "lucide-react";
+import { Sparkles, FileText, Users, Check, Download, ArrowRight, MessageCircle, Zap, TrendingUp, Calendar, AlertCircle, Rocket } from "lucide-react";
 import { motion } from "framer-motion";
 import WhatsAppButton from "@/components/WhatsAppButton";
 

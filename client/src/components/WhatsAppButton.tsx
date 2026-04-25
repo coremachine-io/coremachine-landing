@@ -2,7 +2,7 @@ import { MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-export default function TelegramButton() {
+export default function WhatsAppButton({ phoneNumber }: { phoneNumber?: string }) {
   const { language } = useLanguage();
 
   const tooltipText = language === "zh-HK" ? "Telegram 聯絡 COO" : "Telegram 联络 COO";
