@@ -246,60 +246,98 @@ const translations: Record<Language, Record<string, string>> = {
     "pricing.faq.a2": "可以隨時取消，取消後下一個週期不會再收費。",
     "pricing.faq.a3": "是的，我們的文件由專業人士審閱，可直接用於正式申請。",
 
-    // Fund details (used in DeadlineTimeline)
+    // Fund overview
+    "fund.title": "中港創業資助一覽",
+    "fund.subtitle": "精準配對 · 最高效的路徑補貼",
+    "fund.cta": "評估適合你的資助",
+    "fund.viewAll": "查看全部資助",
+    "fund.tab.qianhai": "前海 · 深圳",
+    "fund.tab.hongkong": "香港",
+    "fund.tab.gba": "大灣區",
+
+    // Fund Card 1: OPC
     "fund.opc.name": "前海OPC「獨行俠禮包」",
     "fund.opc.tag": "AI創業首選",
-    "fund.smartcoupon.name": "深圳智能券",
+    "fund.opc.amount": "最高 200㎡ 空間 + 50P 算力",
+    "fund.opc.bonus": "人才獎勵最高 60 萬",
+    "fund.opc.description": "專為 AI 獨行俠設計的一人公司創業基地。3 個月主流大模型免費試用，讓你專注產品開發。",
+    "fund.opc.eligible": "• 港澳居民（18-45歲）\n• AI / 數碼科技相關項目優先\n• 已注冊或計劃注冊前海公司",
+
+    // Fund Card 2: 深圳智能券
+    "fund.smartcoupon.name": "深圳智能券 · 訓力券 · 模型券",
     "fund.smartcoupon.tag": "算力補貼",
+    "fund.smartcoupon.amount": "最高 1000 萬算力補貼",
+    "fund.smartcoupon.bonus": "200萬 模型券 + 200萬 語料券",
+    "fund.smartcoupon.description": "深圳市 AI 訓練與部署專項補貼。入駐 OPC 後自動匹配，後續可持續申請。",
+    "fund.smartcoupon.eligible": "• OPC 園區入駐企業\n• AI 訓練或模型部署需求\n• 深圳有效工商登記",
+
+    // Fund Card 3: 鯤鵬
     "fund.kunpeng.name": "鯤鵬青年創新創業項目",
     "fund.kunpeng.tag": "創新創業",
-    "fund.cyberport.name": "Cyberport數碼港孵化",
+    "fund.kunpeng.amount": "最高 5 萬獎勵 + 100 萬研發資助",
+    "fund.kunpeng.bonus": "導師資源 + 產業對接",
+    "fund.kunpeng.description": "面向 35 歲以下青年創業者的創新項目資助。重點支持信息技術、生物醫藥、新能源等領域。",
+    "fund.kunpeng.eligible": "• 35 歲以下青年創業者\n• 具備創新技術或商業模式\n• 項目具有市場化潛力",
+
+    // Fund Card 4: Cyberport
+    "fund.cyberport.name": "Cyberport數碼港孵化計劃",
     "fund.cyberport.tag": "香港旗艦孵化",
-    "fund.hkstp.name": "科技園Incu-Tech",
+    "fund.cyberport.amount": "最高 50 萬孵化資助",
+    "fund.cyberport.bonus": "免費辦公室 + 導師網絡",
+    "fund.cyberport.description": "香港數碼港旗艦孵化項目，專為 AI 和數碼科技初創設計，提供全方位創業支援。",
+    "fund.cyberport.eligible": "• AI / 數碼科技相關項目\n• 香港注冊公司或計劃在香港注冊\n• 具有跨境發展潛力（如 GBA）",
+
+    // Fund Card 5: HKSTP
+    "fund.hkstp.name": "科技園Incu-Tech計劃",
     "fund.hkstp.tag": "科技企業",
+    "fund.hkstp.amount": "最高百萬資助 + 資源對接",
+    "fund.hkstp.bonus": "科研設施 + 人才網絡",
+    "fund.hkstp.description": "香港科技園 Incu-Tech 計劃，為科技初創提供資助、辦公室和科研設施支援。",
+    "fund.hkstp.eligible": "• 科技初創企業\n• 持有香港身份證的創業者\n• 具備核心技術或 IP",
+
+    // Fund Card 6: ITF
     "fund.itf.name": "創新及科技基金AI補貼",
     "fund.itf.tag": "創科支援",
+    "fund.itf.amount": "最高 70% 算力補貼",
+    "fund.itf.bonus": "研發資助 + 技術支持",
+    "fund.itf.description": "創新及科技基金下的 AI 專項補貼計劃，資助企業採用和開發 AI 技術。",
+    "fund.itf.eligible": "• 香港注冊的中小企\n• AI 技術應用或研發項目\n• 具有技術團隊或合作夥伴",
+
+    // Fund Card 7: GBA
     "fund.gba.name": "大灣區青年創業基金",
     "fund.gba.tag": "跨境創業",
+    "fund.gba.amount": "香港青年大灣區創業專項資助",
+    "fund.gba.bonus": "額外配套獎勵 + 落地支援",
+    "fund.gba.description": "專為香港青年在大灣區創業設立的專項基金，提供資金和落地支援。",
+    "fund.gba.eligible": "• 香港永久居民\n• 在大灣區內地城市創業\n• 18-40 歲青年創業者",
+
+    // Fund Card 8: 粵港澳青年
     "fund.youth.name": "粵港澳青年創業計劃",
     "fund.youth.tag": "青年創業",
-
-    // Fund cards (used in FreeResources)
-    "fund.business.name": "業務計劃",
-    "fund.business.tag": "必備文件",
-    "fund.business.amount": "模板下載",
-    "fund.reg.name": "公司註冊",
-    "fund.reg.tag": "入門指南",
-    "fund.reg.amount": "免費下載",
-    "fund.id.name": "身份證明",
-    "fund.id.tag": "證件模板",
-    "fund.id.amount": "免費下載",
-    "fund.financial.name": "財務預測",
-    "fund.financial.tag": "Excel 工具",
-    "fund.financial.amount": "範本下載",
-    "fund.tech.name": "技術證明",
-    "fund.tech.tag": "創新專利",
-    "fund.tech.amount": "參考範例",
-    "fund.other.name": "其他文件",
-    "fund.other.tag": "輔助材料",
-    "fund.other.amount": "清單下載",
+    "fund.youth.amount": "生活補貼 + 創業支援",
+    "fund.youth.bonus": "孵化服務 + 導師指導",
+    "fund.youth.description": "支持粵港澳三地青年在內地創業的綜合性資助計劃，包含生活補貼和創業支援。",
+    "fund.youth.eligible": "• 粵港澳三地青年（18-45歲）\n• 在內地創業的港澳青年\n• 已開展創業項目或已有商業計劃",
 
     // Fund process
-    "fund.process.step1.title": "評估資格",
-    "fund.process.step1.desc": "回答5條問題，即時知道邊個資助啱你",
-    "fund.process.step2.title": "準備文件",
-    "fund.process.step2.desc": "下載模板，AI 幫你生成內容",
-    "fund.process.step3.title": "提交申請",
-    "fund.process.step3.desc": "跟住我哋嘅指南一步一步提交",
-    "fund.process.step4.title": "獲得資助",
-    "fund.process.step4.desc": "審批時間2-6個月，獲批後直接到帳",
-    "fund.docs.title": "常見所需文件",
-    "fund.docs.business": "業務計劃書",
-    "fund.docs.reg": "公司註冊證明",
-    "fund.docs.id": "身份證明文件",
-    "fund.docs.financial": "財務預測報表",
-    "fund.docs.tech": "技術/專利證書",
-    "fund.docs.other": "其他輔助材料",
+    "fund.process.title": "申請流程",
+    "fund.process.step1.title": "評估配對",
+    "fund.process.step1.desc": "根據你的項目和背景，評估最適合的資助方案",
+    "fund.process.step2.title": "准備文件",
+    "fund.process.step2.desc": "協助准備商業計劃書、財務預測等申請文件",
+    "fund.process.step3.title": "遞交申請",
+    "fund.process.step3.desc": "代為遞交申請，確保資料完整合規",
+    "fund.process.step4.title": "跟進管理",
+    "fund.process.step4.desc": "跟進審批進度，及時補充材料直至獲批",
+
+    // Fund docs
+    "fund.docs.title": "必備文件清單",
+    "fund.docs.business": "商業計劃書（Word/PDF）",
+    "fund.docs.reg": "公司注冊證書副本",
+    "fund.docs.id": "創業者身份證明文件",
+    "fund.docs.financial": "財務預測或現有財務報表",
+    "fund.docs.tech": "技術/產品介紹（如有）",
+    "fund.docs.other": "其他輔助材料（專利、獎項、合作意向書等）",
 
     // FreeResources
     "free.title": "免費資源",
@@ -565,60 +603,98 @@ const translations: Record<Language, Record<string, string>> = {
     "pricing.faq.a2": "可以随时取消，取消后下一个周期不会再收费。",
     "pricing.faq.a3": "是的，我们的文件由专业人士审阅，可直接用于正式申请。",
 
-    // Fund details (used in DeadlineTimeline)
+    // Fund overview
+    "fund.title": "中港创业资助一览",
+    "fund.subtitle": "精准配对 · 最高效的路径补贴",
+    "fund.cta": "评估适合你的资助",
+    "fund.viewAll": "查看全部资助",
+    "fund.tab.qianhai": "前海 · 深圳",
+    "fund.tab.hongkong": "香港",
+    "fund.tab.gba": "大湾区",
+
+    // Fund Card 1: OPC
     "fund.opc.name": "前海OPC「独行侠礼包」",
     "fund.opc.tag": "AI创业首选",
-    "fund.smartcoupon.name": "深圳智能券",
+    "fund.opc.amount": "最高 200㎡ 空间 + 50P 算力",
+    "fund.opc.bonus": "人才奖励最高 60 万",
+    "fund.opc.description": "专为 AI 独行侠设计的一人公司创业基地。3 个月主流大模型免费试用，让你专注产品开发。",
+    "fund.opc.eligible": "• 港澳居民（18-45岁）\n• AI / 数码科技相关项目优先\n• 已注册或计划注册前海公司",
+
+    // Fund Card 2: 深圳智能券
+    "fund.smartcoupon.name": "深圳智能券 · 训力券 · 模型券",
     "fund.smartcoupon.tag": "算力补贴",
+    "fund.smartcoupon.amount": "最高 1000 万算力补贴",
+    "fund.smartcoupon.bonus": "200万 模型券 + 200万 语料券",
+    "fund.smartcoupon.description": "深圳市 AI 训练与部署专项补贴。入驻 OPC 后自动匹配，后续可持续申请。",
+    "fund.smartcoupon.eligible": "• OPC 园区入驻企业\n• AI 训练或模型部署需求\n• 深圳有效工商登记",
+
+    // Fund Card 3: 鯤鵬
     "fund.kunpeng.name": "鲲鹏青年创新创业项目",
     "fund.kunpeng.tag": "创新创业",
-    "fund.cyberport.name": "Cyberport数码港孵化",
+    "fund.kunpeng.amount": "最高 5 万奖励 + 100 万研发资助",
+    "fund.kunpeng.bonus": "导师资源 + 产业对接",
+    "fund.kunpeng.description": "面向 35 岁以下青年创业者的创新项目资助。重点支持信息技术、生物医药、新能源等领域。",
+    "fund.kunpeng.eligible": "• 35 岁以下青年创业者\n• 具备创新技术或商业模式\n• 项目具有市场化潜力",
+
+    // Fund Card 4: Cyberport
+    "fund.cyberport.name": "Cyberport数码港孵化计划",
     "fund.cyberport.tag": "香港旗舰孵化",
-    "fund.hkstp.name": "科技园Incu-Tech",
+    "fund.cyberport.amount": "最高 50 万孵化资助",
+    "fund.cyberport.bonus": "免费办公室 + 导师网络",
+    "fund.cyberport.description": "香港数码港旗舰孵化项目，专为 AI 和数码科技初创设计，提供全方位创业支援。",
+    "fund.cyberport.eligible": "• AI / 数码科技相关项目\n• 香港注册公司或计划在香港注册\n• 具有跨境发展潜力（如 GBA）",
+
+    // Fund Card 5: HKSTP
+    "fund.hkstp.name": "科技园Incu-Tech计划",
     "fund.hkstp.tag": "科技企业",
+    "fund.hkstp.amount": "最高百万资助 + 资源对接",
+    "fund.hkstp.bonus": "科研设施 + 人才网络",
+    "fund.hkstp.description": "香港科技园 Incu-Tech 计划，为科技初创提供资助、办公室和科研设施支援。",
+    "fund.hkstp.eligible": "• 科技初创企业\n• 持有香港身份证的创业者\n• 具备核心技术或 IP",
+
+    // Fund Card 6: ITF
     "fund.itf.name": "创新及科技基金AI补贴",
     "fund.itf.tag": "创科支援",
+    "fund.itf.amount": "最高 70% 算力补贴",
+    "fund.itf.bonus": "研发资助 + 技术支持",
+    "fund.itf.description": "创新及科技基金下的 AI 专项补贴计划，资助企业采用和开发 AI 技术。",
+    "fund.itf.eligible": "• 香港注册的中小企\n• AI 技术应用或研发项目\n• 具有技术团队或合作伙伴",
+
+    // Fund Card 7: GBA
     "fund.gba.name": "大湾区青年创业基金",
     "fund.gba.tag": "跨境创业",
+    "fund.gba.amount": "香港青年大湾区创业专项资助",
+    "fund.gba.bonus": "额外配套奖励 + 落地支援",
+    "fund.gba.description": "专为香港青年在大湾区创业设立的专项基金，提供资金和落地支援。",
+    "fund.gba.eligible": "• 香港永久居民\n• 在大湾区内内地城市创业\n• 18-40 岁青年创业者",
+
+    // Fund Card 8: 粵港澳青年
     "fund.youth.name": "粤港澳青年创业计划",
     "fund.youth.tag": "青年创业",
-
-    // Fund cards (used in FreeResources)
-    "fund.business.name": "业务计划",
-    "fund.business.tag": "必备文件",
-    "fund.business.amount": "模板下载",
-    "fund.reg.name": "公司注册",
-    "fund.reg.tag": "入门指南",
-    "fund.reg.amount": "免费下载",
-    "fund.id.name": "身份证明",
-    "fund.id.tag": "证件模板",
-    "fund.id.amount": "免费下载",
-    "fund.financial.name": "财务预测",
-    "fund.financial.tag": "Excel 工具",
-    "fund.financial.amount": "范本下载",
-    "fund.tech.name": "技术证明",
-    "fund.tech.tag": "创新专利",
-    "fund.tech.amount": "参考范例",
-    "fund.other.name": "其他文件",
-    "fund.other.tag": "辅助材料",
-    "fund.other.amount": "清单下载",
+    "fund.youth.amount": "生活补贴 + 创业支援",
+    "fund.youth.bonus": "孵化服务 + 导师指导",
+    "fund.youth.description": "支持粤港澳三地青年在内地创业的综合资助计划，包含生活补贴和创业支援。",
+    "fund.youth.eligible": "• 粤港澳三地青年（18-45岁）\n• 在内地创业的港澳青年\n• 已开展创业项目或已有商业计划",
 
     // Fund process
-    "fund.process.step1.title": "评估资格",
-    "fund.process.step1.desc": "回答5条问题，即时知道边个资助啱你",
+    "fund.process.title": "申请流程",
+    "fund.process.step1.title": "评估配对",
+    "fund.process.step1.desc": "根据你的项目和背景，评估最合适的资助方案",
     "fund.process.step2.title": "准备文件",
-    "fund.process.step2.desc": "下载模板，AI 帮你生成内容",
-    "fund.process.step3.title": "提交申请",
-    "fund.process.step3.desc": "跟住我哋嘅指南一步一步提交",
-    "fund.process.step4.title": "获得资助",
-    "fund.process.step4.desc": "审批时间2-6个月，获批后直接到帐",
-    "fund.docs.title": "常见所需文件",
-    "fund.docs.business": "业务计划书",
-    "fund.docs.reg": "公司注册证明",
-    "fund.docs.id": "身份证证明文件",
-    "fund.docs.financial": "财务预测报表",
-    "fund.docs.tech": "技术/专利证书",
-    "fund.docs.other": "其他辅助材料",
+    "fund.process.step2.desc": "协助准备商业计划书、财务预测等申请文件",
+    "fund.process.step3.title": "递交申请",
+    "fund.process.step3.desc": "代为递交申请，确保资料完整合规",
+    "fund.process.step4.title": "跟进管理",
+    "fund.process.step4.desc": "跟进审批进度，及时补充材料直至获批",
+
+    // Fund docs
+    "fund.docs.title": "必备文件清单",
+    "fund.docs.business": "商业计划书（Word/PDF）",
+    "fund.docs.reg": "公司注册证书副本",
+    "fund.docs.id": "创业者身份证证明文件",
+    "fund.docs.financial": "财务预测或现有财务报表",
+    "fund.docs.tech": "技术/产品介绍（如有）",
+    "fund.docs.other": "其他辅助材料（专利、奖项、合作意向书等）",
 
     // FreeResources
     "free.title": "免费资源",

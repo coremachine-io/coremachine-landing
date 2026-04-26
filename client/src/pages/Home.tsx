@@ -647,6 +647,278 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* 資助卡片 — 8種資助一覽 */}
+      <section id="fund-cards" className="container py-20">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="space-y-12"
+        >
+          {/* Section Header */}
+          <div className="text-center space-y-4">
+            <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-primary text-sm font-medium">
+              <Sparkles className="inline h-4 w-4 mr-2" />
+              {t("fund.title")}
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold">{t("fund.subtitle")}</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              {language === "zh-HK"
+                ? "8種精選資助方案，覆蓋前海、深圳、香港、大灣區——總有一個啱你"
+                : "8种精选资助方案，覆盖前海、深圳、香港、大湾区——总有一个啱你"}
+            </p>
+          </div>
+
+          {/* Fund Cards Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {/* OPC */}
+            <Card className="border-primary/30 hover:border-primary/60 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded-full">{t("fund.opc.tag")}</span>
+                </div>
+                <CardTitle className="text-lg leading-tight">{t("fund.opc.name")}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="space-y-1">
+                  <p className="text-2xl font-bold text-primary">{t("fund.opc.amount")}</p>
+                  <p className="text-sm text-secondary font-medium">+ {t("fund.opc.bonus")}</p>
+                </div>
+                <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.opc.description")}</p>
+                <div className="pt-2 border-t border-border/50">
+                  <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.opc.eligible")}</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 深圳智能券 */}
+            <Card className="border-secondary/30 hover:border-secondary/60 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary to-secondary/50" />
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-medium px-2 py-1 bg-secondary/10 text-secondary rounded-full">{t("fund.smartcoupon.tag")}</span>
+                </div>
+                <CardTitle className="text-lg leading-tight">{t("fund.smartcoupon.name")}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="space-y-1">
+                  <p className="text-2xl font-bold text-secondary">{t("fund.smartcoupon.amount")}</p>
+                  <p className="text-sm text-secondary font-medium">+ {t("fund.smartcoupon.bonus")}</p>
+                </div>
+                <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.smartcoupon.description")}</p>
+                <div className="pt-2 border-t border-border/50">
+                  <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.smartcoupon.eligible")}</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 鯤鵬 */}
+            <Card className="border-accent/30 hover:border-accent/60 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent to-accent/50" />
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-medium px-2 py-1 bg-accent/10 text-accent rounded-full">{t("fund.kunpeng.tag")}</span>
+                </div>
+                <CardTitle className="text-lg leading-tight">{t("fund.kunpeng.name")}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="space-y-1">
+                  <p className="text-2xl font-bold text-accent">{t("fund.kunpeng.amount")}</p>
+                  <p className="text-sm text-accent font-medium">+ {t("fund.kunpeng.bonus")}</p>
+                </div>
+                <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.kunpeng.description")}</p>
+                <div className="pt-2 border-t border-border/50">
+                  <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.kunpeng.eligible")}</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Cyberport */}
+            <Card className="border-primary/30 hover:border-primary/60 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded-full">{t("fund.cyberport.tag")}</span>
+                </div>
+                <CardTitle className="text-lg leading-tight">{t("fund.cyberport.name")}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="space-y-1">
+                  <p className="text-2xl font-bold text-primary">{t("fund.cyberport.amount")}</p>
+                  <p className="text-sm text-secondary font-medium">+ {t("fund.cyberport.bonus")}</p>
+                </div>
+                <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.cyberport.description")}</p>
+                <div className="pt-2 border-t border-border/50">
+                  <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.cyberport.eligible")}</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* HKSTP */}
+            <Card className="border-secondary/30 hover:border-secondary/60 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary to-secondary/50" />
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-medium px-2 py-1 bg-secondary/10 text-secondary rounded-full">{t("fund.hkstp.tag")}</span>
+                </div>
+                <CardTitle className="text-lg leading-tight">{t("fund.hkstp.name")}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="space-y-1">
+                  <p className="text-2xl font-bold text-secondary">{t("fund.hkstp.amount")}</p>
+                  <p className="text-sm text-secondary font-medium">+ {t("fund.hkstp.bonus")}</p>
+                </div>
+                <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.hkstp.description")}</p>
+                <div className="pt-2 border-t border-border/50">
+                  <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.hkstp.eligible")}</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* ITF */}
+            <Card className="border-accent/30 hover:border-accent/60 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent to-accent/50" />
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-medium px-2 py-1 bg-accent/10 text-accent rounded-full">{t("fund.itf.tag")}</span>
+                </div>
+                <CardTitle className="text-lg leading-tight">{t("fund.itf.name")}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="space-y-1">
+                  <p className="text-2xl font-bold text-accent">{t("fund.itf.amount")}</p>
+                  <p className="text-sm text-accent font-medium">+ {t("fund.itf.bonus")}</p>
+                </div>
+                <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.itf.description")}</p>
+                <div className="pt-2 border-t border-border/50">
+                  <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.itf.eligible")}</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* GBA */}
+            <Card className="border-primary/30 hover:border-primary/60 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded-full">{t("fund.gba.tag")}</span>
+                </div>
+                <CardTitle className="text-lg leading-tight">{t("fund.gba.name")}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="space-y-1">
+                  <p className="text-2xl font-bold text-primary">{t("fund.gba.amount")}</p>
+                  <p className="text-sm text-secondary font-medium">+ {t("fund.gba.bonus")}</p>
+                </div>
+                <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.gba.description")}</p>
+                <div className="pt-2 border-t border-border/50">
+                  <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.gba.eligible")}</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 粵港澳青年 */}
+            <Card className="border-secondary/30 hover:border-secondary/60 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary to-secondary/50" />
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-medium px-2 py-1 bg-secondary/10 text-secondary rounded-full">{t("fund.youth.tag")}</span>
+                </div>
+                <CardTitle className="text-lg leading-tight">{t("fund.youth.name")}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="space-y-1">
+                  <p className="text-2xl font-bold text-secondary">{t("fund.youth.amount")}</p>
+                  <p className="text-sm text-secondary font-medium">+ {t("fund.youth.bonus")}</p>
+                </div>
+                <p className="text-sm text-muted-foreground line-clamp-3">{t("fund.youth.description")}</p>
+                <div className="pt-2 border-t border-border/50">
+                  <p className="text-xs text-muted-foreground whitespace-pre-line">{t("fund.youth.eligible")}</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* CTA */}
+          <div className="text-center pt-4">
+            <Button
+              size="lg"
+              onClick={() => setShowAIGenerator(true)}
+              className="gap-2 text-lg px-10 py-7 h-auto"
+            >
+              <Zap className="h-5 w-5" />
+              {t("fund.cta")}
+              <ArrowRight className="h-5 w-5" />
+            </Button>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* 申請流程 + 文件清單 */}
+      <section id="fund-process" className="container py-20 bg-card/30 rounded-3xl">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="max-w-5xl mx-auto space-y-12"
+        >
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl md:text-4xl font-bold">{t("fund.process.title")}</h2>
+          </div>
+
+          {/* 4步流程 */}
+          <div className="grid md:grid-cols-4 gap-4">
+            {[
+              { step: 1, title: t("fund.process.step1.title"), desc: t("fund.process.step1.desc"), color: "primary" },
+              { step: 2, title: t("fund.process.step2.title"), desc: t("fund.process.step2.desc"), color: "secondary" },
+              { step: 3, title: t("fund.process.step3.title"), desc: t("fund.process.step3.desc"), color: "accent" },
+              { step: 4, title: t("fund.process.step4.title"), desc: t("fund.process.step4.desc"), color: "primary" },
+            ].map((item) => (
+              <Card key={item.step} className={`border-${item.color}/30 bg-${item.color}/5`}>
+                <CardHeader className="pb-3">
+                  <div className={`w-10 h-10 rounded-full bg-${item.color}/10 text-${item.color} flex items-center justify-center font-bold text-lg mb-3`}>
+                    {item.step}
+                  </div>
+                  <CardTitle className="text-base">{item.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* 文件清單 */}
+          <div className="bg-card border border-border rounded-2xl p-8">
+            <h3 className="text-xl font-bold mb-6">{t("fund.docs.title")}</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              {[
+                { icon: "📄", key: "fund.docs.business" },
+                { icon: "🏢", key: "fund.docs.reg" },
+                { icon: "🪪", key: "fund.docs.id" },
+                { icon: "📊", key: "fund.docs.financial" },
+                { icon: "💡", key: "fund.docs.tech" },
+                { icon: "📎", key: "fund.docs.other" },
+              ].map((item) => (
+                <div key={item.key} className="flex items-start gap-3 bg-muted/30 rounded-lg p-4">
+                  <span className="text-2xl">{item.icon}</span>
+                  <div>
+                    <p className="font-medium text-sm">{t(item.key as any)}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 text-center">
+              <Button onClick={() => setShowAIGenerator(true)} className="gap-2">
+                <Zap className="h-4 w-4" />
+                {language === "zh-HK" ? "AI 幫你生成文件" : "AI 帮你生成文件"}
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
       {/* Founder Story — 三問三答 (Replaces duplicate Platform & Vision) */}
       <section id="founder-story" className="container py-20">
         <motion.div 
