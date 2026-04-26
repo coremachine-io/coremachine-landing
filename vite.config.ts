@@ -1,5 +1,5 @@
 import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
-import { default as tailwindcss } from "@tailwindcss/vite";
+import tailwindcss, * as tailwindcssNs from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import fs from "node:fs";
 import path from "node:path";
