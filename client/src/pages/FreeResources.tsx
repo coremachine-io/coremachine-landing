@@ -122,14 +122,14 @@ export default function FreeResources() {
               {t("pricing.free.feature5")}
             </h3>
             <p className="text-muted-foreground mb-6">
-              t("free.subtitle")
+              {t("free.subtitle")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>
-                <Link to="/free-assessment">t("free.cta")</Link>
+                <Link to="/free-assessment">{t("free.cta")}</Link>
               </Button>
               <Button size="lg" variant="outline" onClick={() => window.location.href = "/#vision-section"}>
-                t("free.tryAI")
+                {t("free.tryAI")}
               </Button>
             </div>
           </div>
@@ -138,14 +138,14 @@ export default function FreeResources() {
         {/* Footer nav */}
         <section className="text-center py-8 border-t border-border/50">
           <p className="text-muted-foreground mb-4">
-            t("free.ready")
+            {t("free.ready")}
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Button variant="outline" asChild>
-              <Link to="/pricing">t("free.pricing")</Link>
+              <Link to="/pricing">{t("free.pricing")}</Link>
             </Button>
             <Button asChild>
-              <Link to="/#contact-form">t("free.consult")</Link>
+              <Link to="/#contact-form">{t("free.consult")}</Link>
             </Button>
           </div>
         </section>

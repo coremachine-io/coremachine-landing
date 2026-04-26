@@ -313,7 +313,7 @@ export default function PricingPage() {
                       className="w-full text-xs"
                       onClick={() => setShowStarterCheckout(false)}
                     >
-                      t("pricing.starter.changeEmail")
+                      {t("pricing.starter.changeEmail")}
                     </Button>
                   </div>
                 )}
@@ -325,20 +325,20 @@ export default function PricingPage() {
           <motion.div variants={itemVariants}>
             <Card className="h-full border-2 border-accent/60 hover:border-accent/80 transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 relative overflow-hidden">
               <div className="absolute top-4 right-4 bg-gradient-to-r from-accent to-primary text-white px-3 py-1 rounded-full text-xs font-bold">
-                t("pricing.starter.savings")
+                {t("pricing.starter.savings")}
               </div>
               <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                   <Crown className="h-5 w-5 text-accent" />
                 </div>
                 <CardTitle className="text-2xl">
-                  t("pricing.starter.yearly")
+                  {t("pricing.starter.yearly")}
                 </CardTitle>
                 <CardDescription className="text-2xl font-bold text-accent mt-2">
                   HK$388<span className="text-sm font-normal text-muted-foreground">/年</span>
                 </CardDescription>
                 <p className="text-xs text-muted-foreground">
-                  t("pricing.starter.monthlyEquiv")
+                  {t("pricing.starter.monthlyEquiv")}
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -357,7 +357,7 @@ export default function PricingPage() {
                   <div className="flex items-start gap-3 bg-accent/10 p-3 rounded-lg">
                     <Sparkles className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
                     <span className="text-sm font-medium text-accent">
-                      t("pricing.starter.yearlySupport")
+                      {t("pricing.starter.yearlySupport")}
                     </span>
                   </div>
                 </div>
@@ -373,7 +373,7 @@ export default function PricingPage() {
                       className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
                       onClick={handleStarterYearlyCheckout}
                     >
-                      t("pricing.starter.subscribeYearly")
+                      {t("pricing.starter.subscribeYearly")}
                       <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                   </div>
@@ -395,7 +395,7 @@ export default function PricingPage() {
                       className="w-full text-xs"
                       onClick={() => setShowStarterYearlyCheckout(false)}
                     >
-                      t("pricing.starter.changeEmail")
+                      {t("pricing.starter.changeEmail")}
                     </Button>
                   </div>
                 )}
@@ -429,7 +429,7 @@ export default function PricingPage() {
                       <div className="flex items-baseline gap-2">
                         <span className="text-3xl font-bold text-primary">HK$12,800</span>
                         <span className="text-sm text-muted-foreground">
-                          t("pricing.pro.onetime")
+                          {t("pricing.pro.onetime")}
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground">
@@ -458,7 +458,7 @@ export default function PricingPage() {
                       <div className="space-y-3 max-w-sm mx-auto md:mx-0 md:ml-auto">
                         <div className="bg-primary/5 border border-primary/20 rounded-xl p-4 space-y-3">
                           <Label className="text-sm font-medium">
-                            language === "zh-HK" ? "輸入你的 email 開始 Pro 方案" : "输入你的 email 开始 Pro 方案"
+                            {language === "zh-HK" ? "輸入你的 email 開始 Pro 方案" : "输入你的 email 开始 Pro 方案"}
                           </Label>
                           <Input
                             type="email"
@@ -470,7 +470,7 @@ export default function PricingPage() {
                             className="w-full bg-primary hover:bg-primary/90"
                             onClick={handleProCheckout}
                           >
-                            t("pricing.pro.choosePayment")
+                            {t("pricing.pro.choosePayment")}
                             <ArrowRight className="h-4 w-4 ml-2" />
                           </Button>
                         </div>
@@ -507,7 +507,7 @@ export default function PricingPage() {
                             onClick={() => setShowProCheckout(false)}
                           >
                             <ArrowLeft className="h-3 w-3 mr-1" />
-                            t("pricing.starter.changeEmail")
+                            {t("pricing.starter.changeEmail")}
                           </Button>
                         </div>
                       </div>
@@ -532,7 +532,7 @@ export default function PricingPage() {
               <Building2 className="w-7 h-7 text-primary" />
             </div>
             <h3 className="text-xl font-bold mb-2">
-              t("pricing.enterprise")
+              {t("pricing.enterprise")}
             </h3>
             <p className="text-sm text-muted-foreground mb-6 max-w-lg mx-auto">
               {language === "zh-HK"
@@ -565,19 +565,19 @@ export default function PricingPage() {
             <div className="space-y-2">
               <Shield className="h-6 w-6 text-primary mx-auto" />
               <p className="text-xs text-muted-foreground">
-                t("pricing.stripePay")
+                {t("pricing.stripePay")}
               </p>
             </div>
             <div className="space-y-2">
               <Clock className="h-6 w-6 text-primary mx-auto" />
               <p className="text-xs text-muted-foreground">
-                t("pricing.cancelAnytime")
+                {t("pricing.cancelAnytime")}
               </p>
             </div>
             <div className="space-y-2">
               <FileCheck className="h-6 w-6 text-primary mx-auto" />
               <p className="text-xs text-muted-foreground">
-                t("pricing.docReview")
+                {t("pricing.docReview")}
               </p>
             </div>
           </div>
