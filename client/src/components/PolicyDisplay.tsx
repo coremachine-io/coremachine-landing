@@ -110,7 +110,7 @@ export default function PolicyDisplay() {
   const { language, t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  const { data, isLoading, refetch, error } = trpc.policy.fetchLatest.useQuery(
+  const { data, isLoading, refetch, error } = (trpc as any).policy.fetchLatest.useQuery(
     { category: "all", region: "qianhai" },
     {
       retry: 1,

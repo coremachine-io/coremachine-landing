@@ -6,7 +6,7 @@ import { z } from "zod";
 // Graceful Stripe initialization - works without keys, Stripe features disabled
 const stripeSecretKey = ENV.stripeSecretKey || "sk_test_placeholder";
 export const stripe = new Stripe(stripeSecretKey, {
-  apiVersion: "2025-04-30.basil",
+  apiVersion: "2026-03-25.dahlia" as any,
 });
 
 // 方案定義

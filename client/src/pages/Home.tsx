@@ -121,7 +121,12 @@ export default function Home() {
       category: "conversion",
       label: language,
     });
-    submitConsultation.mutate({ ...consultationForm, language });
+    submitConsultation.mutate({
+      ...consultationForm,
+      language,
+      csrfToken: "",
+      sessionId: "",
+    } as any);
   };
 
   const handleTemplateDownload = (templateType: "subsidy_application" | "personal_statement") => {
@@ -155,11 +160,8 @@ export default function Home() {
         background: aiForm.education,
         businessIdea: aiForm.industry,
         experience: aiForm.experience,
-        motivation: aiForm.motivation,
-        companyName: aiForm.companyName,
-        targetCompany: aiForm.targetCompany,
         fundingNeeds: undefined,
-        otherInfo: undefined,
+        otherInfo: aiForm.motivation || aiForm.companyName || aiForm.targetCompany || undefined,
       },
     });
   };
