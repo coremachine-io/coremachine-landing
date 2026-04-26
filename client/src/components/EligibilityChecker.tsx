@@ -173,7 +173,7 @@ export default function EligibilityChecker() {
                 <p className="text-xs text-muted-foreground mb-3">
                   我哋嘅AI可以幫你生成專業申請文件，大幅提升成功機會
                 </p>
-                <Button className="w-full" onClick={() => window.location.href = "/#ai-generator"}>
+                <Button className="w-full" onClick={() => window.dispatchEvent(new CustomEvent("open-ai-generator"))}>
                   立即試用 AI 生成文件
                 </Button>
               </div>

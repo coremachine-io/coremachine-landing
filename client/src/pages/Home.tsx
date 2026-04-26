@@ -417,7 +417,7 @@ export default function Home() {
       </section>
 
       {/* Vision & Mission Section — 願景與使命 (Replaces fake case study) */}
-      <section id="vision-section" className="container py-24">
+      <section id="mission" className="container py-24">
         <motion.div 
           initial={{ opacity: 0 }} 
           whileInView={{ opacity: 1 }} 
@@ -885,7 +885,7 @@ export default function Home() {
                 <h3 className="text-2xl font-bold flex items-center gap-2"><Sparkles className="h-6 w-6 text-primary" />{t("ai.title")}</h3>
                 <p className="text-sm text-muted-foreground mt-1">{t("ai.subtitle")}</p>
               </div>
-              <button onClick={() => setShowAIGenerator(false)} className="text-muted-foreground hover:text-foreground text-2xl">\u00d7</button>
+              <button onClick={() => setShowAIGenerator(false)} className="text-muted-foreground hover:text-foreground text-2xl">&times;</button>
             </div>
             <div className="p-6 space-y-6">
               {/* Progress */}
@@ -993,7 +993,7 @@ export default function Home() {
                 <p className="text-sm text-muted-foreground">{t("ai.footer.note")}</p>
                 <a href="https://t.me/COOCMbot" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-2 text-primary hover:underline text-sm">
                   <MessageCircle className="h-4 w-4" />
-                  {language === "zh-HK" ? "\u9700\u8981\u4eba\u5de5\u5e6b\u52a9\uff1fTelegram \u806f\u7d61 COO" : "\u9700\u8981\u4eba\u5de5\u5e2e\u52a9\uff1fTelegram \u8054\u7cfb COO"}
+                  {language === "zh-HK" ? "需要人工幫助？Telegram 聯絡 COO" : "需要人工帮助？Telegram 联络 COO"}
                 </a>
               </div>
             </div>

@@ -233,12 +233,12 @@ export default function PricingPage() {
                 <p className="text-sm text-muted-foreground">{t("pricing.ai.description")}</p>
                 <div className="space-y-3 pt-4">
                   <Label htmlFor="ai-email" className="text-sm">
-                    {t("pricing.ai.emailPlaceholder")}
+                    {t("pricing.ai.emailLabel")}
                   </Label>
                   <Input
                     id="ai-email"
                     type="email"
-                    placeholder="your@email.com"
+                    placeholder={t("pricing.ai.emailPlaceholder")}
                     value={freeEmail}
                     onChange={(e) => setFreeEmail(e.target.value)}
                   />
@@ -283,7 +283,7 @@ export default function PricingPage() {
                   <div className="space-y-3">
                     <Input
                       type="email"
-                      placeholder={language === "zh-HK" ? "你的 email 地址" : "你的 email 地址"}
+                      placeholder={t("pricing.starter.emailPlaceholder")}
                       value={starterEmail}
                       onChange={(e) => setStarterEmail(e.target.value)}
                     />
@@ -313,7 +313,7 @@ export default function PricingPage() {
                       className="w-full text-xs"
                       onClick={() => setShowStarterCheckout(false)}
                     >
-                      {language === "zh-HK" ? "更改 email" : "更改 email"}
+                      t("pricing.starter.changeEmail")
                     </Button>
                   </div>
                 )}
@@ -325,20 +325,20 @@ export default function PricingPage() {
           <motion.div variants={itemVariants}>
             <Card className="h-full border-2 border-accent/60 hover:border-accent/80 transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 relative overflow-hidden">
               <div className="absolute top-4 right-4 bg-gradient-to-r from-accent to-primary text-white px-3 py-1 rounded-full text-xs font-bold">
-                {language === "zh-HK" ? "慳 15%" : "省 15%"}
+                t("pricing.starter.savings")
               </div>
               <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                   <Crown className="h-5 w-5 text-accent" />
                 </div>
                 <CardTitle className="text-2xl">
-                  {language === "zh-HK" ? "Starter 年費" : "Starter 年费"}
+                  t("pricing.starter.yearly")
                 </CardTitle>
                 <CardDescription className="text-2xl font-bold text-accent mt-2">
                   HK$388<span className="text-sm font-normal text-muted-foreground">/年</span>
                 </CardDescription>
                 <p className="text-xs text-muted-foreground">
-                  {language === "zh-HK" ? "相當於每月 HK$32" : "相当于每月 HK$32"}
+                  t("pricing.starter.monthlyEquiv")
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -357,7 +357,7 @@ export default function PricingPage() {
                   <div className="flex items-start gap-3 bg-accent/10 p-3 rounded-lg">
                     <Sparkles className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
                     <span className="text-sm font-medium text-accent">
-                      {language === "zh-HK" ? "年費專享：優先客戶支援" : "年费专享：优先客户支援"}
+                      t("pricing.starter.yearlySupport")
                     </span>
                   </div>
                 </div>
@@ -365,7 +365,7 @@ export default function PricingPage() {
                   <div className="space-y-3">
                     <Input
                       type="email"
-                      placeholder={language === "zh-HK" ? "你的 email 地址" : "你的 email 地址"}
+                      placeholder={t("pricing.starter.emailPlaceholder")}
                       value={starterYearlyEmail}
                       onChange={(e) => setStarterYearlyEmail(e.target.value)}
                     />
@@ -373,7 +373,7 @@ export default function PricingPage() {
                       className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
                       onClick={handleStarterYearlyCheckout}
                     >
-                      {language === "zh-HK" ? "立即訂閱年費" : "立即订阅年费"}
+                      t("pricing.starter.subscribeYearly")
                       <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                   </div>
@@ -395,7 +395,7 @@ export default function PricingPage() {
                       className="w-full text-xs"
                       onClick={() => setShowStarterYearlyCheckout(false)}
                     >
-                      {language === "zh-HK" ? "更改 email" : "更改 email"}
+                      t("pricing.starter.changeEmail")
                     </Button>
                   </div>
                 )}
@@ -429,7 +429,7 @@ export default function PricingPage() {
                       <div className="flex items-baseline gap-2">
                         <span className="text-3xl font-bold text-primary">HK$12,800</span>
                         <span className="text-sm text-muted-foreground">
-                          {language === "zh-HK" ? "一次性" : "一次性"}
+                          t("pricing.pro.onetime")
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground">
@@ -458,11 +458,11 @@ export default function PricingPage() {
                       <div className="space-y-3 max-w-sm mx-auto md:mx-0 md:ml-auto">
                         <div className="bg-primary/5 border border-primary/20 rounded-xl p-4 space-y-3">
                           <Label className="text-sm font-medium">
-                            {language === "zh-HK" ? "輸入你的 email 開始 Pro 方案" : "输入你的 email 开始 Pro 方案"}
+                            language === "zh-HK" ? "輸入你的 email 開始 Pro 方案" : "输入你的 email 开始 Pro 方案"
                           </Label>
                           <Input
                             type="email"
-                            placeholder={language === "zh-HK" ? "你的 email 地址" : "你的 email 地址"}
+                            placeholder={t("pricing.pro.emailPlaceholder")}
                             value={proEmail}
                             onChange={(e) => setProEmail(e.target.value)}
                           />
@@ -470,13 +470,13 @@ export default function PricingPage() {
                             className="w-full bg-primary hover:bg-primary/90"
                             onClick={handleProCheckout}
                           >
-                            {language === "zh-HK" ? "選擇付款方式" : "选择付款方式"}
+                            t("pricing.pro.choosePayment")
                             <ArrowRight className="h-4 w-4 ml-2" />
                           </Button>
                         </div>
                         <div className="flex items-center gap-2 text-xs text-muted-foreground justify-center md:justify-start">
                           <Shield className="h-3 w-3" />
-                          <span>Stripe 安全付款</span>
+                          <span>{t("pricing.stripePay")}</span>
                         </div>
                       </div>
                     ) : (
@@ -507,7 +507,7 @@ export default function PricingPage() {
                             onClick={() => setShowProCheckout(false)}
                           >
                             <ArrowLeft className="h-3 w-3 mr-1" />
-                            {language === "zh-HK" ? "更改 email" : "更改 email"}
+                            t("pricing.starter.changeEmail")
                           </Button>
                         </div>
                       </div>
@@ -532,7 +532,7 @@ export default function PricingPage() {
               <Building2 className="w-7 h-7 text-primary" />
             </div>
             <h3 className="text-xl font-bold mb-2">
-              {language === "zh-HK" ? "企業方案" : "企业方案"}
+              t("pricing.enterprise")
             </h3>
             <p className="text-sm text-muted-foreground mb-6 max-w-lg mx-auto">
               {language === "zh-HK"
@@ -550,7 +550,7 @@ export default function PricingPage() {
               <Button variant="outline" asChild>
                 <Link to="/free-assessment">
                   <Sparkles className="h-4 w-4 mr-2" />
-                  {language === "zh-HK" ? "先做免費評估" : "先做免费评估"}
+                  t("pricing.enterpriseCTA")
                 </Link>
               </Button>
             </div>
@@ -565,19 +565,19 @@ export default function PricingPage() {
             <div className="space-y-2">
               <Shield className="h-6 w-6 text-primary mx-auto" />
               <p className="text-xs text-muted-foreground">
-                {language === "zh-HK" ? "Stripe 安全付款" : "Stripe 安全付款"}
+                t("pricing.stripePay")
               </p>
             </div>
             <div className="space-y-2">
               <Clock className="h-6 w-6 text-primary mx-auto" />
               <p className="text-xs text-muted-foreground">
-                {language === "zh-HK" ? "隨時可取消" : "随时可取消"}
+                t("pricing.cancelAnytime")
               </p>
             </div>
             <div className="space-y-2">
               <FileCheck className="h-6 w-6 text-primary mx-auto" />
               <p className="text-xs text-muted-foreground">
-                {language === "zh-HK" ? "專業文件審閱" : "专业文件审阅"}
+                t("pricing.docReview")
               </p>
             </div>
           </div>

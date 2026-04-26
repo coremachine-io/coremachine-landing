@@ -58,7 +58,7 @@ export default function NavBar({ transparent = false }: NavBarProps) {
             {t("nav.pricing")}
           </a>
           <button
-            onClick={() => scrollToSection("contact")}
+            onClick={() => scrollToSection("contact-form")}
             className="text-sm hover:text-primary transition-colors"
           >
             {t("nav.contact")}
@@ -77,7 +77,7 @@ export default function NavBar({ transparent = false }: NavBarProps) {
               {language === "zh-HK" ? "繁" : "简"}
             </Button>
             <Button
-              onClick={() => scrollToSection("contact")}
+              onClick={() => scrollToSection("contact-form")}
               className="gap-2"
             >
               {t("hero.cta.primary")}
@@ -108,7 +108,7 @@ export default function NavBar({ transparent = false }: NavBarProps) {
                 <a href="/free-assessment" className="text-sm hover:text-primary transition-colors text-cyan-400">{t("nav.freeAssessment")}</a>
                 <a href="/pricing" className="text-sm hover:text-primary transition-colors">{t("nav.pricing")}</a>
                 <button
-                  onClick={() => { scrollToSection("contact"); setMobileMenuOpen(false); }}
+                  onClick={() => { scrollToSection("contact-form"); setMobileMenuOpen(false); }}
                   className="text-sm hover:text-primary transition-colors text-left"
                 >
                   {t("nav.contact")}

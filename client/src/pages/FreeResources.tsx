@@ -122,14 +122,14 @@ export default function FreeResources() {
               {t("pricing.free.feature5")}
             </h3>
             <p className="text-muted-foreground mb-6">
-              回答幾條簡單問題，立即知道邊個資助啱你
+              t("free.subtitle")
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>
-                <Link to="/free-assessment">立即評估資格</Link>
+                <Link to="/free-assessment">t("free.cta")</Link>
               </Button>
               <Button size="lg" variant="outline" onClick={() => window.location.href = "/#vision-section"}>
-                試用 AI 生成文件
+                t("free.tryAI")
               </Button>
             </div>
           </div>
@@ -138,14 +138,14 @@ export default function FreeResources() {
         {/* Footer nav */}
         <section className="text-center py-8 border-t border-border/50">
           <p className="text-muted-foreground mb-4">
-            準備好開始？
+            t("free.ready")
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Button variant="outline" asChild>
-              <Link to="/pricing">查看定價</Link>
+              <Link to="/pricing">t("free.pricing")</Link>
             </Button>
             <Button asChild>
-              <Link to="/#contact-form">免費咨詢</Link>
+              <Link to="/#contact-form">t("free.consult")</Link>
             </Button>
           </div>
         </section>
