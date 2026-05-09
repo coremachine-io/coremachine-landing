@@ -23,13 +23,51 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.pricing": "訂閱方案",
     "nav.freeResources": "免費資源",
     
-    // Hero
+    // Hero — NEW VALUE PROPOSITION FIRST
     "hero.title": "核芯機器",
     "hero.subtitle": "港澳青年北上前海創業加速器",
     "hero.tagline": "1站式註冊 + 補貼 + AI工具",
     "hero.description": "我哋係專業嘅中港創業落地服務平台，幫助香港創業者輕鬆完成前海公司註冊、補貼申請同 AI 工具落地。我行過嘅路，教你避坑。",
     "hero.cta.primary": "免費咨詢",
     "hero.cta.secondary": "下載免費模板",
+    "hero.tagline1": "AI 助你 3 分鐘生成補貼申請文件",
+    "hero.tagline2": "前海補貼成功率提升 80%",
+    "hero.who": "為香港、澳門創業者而生",
+    "hero.cta": "免費評估適合你的補貼",
+    "hero.ctaSecondary": "了解服務流程",
+    "hero.badge": "前海補貼專家",
+
+    // Trust Metrics
+    "trust.title": "已經幫咁多人成功申請",
+    "trust.clients": "成功申請創業者",
+    "trust.subsidy": "累計申請補貼總額",
+    "trust.satisfaction": "客戶滿意度",
+    "trust.hk": "香港創業者",
+    "trust.mo": "澳門創業者",
+    "trust.mainland": "內地專才",
+
+    // Mainland perspective
+    "mainland.title": "內地專才想去香港發展？",
+    "mainland.subtitle": "高端人才通行證、輸入內地人才計劃",
+    "mainland.hk.label": "香港發展",
+    "mainland.hk.desc": "香港身份、稅務優惠、國際金融中心",
+    "mainland.benefit1": "子女教育與國際學校",
+    "mainland.benefit2": "個人所得稅上限 17%",
+    "mainland.benefit3": "無外匯管制，全球資金自由流動",
+    "mainland.cta": "評估我可唔可以",
+
+    // Service Flow (5 steps)
+    "flow.title": "5 步完成補貼申請",
+    "flow.step1": "AI 評估",
+    "flow.step1desc": "3 分鐘了解你符合邊個補貼",
+    "flow.step2": "方案制定",
+    "flow.step2desc": "顧問為你度身訂造申請策略",
+    "flow.step3": "文件生成",
+    "flow.step3desc": "AI 生成專業申請文件",
+    "flow.step4": "專業審閱",
+    "flow.step4desc": "真人顧問把關每份文件",
+    "flow.step5": "代提交申請",
+    "flow.step5desc": "我哋幫你搞掂最後一步",
     
     // Services
     "services.title": "服務方案",
@@ -380,13 +418,51 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.fundOverview": "资助一览",
     "nav.freeAssessment": "免费评估",
     
-    // Hero
+    // Hero — NEW VALUE PROPOSITION FIRST
     "hero.title": "核芯机器",
     "hero.subtitle": "港澳青年北上前海创业加速器",
     "hero.tagline": "1站式注册 + 补贴 + AI工具",
     "hero.description": "我们是专业的中港创业落地服务平台，帮助香港创业者轻松完成前海公司注册、补贴申请和 AI 工具落地。我走过的路，教你避坑。",
     "hero.cta.primary": "免费咨询",
     "hero.cta.secondary": "下载免费模板",
+    "hero.tagline1": "AI 助你 3 分钟生成补贴申请文件",
+    "hero.tagline2": "前海补贴成功率提升 80%",
+    "hero.who": "为香港、澳门创业者而生",
+    "hero.cta": "免费评估适合你的补贴",
+    "hero.ctaSecondary": "了解服务流程",
+    "hero.badge": "前海补贴专家",
+
+    // Trust Metrics
+    "trust.title": "已经帮这么多人成功申请",
+    "trust.clients": "成功申请创业者",
+    "trust.subsidy": "累计申请补贴总额",
+    "trust.satisfaction": "客户满意度",
+    "trust.hk": "香港创业者",
+    "trust.mo": "澳门创业者",
+    "trust.mainland": "内地专才",
+
+    // Mainland perspective
+    "mainland.title": "内地专才想去香港发展？",
+    "mainland.subtitle": "高端人才通行证、输入内地人才计划",
+    "mainland.hk.label": "香港发展",
+    "mainland.hk.desc": "香港身份、税务优惠、国际金融中心",
+    "mainland.benefit1": "子女教育与国际学校",
+    "mainland.benefit2": "个人所得税上限 17%",
+    "mainland.benefit3": "无外汇管制，全球资金自由流动",
+    "mainland.cta": "评估我可不可以",
+
+    // Service Flow (5 steps)
+    "flow.title": "5 步完成补贴申请",
+    "flow.step1": "AI 评估",
+    "flow.step1desc": "3 分钟了解你符合哪个补贴",
+    "flow.step2": "方案制定",
+    "flow.step2desc": "顾问为你量身定制申请策略",
+    "flow.step3": "文件生成",
+    "flow.step3desc": "AI 生成专业申请文件",
+    "flow.step4": "专业审核",
+    "flow.step4desc": "真人顾问把关每份文件",
+    "flow.step5": "代提交申请",
+    "flow.step5desc": "我们帮你搞掂最后一步",
     
     // Services
     "services.title": "服务方案",

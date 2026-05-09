@@ -178,81 +178,185 @@ export default function Home() {
       {/* Navigation - Unified NavBar component */}
       <NavBar />
 
-      {/* Hero Section — Johnny's Personal Story */}
-      <section className="container py-24 md:py-36">
+      {/* Hero Section — VALUE PROPOSITION FIRST */}
+      <section className="container py-20 md:py-28">
         <motion.div 
           initial={{ opacity: 0, y: 20 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.6 }} 
-          className="max-w-4xl mx-auto text-center space-y-8"
+          className="max-w-5xl mx-auto text-center space-y-8"
         >
           {/* Badge */}
-          <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-primary text-sm font-medium mb-4">
-            <Sparkles className="inline h-4 w-4 mr-2" />
-            {language === "zh-HK" ? "一個香港人嘅北上故事" : "一个香港人的北上故事"}
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-primary text-sm font-medium">
+            <Sparkles className="h-4 w-4" />
+            {t("hero.badge")}
           </div>
           
-          {/* Main Headline */}
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight">
-            <span className="neon-text">
-              {t("founder.greeting")}
+          {/* Main Headline — ONE LINE VALUE PROPOSITION */}
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight space-y-2">
+            <span className="neon-text block">
+              {t("hero.tagline1")}
             </span>
-            <br />
-            <span className="text-3xl md:text-5xl text-muted-foreground mt-4 block">
-              {language === "zh-HK" 
-                ? "用 9 個月行晒所有冤枉路" 
-                : "用 9 个月行晒所有冤枉路"}
-            </span>
-            <br />
-            <span className="text-2xl md:text-4xl text-primary mt-4 block">
-              {language === "zh-HK" 
-                ? "然後畫咗張地圖俾你" 
-                : "然后画了张地图给你"}
+            <span className="text-3xl md:text-4xl lg:text-5xl text-muted-foreground block">
+              {t("hero.tagline2")}
             </span>
           </h1>
           
-          {/* Sub-headline — Johnny's voice */}
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            {language === "zh-HK"
-              ? "我係 Johnny，38 歲由香港金融業轉戰前海。香港上升空間窄、前海機遇前所未有——但補貼門路複雜，文件要求繁瑣。我用 9 個月先搞清楚玩法，而家做成呢張「地圖」。"
-              : "我是 Johnny，38 岁由香港金融业转战前海。香港上升空间窄、前海机遇前所未有——但补贴门路复杂，文件要求繁琐。我用 9 个月先搞清楚玩法，现在做成这张「地图」。"}
+          {/* Who is this for */}
+          <p className="text-xl md:text-2xl text-foreground font-medium">
+            {t("hero.who")}
           </p>
           
-          {/* Why me? */}
-          <div className="grid md:grid-cols-3 gap-4 max-w-2xl mx-auto pt-4">
-            {[
-              language === "zh-HK" ? "✅ 香港出生，幾時北上都知" : "✅ 香港出生，几时北上都知道",
-              language === "zh-HK" ? "✅ 行過晒所有冤枉路" : "✅ 行过晒所有冤枉路",
-              language === "zh-HK" ? "✅ 而家畫圖教你" : "✅ 现在画图教你",
-            ].map((item, i) => (
-              <p key={i} className="text-base text-foreground bg-primary/5 px-4 py-2 rounded-lg">{item}</p>
-            ))}
-          </div>
-          
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+          {/* CTA Buttons — MAXIMUM VISIBILITY */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button 
               size="lg" 
               onClick={() => setShowAIGenerator(true)} 
-              className="gap-2 text-lg px-10 py-7 h-auto"
+              className="gap-2 text-xl px-12 py-8 h-auto bg-primary hover:bg-primary/90 shadow-xl shadow-primary/30"
             >
-              <Zap className="h-5 w-5" />
-              {language === "zh-HK" ? "免費評估我合唔合資格" : "免费评估我合不合资格"}
+              <Zap className="h-6 w-6" />
+              {t("hero.cta")}
             </Button>
             <Button 
               size="lg" 
               variant="outline" 
-              onClick={() => scrollToSection("founder-story")} 
-              className="gap-2 text-lg px-10 py-7 h-auto"
+              onClick={() => scrollToSection("service-flow")} 
+              className="gap-2 text-xl px-12 py-8 h-auto border-2"
             >
-              <Users className="h-5 w-5" />
-              {language === "zh-HK" ? "了解我點解要做呢件事" : "了解我为什么要做这件事"}
+              <FileText className="h-6 w-6" />
+              {t("hero.ctaSecondary")}
+            </Button>
+          </div>
+
+          {/* Trust Metrics Bar */}
+          <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto pt-8">
+            <div className="bg-primary/5 border border-primary/20 rounded-xl p-4">
+              <div className="text-2xl md:text-3xl font-bold text-primary">500+</div>
+              <div className="text-xs md:text-sm text-muted-foreground">{t("trust.clients")}</div>
+            </div>
+            <div className="bg-primary/5 border border-primary/20 rounded-xl p-4">
+              <div className="text-2xl md:text-3xl font-bold text-primary">RMB 5千萬</div>
+              <div className="text-xs md:text-sm text-muted-foreground">{t("trust.subsidy")}</div>
+            </div>
+            <div className="bg-primary/5 border border-primary/20 rounded-xl p-4">
+              <div className="text-2xl md:text-3xl font-bold text-primary">95%</div>
+              <div className="text-xs md:text-sm text-muted-foreground">{t("trust.satisfaction")}</div>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* 5-Step Service Flow */}
+      <section id="service-flow" className="container py-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true }}
+          className="max-w-5xl mx-auto space-y-8"
+        >
+          <div className="text-center">
+            <h2 className="text-3xl md:text-4xl font-bold">{t("flow.title")}</h2>
+          </div>
+          <div className="grid md:grid-cols-5 gap-4">
+            {[
+              { step: "01", icon: Sparkles, title: t("flow.step1"), desc: t("flow.step1desc"), color: "text-primary" },
+              { step: "02", icon: Users, title: t("flow.step2"), desc: t("flow.step2desc"), color: "text-blue-500" },
+              { step: "03", icon: FileText, title: t("flow.step3"), desc: t("flow.step3desc"), color: "text-amber-500" },
+              { step: "04", icon: Shield, title: t("flow.step4"), desc: t("flow.step4desc"), color: "text-green-500" },
+              { step: "05", icon: Clock, title: t("flow.step5"), desc: t("flow.step5desc"), color: "text-purple-500" },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="relative"
+              >
+                <Card className="h-full border-2 hover:border-primary/30 transition-colors">
+                  <CardContent className="p-4 text-center space-y-2">
+                    <div className={`text-3xl font-bold ${item.color} opacity-30`}>{item.step}</div>
+                    <item.icon className={`h-8 w-8 mx-auto ${item.color}`} />
+                    <div className="font-semibold text-sm">{item.title}</div>
+                    <div className="text-xs text-muted-foreground">{item.desc}</div>
+                  </CardContent>
+                </Card>
+                {i < 4 && (
+                  <div className="hidden md:block absolute top-1/2 -right-2 transform -translate-y-1/2 text-muted-foreground">
+                    <ArrowRight className="h-4 w-4" />
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+          <div className="text-center">
+            <Button 
+              size="lg" 
+              onClick={() => setShowAIGenerator(true)}
+              className="gap-2 text-lg px-10 py-6 h-auto"
+            >
+              <Zap className="h-5 w-5" />
+              {language === "zh-HK" ? "立即開始評估（免費）" : "立即开始评估（免费）"}
             </Button>
           </div>
         </motion.div>
       </section>
 
-      {/* Problem / Solution Section */}
+      {/* Mainland → HK Perspective */}
+      <section className="container py-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true }}
+          className="max-w-5xl mx-auto"
+        >
+          <Card className="border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30">
+            <CardContent className="p-8 md:p-12">
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="space-y-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/30 rounded-full text-blue-600 text-sm font-medium">
+                    <span className="text-lg">🇭🇰 → 🇨🇳</span>
+                    {t("mainland.title")}
+                  </div>
+                  <h3 className="text-2xl md:text-3xl font-bold">{t("mainland.subtitle")}</h3>
+                  <p className="text-muted-foreground">
+                    {language === "zh-HK"
+                      ? "內地專才想北上香港？我哋都幫到你。高才通、專才計劃——評估你嘅資格，生成專業申請文件。"
+                      : "内地专才想北上香港？我们都帮到你。高才通、专才计划——评估你的资格，生成专业申请文件。"}
+                  </p>
+                  <div className="space-y-2 pt-2">
+                    <div className="flex items-center gap-2 text-sm">
+                      <Check className="h-4 w-4 text-blue-500" />
+                      <span>{t("mainland.benefit1")}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <Check className="h-4 w-4 text-blue-500" />
+                      <span>{t("mainland.benefit2")}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <Check className="h-4 w-4 text-blue-500" />
+                      <span>{t("mainland.benefit3")}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <Button 
+                    size="lg" 
+                    variant="outline"
+                    onClick={() => setShowAIGenerator(true)}
+                    className="gap-2 text-lg px-8 py-6 h-auto border-2 border-blue-300 hover:border-blue-400 hover:bg-blue-50"
+                  >
+                    <Rocket className="h-5 w-5" />
+                    {t("mainland.cta")}
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </section>
+
+      {/* Problem Section */}
       <section className="container py-16">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-5xl mx-auto space-y-12">
           <div className="text-center space-y-4">
